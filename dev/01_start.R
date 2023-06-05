@@ -19,16 +19,15 @@
 ## to change the name in the app_sys() function in app_config.R /!\
 ##
 golem::fill_desc(
-  pkg_name = "lima-golem", # The Name of the package containing the App
-  pkg_title = "PKG_TITLE", # The Title of the package containing the App
-  pkg_description = "PKG_DESC.", # The Description of the package containing the App
-  author_first_name = "AUTHOR_FIRST", # Your First Name
-  author_last_name = "AUTHOR_LAST", # Your Last Name
-  author_email = "AUTHOR@MAIL.COM", # Your Email
-  repo_url = NULL, # The URL of the GitHub Repo (optional),
-  pkg_version = "0.0.0.9000" # The Version of the package containing the App
+       pkg_name = "shinylima", # The Name of the package containing the App
+       pkg_title = "LIMA-Tool", # The Title of the package containing the App
+       pkg_description = "Die Revision des Grundangebot zum Thema Handänderungen führt auch zu Veränderungen in der LIMA-App: Neu werden Bodenpreise und Wohnflächenpreise in unterschiedlichen Apps ausgewiesen. Gleichzeitig wird der Aufbau der App modularisiert.", # The Description of the package containing the App
+       author_first_name = "Aline", # Your First Name
+       author_last_name = "Metzler", # Your Last Name
+       author_email = "aline.metzler@zuerich.ch", # Your Email
+       repo_url = NULL, # The (optional) URL of the GitHub Repo
+       pkg_version = "0.0.0.9000" # The Version of the package containing the App
 )
-
 ## Set {golem} options ----
 golem::set_golem_options()
 
@@ -37,17 +36,17 @@ golem::install_dev_deps()
 
 ## Create Common Files ----
 ## See ?usethis for more information
-usethis::use_mit_license("Golem User") # You can set another license here
-usethis::use_readme_rmd(open = FALSE)
-devtools::build_readme()
-# Note that `contact` is required since usethis version 2.1.5
-# If your {usethis} version is older, you can remove that param
-usethis::use_code_of_conduct(contact = "Golem User")
-usethis::use_lifecycle_badge("Experimental")
-usethis::use_news_md(open = FALSE)
+# usethis::use_mit_license("Golem User") # You can set another license here
+# usethis::use_readme_rmd(open = FALSE)
+# devtools::build_readme()
+# # Note that `contact` is required since usethis version 2.1.5
+# # If your {usethis} version is older, you can remove that param
+# usethis::use_code_of_conduct(contact = "Golem User")
+# usethis::use_lifecycle_badge("Experimental")
+# usethis::use_news_md(open = FALSE)
 
 ## Use git ----
-usethis::use_git()
+# usethis::use_git()
 
 ## Init Testing Infrastructure ----
 ## Create a template for tests
