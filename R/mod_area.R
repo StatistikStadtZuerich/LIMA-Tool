@@ -6,10 +6,46 @@
 #'
 #' @noRd 
 #'
+#'
 #' @importFrom shiny NS tagList 
 mod_area_ui <- function(id){
+  
+  choices_area <- unique(data_vector[["zones"]]$GebietLang)
+  choices_price <- unique(data_vector[["zones"]]$PreisreiheLang)
+  
   ns <- NS(id)
   tagList(
+    sidebarPanel(
+      # Area
+      sszSelectInput(ns("area"),
+                     "Gebietsauswahl",
+                     choices = choices_area),
+      
+      # Price
+      sszRadioButtons(ns("price"),
+                      "Preise",
+                      choices = choices_price),
+      
+      # Group (conditional to price)
+      conditionalPanel(
+        condition = 'input.price != "Stockwerkeigentum pro m\u00B2 Wohnungsfläche"',
+        sszRadioButtons(ns("group"),
+                        "Art",
+                        choices = c(
+                          "Ganze Liegenschaften",
+                          "Stockwerkeigentum",
+                          "Alle Verkäufe"
+                        )
+        ),
+      ),
+      
+      # Action Button
+      sszActionButton(
+        inputId = ns("buttonStart"),
+        label = "Abfrage starten"
+      ),
+      br()
+    )
  
   )
 }

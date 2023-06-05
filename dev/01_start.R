@@ -61,6 +61,9 @@ golem::use_favicon() # path = "path/to/ico". Can be an online file.
 golem::use_utils_ui(with_test = TRUE)
 golem::use_utils_server(with_test = TRUE)
 
+usethis::use_package("dplyr")
+usethis::use_pipe()
+
 # You're now set! ----
 
 # go to dev/02_dev.R

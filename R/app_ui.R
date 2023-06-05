@@ -3,6 +3,7 @@
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @import zuericssstyle
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -10,7 +11,36 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("lima-golem")
+      
+      # App Selection
+      tags$div(
+        class = "queryDiv",
+        h1("Wählen Sie eine Abfrage"),
+        hr(),
+        sszRadioButtons(
+          inputId = "query",
+          label = NULL,
+          choices = c(
+            "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete",
+            "Abfrage 2: Zeitreihen für Quartiere und Bauzonen über Adresseingabe"
+          ),
+          selected = character(0)
+        )
+      ),
+      
+      # Conditional Panel which App to choose
+      # App 1
+      conditionalPanel(
+        condition = 'input.query == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
+        # Show App 1 Code
+        mod_area_ui("area_1")
+      ),
+      # App 2
+      conditionalPanel(
+        condition = 'input.query == "Abfrage 2: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
+        # Show App 2 Code
+      )
+      # App 3 tbd.
     )
   )
 }
