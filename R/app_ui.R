@@ -11,6 +11,9 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
+      # CSS
+      includeCSS("inst/app/www/sszThemeShiny.css"),
+      includeCSS("inst/app/www/LimaTheme.css"),
       
       # App Selection
       tags$div(

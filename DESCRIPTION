@@ -17,8 +17,11 @@ Imports:
     dplyr,
     furrr,
     golem (>= 0.4.0),
+    icons,
     magrittr,
+    reactable,
     shiny (>= 1.6.0),
+    shinyjs,
     zuericssstyle
 Suggests: 
     spelling,
