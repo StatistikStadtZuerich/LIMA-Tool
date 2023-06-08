@@ -21,11 +21,12 @@ app_ui <- function(request) {
         h1("Wählen Sie eine Abfrage"),
         hr(),
         sszRadioButtons(
-          inputId = "query",
+          inputId = "choose_app",
           label = NULL,
           choices = c(
             "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete",
-            "Abfrage 2: Zeitreihen für Quartiere und Bauzonen über Adresseingabe"
+            "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
+            "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe"
           ),
           selected = character(0)
         )
@@ -34,17 +35,21 @@ app_ui <- function(request) {
       # Conditional Panel which App to choose
       # App 1
       conditionalPanel(
-        condition = 'input.query == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
+        condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
         # Show App 1 Code
         mod_area_ui(id = "area_zones",
                     data = data_vector[["zones"]])
       ),
       # App 2
       conditionalPanel(
-        condition = 'input.query == "Abfrage 2: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
+        condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
+        # Show App 2 Code
+      ),
+      # App 2
+      conditionalPanel(
+        condition = 'input.choose_app == "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
         # Show App 2 Code
       )
-      # App 3 tbd.
     )
   )
 }

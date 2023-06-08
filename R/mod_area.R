@@ -25,19 +25,19 @@ mod_area_ui <- function(id, data){
   tagList(
     sidebarPanel(
       # Area
-      sszSelectInput(ns("area"),
+      sszSelectInput(ns("select_area"),
                      "Gebietsauswahl",
                      choices = choices_area),
       
       # Price
-      sszRadioButtons(ns("price"),
+      sszRadioButtons(ns("select_price"),
                       "Preise",
                       # choices = choices_price
                       choices = c("Preis pro m² Grundstücksfläche", 
                                   "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert")),
       
       # Group (conditional to price)
-      sszRadioButtons(ns("group"),
+      sszRadioButtons(ns("select_group"),
                       "Art",
                       choices = c(
                         "Ganze Liegenschaften",
@@ -48,14 +48,14 @@ mod_area_ui <- function(id, data){
       
       # Action Button
       sszActionButton(
-        inputId = ns("buttonStart"),
+        inputId = ns("start_query"),
         label = "Abfrage starten"
       ),
       br(),
       
       # Downloads
       conditionalPanel(
-        condition = "input.buttonStart",
+        condition = "input.start_query",
         ns = ns,
         mod_download_ui("download_1")
       )
@@ -70,7 +70,7 @@ mod_area_ui <- function(id, data){
         textOutput(ns("title"))
       ),
       conditionalPanel(
-        condition = "input.buttonStart",
+        condition = "input.start_query",
         ns = ns,
         hr()
       ),
@@ -92,18 +92,19 @@ mod_area_ui <- function(id, data){
       mod_area_tables_ui(id, "price"),
 
       # Action Link for Hand Changes (counts)
-      shinyjs::useShinyjs(),
-      conditionalPanel(
-        condition = "input.buttonStart",
-        ns = ns,
-        tags$div(
-          class = "linkCount",
-          actionLink("linkCount",
-                     "Anzahl Handänderungen einblenden",
-                     icon = icon("angle-down")
-          )
-        )
-      ),
+      # golem::activate_js(),
+      # shinyjs::useShinyjs(),
+      # conditionalPanel(
+      #   condition = "input.start_query",
+      #   ns = ns,
+      #   tags$div(
+      #     class = "linkCount",
+      #     actionLink("linkCount",
+      #                "Anzahl Handänderungen einblenden",
+      #                icon = icon("angle-down")
+      #     )
+      #   )
+      # ),
       # 
       # # Hidden Titles and Tables for Hand Changes
       # shinyjs::hidden(
@@ -115,7 +116,7 @@ mod_area_ui <- function(id, data){
       #   ),
       
       conditionalPanel(
-        condition = "input.buttonStart",
+        condition = "input.start_query",
         ns = ns,
         explanationbox_app1()
       )
@@ -134,19 +135,19 @@ mod_area_server <- function(id, data){
     
     # Captions
     # Reactive Title
-    titleReactive <- eventReactive(input$buttonStart, {
-      input$price
+    titleReactive <- eventReactive(input$start_query, {
+      input$select_price
     })
     output$title <- renderText({
       titleReactive()
     })
     
     # Reactive Subtitle
-    subtitleReactive <- eventReactive(input$buttonStart, {
-      if (input$price == "Stockwerkeigentum pro m\u00B2 Wohnungsfläche") {
+    subtitleReactive <- eventReactive(input$start_query, {
+      if (input$select_price == "Stockwerkeigentum pro m\u00B2 Wohnungsfläche") {
         title <- NULL
       } else {
-        title <- input$group
+        title <- input$select_group
       }
     })
     output$subtitle <- renderText({
@@ -154,8 +155,8 @@ mod_area_server <- function(id, data){
     })
     
     # Reactive Sub-Subtitle
-    subSubtitleReactive <- eventReactive(input$buttonStart, {
-      subSubtitle <- paste0(input$area, ", Medianpreise in CHF")
+    subSubtitleReactive <- eventReactive(input$start_query, {
+      subSubtitle <- paste0(input$select_area, ", Medianpreise in CHF")
     })
     output$subSubtitle <- renderText({
       subSubtitleReactive()

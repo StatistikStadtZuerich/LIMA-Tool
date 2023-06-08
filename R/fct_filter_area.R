@@ -12,9 +12,9 @@ filter_area_zone <- function(target_value, data, BZO_year){
   filtered <- data %>%
     filter(
       Typ == target_value,
-      GebietLang == input$area,
-      PreisreiheLang == input$price,
-      ArtLang == input$group,
+      GebietLang == input$select_area,
+      PreisreiheLang == input$select_price,
+      ArtLang == input$select_group,
       BZO == BZO_year
     ) 
   
