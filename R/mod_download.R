@@ -15,27 +15,26 @@ mod_download_ui <- function(id){
   
   ns <- NS(id)
   tagList(
-    conditionalPanel(
-      condition = "input.buttonStart",
-      h3("Daten herunterladen"),
-      tags$div(
-        id = "downloadWrapperId",
-        class = "downloadWrapperDiv",
-        sszDownloadButton("csvDownload",
-                          label = "csv",
-                          image = img(ssz_icons$download)
-        ),
-        sszDownloadButton("excelDownload",
-                          label = "xlsx",
-                          image = img(ssz_icons$download)
-        ),
-        sszOgdDownload(
-          outputId = "ogdDown",
-          label = "OGD",
-          href = "https://data.stadt-zuerich.ch/dataset?tags=lima",
-          image = img(ssz_icons$link)
-        )
+
+    h3("Daten herunterladen"),
+    tags$div(
+      id = "downloadWrapperId",
+      class = "downloadWrapperDiv",
+      sszDownloadButton(ns("csvDownload"),
+                        label = "csv",
+                        image = img(ssz_icons$download)
+      ),
+      sszDownloadButton(ns("excelDownload"),
+                        label = "xlsx",
+                        image = img(ssz_icons$download)
+      ),
+      sszOgdDownload(
+        outputId = ns("ogdDown"),
+        label = "OGD",
+        href = "https://data.stadt-zuerich.ch/dataset?tags=lima",
+        image = img(ssz_icons$link)
       )
+      
     )
   )
 }

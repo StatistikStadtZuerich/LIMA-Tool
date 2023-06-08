@@ -6,7 +6,7 @@
 #'
 #' @noRd 
 #'
-#' @import shinyjs useShinyjs
+#' @import shinyjs
 #' @import reactable
 #' @import shiny
 #' @import icons
@@ -31,19 +31,18 @@ mod_area_ui <- function(id){
       # Price
       sszRadioButtons(ns("price"),
                       "Preise",
-                      choices = choices_price),
+                      # choices = choices_price
+                      choices = c("Preis pro m² Grundstücksfläche", 
+                                  "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert")),
       
       # Group (conditional to price)
-      conditionalPanel(
-        condition = 'input.price != "Stockwerkeigentum pro m\u00B2 Wohnungsfläche"',
-        sszRadioButtons(ns("group"),
-                        "Art",
-                        choices = c(
-                          "Ganze Liegenschaften",
-                          "Stockwerkeigentum",
-                          "Alle Verkäufe"
-                        )
-        ),
+      sszRadioButtons(ns("group"),
+                      "Art",
+                      choices = c(
+                        "Ganze Liegenschaften",
+                        "Stockwerkeigentum",
+                        "Alle Verkäufe"
+                      )
       ),
       
       # Action Button
@@ -54,7 +53,11 @@ mod_area_ui <- function(id){
       br(),
       
       # Downloads
-      mod_download_ui("download_1")
+      conditionalPanel(
+        condition = "input.buttonStart",
+        ns = ns,
+        mod_download_ui("download_1")
+      )
     ),
     # Main Panel (Results)
     mainPanel(
@@ -63,10 +66,11 @@ mod_area_ui <- function(id){
       tags$div(
         id = "title_id",
         class = "title_div",
-        textOutput("title")
+        textOutput(ns("title"))
       ),
       conditionalPanel(
         condition = "input.buttonStart",
+        ns = ns,
         hr()
       ),
       
@@ -74,40 +78,23 @@ mod_area_ui <- function(id){
       tags$div(
         id = "subtitle_id",
         class = "subtitle_div",
-        textOutput("subtitle")
+        textOutput(ns("subtitle"))
       ),
       
       # Table Subsubtitle (prices)
       tags$div(
         id = "subSubtitle_id",
         class = "subSubtitle_div",
-        textOutput("subSubtitle")
+        textOutput(ns("subSubtitle"))
       ),
       
-      # Title for BZO16 (prices)
-      tags$div(
-        id = "tableTitle16_id",
-        class = "tableTitle_div",
-        textOutput("tableTitle16")
-      ),
-      
-      # Table for BZO 16 (prices)
-      reactableOutput("resultsPrice16"),
-      
-      # title for BZO99 (prices)
-      tags$div(
-        id = "tableTitle99_id",
-        class = "tableTitle_div",
-        textOutput("tableTitle99")
-      ),
-      
-      # Table for BZO 99 (prices)
-      reactableOutput("resultsPrice99"),
+      mod_area_mainpanel_ui(id, "price"),
       
       # Action Link for Hand Changes (counts)
       useShinyjs(),
       conditionalPanel(
         condition = "input.buttonStart",
+        ns = ns, 
         tags$div(
           class = "linkCount",
           actionLink("linkCount",
@@ -117,49 +104,21 @@ mod_area_ui <- function(id){
         )
       ),
       
-      
       # Hidden Titles and Tables for Hand Changes
       shinyjs::hidden(
         div(
           id = "countDiv",
           
-          # Title for BZO16 (counts)
-          tags$div(
-            id = "tableTitleTwo16_id",
-            class = "tableTitle_div",
-            textOutput("tableTitleTwo16")
-          ),
-          
-          # Table for BZO16 (counts)
-          reactableOutput("resultsCount16"),
-          
-          # Title for BZO99 (counts)
-          tags$div(
-            id = "tableTitleTwo99_id",
-            class = "tableTitle_div",
-            textOutput("tableTitleTwo99")
-          ),
-          
-          # Table for BZO99 (counts)
-          reactableOutput("resultsCount99")
+          mod_area_mainpanel_ui(id, "count")
         )
-      ),
+        ),
+      
       conditionalPanel(
         condition = "input.buttonStart",
-        tags$div(
-          class = "infoDiv",
-          h5("Erklärung Zonenarten"),
-          hr(),
-          p("Z = Zentrumszone"),
-          p("K = Kernzone"),
-          p("Q = Quartiererhaltungszone"),
-          p("W2 = Wohnzone 2"),
-          p("W3 = Wohnzone 3"),
-          p("W4 = Wohnzone 4"),
-          p("W5 = Wohnzone 5")
-        )
+        ns = ns,
+        explanationbox_app1()
       )
-    )
+    )  
   )
  
   
@@ -171,7 +130,58 @@ mod_area_ui <- function(id){
 mod_area_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    # Captions
+    # Reactive Title
+    titleReactive <- eventReactive(input$buttonStart, {
+      input$price
+    })
+    output$title <- renderText({
+      titleReactive()
+    })
+    
+    # Reactive Subtitle
+    subtitleReactive <- eventReactive(input$buttonStart, {
+      if (input$price == "Stockwerkeigentum pro m\u00B2 Wohnungsfläche") {
+        title <- NULL
+      } else {
+        title <- input$group
+      }
+    })
+    output$subtitle <- renderText({
+      subtitleReactive()
+    })
+    
+    # Reactive Sub-Subtitle
+    subSubtitleReactive <- eventReactive(input$buttonStart, {
+      subSubtitle <- paste0(input$area, ", Medianpreise in CHF")
+    })
+    output$subSubtitle <- renderText({
+      subSubtitleReactive()
+    })
  
+    # Output price
+    mod_area_mainpanel_server(id, "Preis")
+    
+    # Show Output Counts
+    observeEvent(input$linkCount, {
+      shinyjs::toggle("countDiv")
+      
+      mod_area_mainpanel_server(id, "Zahl")
+      
+      if (input$linkCount %% 2 == 1) {
+        txt <- "Anzahl Handänderungen verbergen"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+        shinyjs::addClass("linkCount", "visitedLink")
+      } else {
+        txt <- "Anzahl Handänderungen einblenden"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
+        shinyjs::removeClass("linkCount", "visitedLink")
+      }
+    })
+  
+    
+    mod_download_server("download_1")
   })
 }
     
