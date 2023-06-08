@@ -45,11 +45,13 @@ mod_area_tables_server <- function(id, target_value, data){
     ns <- session$ns
     
     # Reactive Table Title BZO 16
-    tableTitle16Reactive <- eventReactive(input$buttonStart, {
-      tableTitle16 <- paste0("Nach Zonenart gemäss BZO 2016")
-    })
+    # tableTitle16Reactive <- eventReactive(input$buttonStart, {
+    #   tableTitle16 <- paste0("Nach Zonenart gemäss BZO 2016")
+    # })
     output$tableTitle16 <- renderText({
-      tableTitle16Reactive()
+      # tableTitle16Reactive()
+      tableTitle16 <- paste0("Nach Zonenart gemäss BZO 2016")
+      tableTitle16
     })
     
     # call data_filter function to get data for table 16
@@ -65,11 +67,13 @@ mod_area_tables_server <- function(id, target_value, data){
       })
       
       # Reactive Table Title BZO 99
-      tableTitle99Reactive <- eventReactive(input$buttonStart, {
-        tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
-      })
+      # tableTitle99Reactive <- eventReactive(input$buttonStart, {
+      #   tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
+      # })
       output$tableTitle99 <- renderText({
-        tableTitle99Reactive()
+        # tableTitle99Reactive()
+        tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
+        tableTitle99
       })
       
       # call data_filter function to get data for table 99

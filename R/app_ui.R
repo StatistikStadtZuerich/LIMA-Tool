@@ -6,6 +6,15 @@
 #' @import zuericssstyle
 #' @noRd
 app_ui <- function(request) {
+  
+  ### Set unique choices
+  choices_app1 <- list(
+    choices_area = unique(data_vector[["zones"]]$GebietLang),
+    choices_price = unique(data_vector[["zones"]]$PreisreiheLang),
+    choices_group = unique(data_vector[["zones"]]$ArtLang)
+  )
+  # choices_area <- unique(data_vector[["zones"]]$GebietLang)
+  
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
@@ -38,7 +47,8 @@ app_ui <- function(request) {
         condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
         # Show App 1 Code
         mod_area_ui(id = "area_zones",
-                    data = data_vector[["zones"]])
+                    data = data_vector[["zones"]],
+                    choices = choices_app1)
       ),
       # App 2
       conditionalPanel(

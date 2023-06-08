@@ -13,13 +13,9 @@
 #' @import zuericssstyle
 #' @importFrom shiny NS tagList
 library(shinyjs) 
-mod_area_ui <- function(id, data){
+mod_area_ui <- function(id, data, choices_app1){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
-  
-  ### Set unique choices
-  choices_area <- unique(data$GebietLang)
-  choices_price <- unique(data$PreisreiheLang)
   
   ns <- NS(id)
   tagList(
@@ -27,18 +23,19 @@ mod_area_ui <- function(id, data){
       # Area
       sszSelectInput(ns("select_area"),
                      "Gebietsauswahl",
-                     choices = choices_area),
+                     choices = choices_app1[["choices_area"]]),
       
       # Price
       sszRadioButtons(ns("select_price"),
                       "Preise",
-                      # choices = choices_price
+                      # choices = choices_app1[["choices_price"]]
                       choices = c("Preis pro m² Grundstücksfläche", 
                                   "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert")),
       
       # Group (conditional to price)
       sszRadioButtons(ns("select_group"),
                       "Art",
+                      # choices = choices_app1[["choices_group"]]
                       choices = c(
                         "Ganze Liegenschaften",
                         "Stockwerkeigentum",
@@ -144,11 +141,7 @@ mod_area_server <- function(id, data){
     
     # Reactive Subtitle
     subtitleReactive <- eventReactive(input$start_query, {
-      if (input$select_price == "Stockwerkeigentum pro m\u00B2 Wohnungsfläche") {
-        title <- NULL
-      } else {
-        title <- input$select_group
-      }
+      title <- input$select_group
     })
     output$subtitle <- renderText({
       subtitleReactive()
@@ -156,10 +149,11 @@ mod_area_server <- function(id, data){
     
     # Reactive Sub-Subtitle
     subSubtitleReactive <- eventReactive(input$start_query, {
-      subSubtitle <- paste0(input$select_area, ", Medianpreise in CHF")
+      input$select_area
     })
     output$subSubtitle <- renderText({
-      subSubtitleReactive()
+      req(subSubtitleReactive())
+      paste0(subSubtitleReactive(), ", Medianpreise in CHF")
     })
  
     # Output price
