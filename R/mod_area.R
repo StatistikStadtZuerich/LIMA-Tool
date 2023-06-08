@@ -11,14 +11,15 @@
 #' @import shiny
 #' @import icons
 #' @import zuericssstyle
-#' @importFrom shiny NS tagList 
-mod_area_ui <- function(id){
+#' @importFrom shiny NS tagList
+library(shinyjs) 
+mod_area_ui <- function(id, data){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
   
   ### Set unique choices
-  choices_area <- unique(data_vector[["zones"]]$GebietLang)
-  choices_price <- unique(data_vector[["zones"]]$PreisreiheLang)
+  choices_area <- unique(data$GebietLang)
+  choices_price <- unique(data$PreisreiheLang)
   
   ns <- NS(id)
   tagList(
@@ -87,14 +88,14 @@ mod_area_ui <- function(id){
         class = "subSubtitle_div",
         textOutput(ns("subSubtitle"))
       ),
-      
-      mod_area_mainpanel_ui(id, "price"),
-      
+
+      mod_area_tables_ui(id, "price"),
+
       # Action Link for Hand Changes (counts)
-      useShinyjs(),
+      shinyjs::useShinyjs(),
       conditionalPanel(
         condition = "input.buttonStart",
-        ns = ns, 
+        ns = ns,
         tags$div(
           class = "linkCount",
           actionLink("linkCount",
@@ -103,15 +104,15 @@ mod_area_ui <- function(id){
           )
         )
       ),
-      
-      # Hidden Titles and Tables for Hand Changes
-      shinyjs::hidden(
-        div(
-          id = "countDiv",
-          
-          mod_area_mainpanel_ui(id, "count")
-        )
-        ),
+      # 
+      # # Hidden Titles and Tables for Hand Changes
+      # shinyjs::hidden(
+      #   div(
+      #     id = "countDiv",
+      #     
+      #     mod_area_tables_ui(id, "count")
+      #   )
+      #   ),
       
       conditionalPanel(
         condition = "input.buttonStart",
@@ -127,7 +128,7 @@ mod_area_ui <- function(id){
 #' area Server Functions
 #'
 #' @noRd 
-mod_area_server <- function(id){
+mod_area_server <- function(id, data){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -161,13 +162,13 @@ mod_area_server <- function(id){
     })
  
     # Output price
-    mod_area_mainpanel_server(id, "Preis")
+    mod_area_tables_server(id, "Preis", data)
     
     # Show Output Counts
     observeEvent(input$linkCount, {
       shinyjs::toggle("countDiv")
       
-      mod_area_mainpanel_server(id, "Zahl")
+      mod_area_tables_server(id, "Zahl", data)
       
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"

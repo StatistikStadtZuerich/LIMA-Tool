@@ -131,6 +131,4 @@ get_data <- function() {
 }
 
 
-# call this here to make it available to both the UI and the Server
-# probably there is a better option?
 data_vector <- get_data()

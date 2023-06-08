@@ -2,10 +2,7 @@ Package: shinylima
 Title: LIMA-Tool
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Aline",
-           family = "Metzler",
-           role = c("cre", "aut"),
-           email = "aline.metzler@zuerich.ch")
+    person("Aline", "Metzler", , "aline.metzler@zuerich.ch", role = c("cre", "aut"))
 Description: Die Revision des Grundangebot zum Thema Handänderungen führt
     auch zu Veränderungen in der LIMA-App: Neu werden Bodenpreise und
     Wohnflächenpreise in unterschiedlichen Apps ausgewiesen. Gleichzeitig
@@ -30,4 +27,4 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3

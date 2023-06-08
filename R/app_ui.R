@@ -36,7 +36,8 @@ app_ui <- function(request) {
       conditionalPanel(
         condition = 'input.query == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
         # Show App 1 Code
-        mod_area_ui("area_1")
+        mod_area_ui(id = "area_zones",
+                    data = data_vector[["zones"]])
       ),
       # App 2
       conditionalPanel(

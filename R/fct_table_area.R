@@ -2,13 +2,13 @@
 #'
 #' @description A fct function to create the tables for the area apps
 #' 
-#' @param output_value Preis or Zahl
+#' @param target_value Preis or Zahl
 #'
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-reactable_area <- function(output_value, pagesize){
-  reactable(output_value,
+reactable_area <- function(target_value, pagesize){
+  reactable(target_value,
             theme = reactableTheme(
               borderColor = "#DEDEDE"
             ),

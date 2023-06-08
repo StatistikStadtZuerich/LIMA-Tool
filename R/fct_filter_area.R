@@ -1,20 +1,21 @@
 #' filter_area_zone 
 #'
 #' @description A fct function
-#' @param output_value Preis or Zahl
+#' @param target_value Preis or Zahl
 #' @param data zonesBZO16 or zonesBZO99
 #'
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-filter_area_zone <- function(output_value, data){
+filter_area_zone <- function(target_value, data, BZO_year){
   
   filtered <- data %>%
     filter(
-      Typ == output_value,
+      Typ == target_value,
       GebietLang == input$area,
       PreisreiheLang == input$price,
-      ArtLang == input$group
+      ArtLang == input$group,
+      BZO == BZO_year
     ) 
   
   if (unique(filtered$BZO) == "BZO16") {
@@ -24,7 +25,7 @@ filter_area_zone <- function(output_value, data){
     filtered <- filtered %>%
       select(Jahr, Total, Z, K, Q, ` `, W2, W3, W4, W5) 
   }
-  if (output_value == "Preis") {
+  if (target_value == "Preis") {
     if(max(filtered$Jahr) > 2018){
       filtered <- filtered %>%
         mutate_at(vars(-Jahr), as.numeric)
