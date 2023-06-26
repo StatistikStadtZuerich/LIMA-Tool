@@ -7,14 +7,14 @@
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-filter_area_zone <- function(target_value, data, BZO_year){
+filter_area_zone <- function(data, target_value, filter_area, filter_price, filter_group, BZO_year){
   
   filtered <- data %>%
     filter(
       Typ == target_value,
-      GebietLang == input$select_area,
-      PreisreiheLang == input$select_price,
-      ArtLang == input$select_group,
+      GebietLang == filter_area,
+      PreisreiheLang == filter_price,
+      ArtLang == filter_group,
       BZO == BZO_year
     ) 
   

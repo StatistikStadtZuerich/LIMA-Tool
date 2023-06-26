@@ -13,7 +13,7 @@
 #' @import zuericssstyle
 #' @importFrom shiny NS tagList
 library(shinyjs) 
-mod_area_ui <- function(id, data, choices_app1){
+mod_area_ui <- function(id, data, choicesapp){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
   
@@ -23,19 +23,19 @@ mod_area_ui <- function(id, data, choices_app1){
       # Area
       sszSelectInput(ns("select_area"),
                      "Gebietsauswahl",
-                     choices = choices_app1[["choices_area"]]),
+                     choices = choicesapp[["choices_area"]]),
       
       # Price
       sszRadioButtons(ns("select_price"),
                       "Preise",
-                      # choices = choices_app1[["choices_price"]]
+                      # choices = choicesapp[["choices_price"]]
                       choices = c("Preis pro m² Grundstücksfläche", 
                                   "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert")),
       
       # Group (conditional to price)
       sszRadioButtons(ns("select_group"),
                       "Art",
-                      # choices = choices_app1[["choices_group"]]
+                      # choices = choicesapp[["choices_group"]]
                       choices = c(
                         "Ganze Liegenschaften",
                         "Stockwerkeigentum",
@@ -54,7 +54,7 @@ mod_area_ui <- function(id, data, choices_app1){
       conditionalPanel(
         condition = "input.start_query",
         ns = ns,
-        mod_download_ui("download_1")
+        mod_download_ui(ns("download_1"))
       )
     ),
     # Main Panel (Results)
@@ -62,7 +62,7 @@ mod_area_ui <- function(id, data, choices_app1){
       
       # Table Title (prices)
       tags$div(
-        id = "title_id",
+        id = ns("title_id"),
         class = "title_div",
         textOutput(ns("title"))
       ),
@@ -74,19 +74,19 @@ mod_area_ui <- function(id, data, choices_app1){
       
       # Table Subtitle (prices)
       tags$div(
-        id = "subtitle_id",
+        id = ns("subtitle_id"),
         class = "subtitle_div",
         textOutput(ns("subtitle"))
       ),
       
       # Table Subsubtitle (prices)
       tags$div(
-        id = "subSubtitle_id",
+        id = ns("subSubtitle_id"),
         class = "subSubtitle_div",
         textOutput(ns("subSubtitle"))
       ),
 
-      mod_area_tables_ui(id, "price"),
+      mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
 
       # Action Link for Hand Changes (counts)
       # golem::activate_js(),
@@ -156,25 +156,30 @@ mod_area_server <- function(id, data){
       paste0(subSubtitleReactive(), ", Medianpreise in CHF")
     })
  
+    output16 <- reactive({
+      filtered_data <- data16
+      filtered_data
+    })
+    
     # Output price
-    mod_area_tables_server(id, "Preis", data)
+    mod_area_tables_server("PreisID", data, "Preis", input$select_area, input$select_price, select_group)
     
     # Show Output Counts
-    observeEvent(input$linkCount, {
-      shinyjs::toggle("countDiv")
-      
-      mod_area_tables_server(id, "Zahl", data)
-      
-      if (input$linkCount %% 2 == 1) {
-        txt <- "Anzahl Handänderungen verbergen"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
-        shinyjs::addClass("linkCount", "visitedLink")
-      } else {
-        txt <- "Anzahl Handänderungen einblenden"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
-        shinyjs::removeClass("linkCount", "visitedLink")
-      }
-    })
+    # observeEvent(input$linkCount, {
+    #   shinyjs::toggle("countDiv")
+    #   
+    #   mod_area_tables_server(id, "Zahl", data)
+    #   
+    #   if (input$linkCount %% 2 == 1) {
+    #     txt <- "Anzahl Handänderungen verbergen"
+    #     updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+    #     shinyjs::addClass("linkCount", "visitedLink")
+    #   } else {
+    #     txt <- "Anzahl Handänderungen einblenden"
+    #     updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
+    #     shinyjs::removeClass("linkCount", "visitedLink")
+    #   }
+    # })
   
     
     mod_download_server("download_1")

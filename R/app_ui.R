@@ -7,7 +7,7 @@
 #' @noRd
 app_ui <- function(request) {
   
-  ### Set unique choices
+  ## Set unique choices
   choices_app1 <- list(
     choices_area = unique(data_vector[["zones"]]$GebietLang),
     choices_price = unique(data_vector[["zones"]]$PreisreiheLang),
@@ -48,7 +48,7 @@ app_ui <- function(request) {
         # Show App 1 Code
         mod_area_ui(id = "area_zones",
                     data = data_vector[["zones"]],
-                    choices = choices_app1)
+                    choicesapp = choices_app1)
       ),
       # App 2
       conditionalPanel(
