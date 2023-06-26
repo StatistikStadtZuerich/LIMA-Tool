@@ -42,23 +42,45 @@ mod_download_ui <- function(id){
 #' download Server Functions
 #'
 #' @noRd 
-mod_download_server <- function(id){
+mod_download_server <- function(id, data, filter_app, filter_area, filter_price, filter_group){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    ### Get Data for Download 
+    # App 1
+    dataDownload <- reactive({
+      
+      filtered <- data %>%
+        filter(
+          GebietLang == filter_area,
+          PreisreiheLang == filter_price,
+          ArtLang == filter_group
+        ) %>%
+        select(Typ, GebietLang, PreisreiheLang, ArtLang, BZO, Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56)
+      filtered
+ 
+    })
+    
+    # App 2
+    dataDownloadTwo <- eventReactive(input$buttonStartTwo, {
+      
+     
+    })
+    
     ### Write Download Table
     ## App 1
     # CSV
     output$csvDownload <- downloadHandler(
       filename = function(price) {
-        price <- input$select_price
+        price <- filter_price
         if (price == "Stockwerkeigentum pro m\u00B2 Wohnungsfläche") {
-          price <- gsub(" ", "-", input$select_price, fixed = TRUE)
-          area <- gsub(" ", "-", input$select_area, fixed = TRUE)
+          price <- gsub(" ", "-", filter_price, fixed = TRUE)
+          area <- gsub(" ", "-", filter_area, fixed = TRUE)
           paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", area, ".csv")
         } else {
-          price <- gsub(" ", "-", input$select_rice, fixed = TRUE)
-          group <- gsub(" ", "-", input$select_group, fixed = TRUE)
-          area <- gsub(" ", "-", input$select_area, fixed = TRUE)
+          price <- gsub(" ", "-", filter_price, fixed = TRUE)
+          group <- gsub(" ", "-", filter_group, fixed = TRUE)
+          area <- gsub(" ", "-", filter_area, fixed = TRUE)
           paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area, ".csv")
         }
       },
@@ -70,20 +92,20 @@ mod_download_server <- function(id){
     # Excel
     output$excelDownload <- downloadHandler(
       filename = function(price) {
-        price <- input$select_price
+        price <- filter_price
         if (price == "Stockwerkeigentum pro m\u00B2 Wohnungsfläche") {
-          price <- gsub(" ", "-", input$select_price, fixed = TRUE)
-          area <- gsub(" ", "-", input$select_area, fixed = TRUE)
+          price <- gsub(" ", "-", filter_price, fixed = TRUE)
+          area <- gsub(" ", "-", filter_area, fixed = TRUE)
           paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", area, ".xlsx")
         } else {
-          price <- gsub(" ", "-", input$select_price, fixed = TRUE)
-          group <- gsub(" ", "-", input$select_group, fixed = TRUE)
-          area <- gsub(" ", "-", input$select_area, fixed = TRUE)
+          price <- gsub(" ", "-", filter_price, fixed = TRUE)
+          group <- gsub(" ", "-", filter_group, fixed = TRUE)
+          area <- gsub(" ", "-", filter_area, fixed = TRUE)
           paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area, ".xlsx")
         }
       },
       content = function(file) {
-        sszDownloadExcel(dataDownload(), file, input$choose_app, input$select_area, input$select_price, input$select_group)
+        sszDownloadExcel(dataDownload(), file, filter_app, filter_area, filter_price, filter_group)
       }
     )
  

@@ -162,7 +162,7 @@ mod_area_server <- function(id, data){
     })
     
     # Output price
-    mod_area_tables_server("PreisID", data, "Preis", input$select_area, input$select_price, select_group)
+    mod_area_tables_server("Preis_submodul", data, "Preis", input$select_area, input$select_price, input$select_group)
     
     # Show Output Counts
     # observeEvent(input$linkCount, {
@@ -182,7 +182,12 @@ mod_area_server <- function(id, data){
     # })
   
     
-    mod_download_server("download_1")
+    mod_download_server(id = "download_1", 
+                        data = data, 
+                        filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
+                        filter_area = input$select_area, 
+                        filter_price = input$select_price, 
+                        filter_group = input$select_group)
   })
 }
     

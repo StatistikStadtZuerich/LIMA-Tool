@@ -6,7 +6,7 @@
 #' @import ggplot2
 #' @import jpeg
 #' @import openxlsx
-#' @import readxl
+#' @importFrom readxl read_excel
 #' @import dplyr
 #' @noRd
 sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, input3 = NULL) {
