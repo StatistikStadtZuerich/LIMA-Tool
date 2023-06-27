@@ -114,6 +114,17 @@ mod_address_server <- function(id, data){
           mixedsort()
       )
     })
+    
+    
+    
+    
+    mod_download_server(id = "download_3", 
+                        data_1 = data, 
+                        data_2 = data2,
+                        filter_app = "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe", 
+                        filter_1 = input$select_street, 
+                        filter_2 = input$select_number,
+                        filter_3 = NULL)
  
   })
 }

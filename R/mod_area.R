@@ -193,11 +193,11 @@ mod_area_server <- function(id, data){
   
     
     mod_download_server(id = "download_1", 
-                        data = data, 
+                        data_1 = data, 
                         filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
-                        filter_area = input$select_area, 
-                        filter_price = input$select_price, 
-                        filter_group = input$select_group)
+                        filter_1 = input$select_area, 
+                        filter_2 = input$select_price, 
+                        filter_3 = input$select_group)
   })
 }
     
