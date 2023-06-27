@@ -44,12 +44,7 @@ mod_area_tables_server <- function(id, data, target_value, filter_area, filter_p
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    # # Reactive Table Title BZO 16
-    # tableTitle16Reactive <- eventReactive(input$buttonStart, {
-    #   tableTitle16 <- paste0("Nach Zonenart gemäss BZO 2016")
-    # })
     output$tableTitle16 <- renderText({
-      # tableTitle16Reactive()
       tableTitle16 <- paste0("Nach Zonenart gemäss BZO 2016")
       tableTitle16
     })
@@ -59,30 +54,22 @@ mod_area_tables_server <- function(id, data, target_value, filter_area, filter_p
       filtered_data <- filter_area_zone(data, target_value, filter_area, filter_price, filter_group, "BZO16")
       filtered_data
     })
-    # output16 <- reactive({
-    #   filtered_data <- data16
-    #   filtered_data
-    # })
 
 
     output$results16 <- renderReactable({
-        out16 <- reactable_area(Output16(), 5)
-        out16
-      })
+      out16 <- reactable_area(Output16(), 5)
+      out16
+    })
 
-    #   # Reactive Table Title BZO 99
-    #   # tableTitle99Reactive <- eventReactive(input$buttonStart, {
-    #   #   tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
-    #   # })
+    # call data_filter function to get data for table 99
     #   output$tableTitle99 <- renderText({
-    #     # tableTitle99Reactive()
     #     tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
     #     tableTitle99
     #   })
     # 
     #   # call data_filter function to get data for table 99
     #   Output99 <- eventReactive(input$buttonStart, {
-    #     filtered_data <- filter_area_zone(target_value, data, "BZO99")
+    #     filtered_data <- filter_area_zone(data, target_value, filter_area, filter_price, filter_group, "BZO99")
     #     filtered_data
     #   })
     # 

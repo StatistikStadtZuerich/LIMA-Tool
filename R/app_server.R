@@ -13,6 +13,9 @@ app_server <- function(input, output, session) {
   mod_area_server(id = "area_zones", 
                   data = data_vector[["zones"]])
   
+  mod_address_server("addresses",
+                     data = data_vector[["addresses"]])
+  
   
   ### Change Action Query Button when first selected
   ## All Apps

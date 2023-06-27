@@ -13,7 +13,10 @@ app_ui <- function(request) {
     choices_price = unique(data_vector[["zones"]]$PreisreiheLang),
     choices_group = unique(data_vector[["zones"]]$ArtLang)
   )
-  # choices_area <- unique(data_vector[["zones"]]$GebietLang)
+  choices_app3 <- list(
+    choices_street = unique(data_vector[["addresses"]]$StrasseLang),
+    choices_streetnr = c("", sort(unique(data_vector[["addresses"]]$Hnr)))
+  )
   
   tagList(
     # Leave this function for adding external resources
@@ -58,7 +61,9 @@ app_ui <- function(request) {
       # App 2
       conditionalPanel(
         condition = 'input.choose_app == "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
-        # Show App 2 Code
+        # Show App 3 Code
+        mod_address_ui(id = "addresses",
+                       choicesapp = choices_app3)
       )
     )
   )

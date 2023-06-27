@@ -108,7 +108,7 @@ mod_area_ui <- function(id, data, choicesapp){
       #   div(
       #     id = "countDiv",
       #     
-      #     mod_area_tables_ui(id, "count")
+      #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
       #   )
       #   ),
       
@@ -156,20 +156,30 @@ mod_area_server <- function(id, data){
       paste0(subSubtitleReactive(), ", Medianpreise in CHF")
     })
  
-    output16 <- reactive({
-      filtered_data <- data16
-      filtered_data
-    })
     
     # Output price
-    mod_area_tables_server("Preis_submodul", data, "Preis", input$select_area, input$select_price, input$select_group)
+    # eventReactive(input$start_query, {
+      mod_area_tables_server(id = "Preis_submodul", 
+                             data = data, 
+                             target_value = "Preis", 
+                             filter_area = input$select_area, 
+                             filter_price = input$select_price, 
+                             filter_group = input$select_group)
+    # })
+    
     
     # Show Output Counts
     # observeEvent(input$linkCount, {
     #   shinyjs::toggle("countDiv")
-    #   
-    #   mod_area_tables_server(id, "Zahl", data)
-    #   
+    # 
+    # # Output count
+    # mod_area_tables_server(id = "Zahl_submodul",
+    #                        data = data,
+    #                        target_value = "Zahl",
+    #                        filter_area = input$select_area,
+    #                        filter_price = input$select_price,
+    #                        filter_group = input$select_group)
+    # 
     #   if (input$linkCount %% 2 == 1) {
     #     txt <- "Anzahl Handänderungen verbergen"
     #     updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
