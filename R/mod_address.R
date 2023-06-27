@@ -60,12 +60,10 @@ mod_address_ui <- function(id, choicesapp){
       br(),
       
       # Info Table
-      htmlOutput(ns("results_info")),
-      uiOutput(ns("more_info")),
+      mod_address_info_ui("address_info"),
       br(),
       
-      # Table for prices
-      reactableOutput(ns("Preis_submodul")),
+      mod_address_tables_ui("Preis_submodul"),
       
       # # Action Link for Hand Changes (counts)
       # useShinyjs(),
@@ -82,7 +80,7 @@ mod_address_ui <- function(id, choicesapp){
       # shinyjs::hidden(
       #   div(
       #     id = "countDivTwo",
-      #     reactableOutput("resultsCountSeries")
+      #     mod_address_tables_ui("Zahl_submodul")
       #   )
       # ),
       
@@ -115,7 +113,7 @@ mod_address_server <- function(id, data){
       )
     })
     
-    
+    mod_address_info_server("address_info")
     
     
     mod_download_server(id = "download_3", 
