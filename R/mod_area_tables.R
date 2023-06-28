@@ -79,6 +79,7 @@ mod_area_tables_server <- function(id, data, target_value, filter_area, filter_p
     #   })
     # })
     
+    
   })
 }
     

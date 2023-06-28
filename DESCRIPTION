@@ -19,12 +19,15 @@ Imports:
     gtools,
     icons,
     jpeg,
+    kableExtra,
+    knitr,
     magrittr,
     openxlsx,
     reactable,
     readxl,
     shiny (>= 1.6.0),
     shinyjs,
+    tidyr,
     zuericssstyle
 Suggests: 
     spelling,

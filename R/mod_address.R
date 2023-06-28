@@ -60,10 +60,10 @@ mod_address_ui <- function(id, choicesapp){
       br(),
       
       # Info Table
-      mod_address_info_ui("address_info"),
+      mod_address_info_ui(ns("address_info")),
       br(),
       
-      mod_address_tables_ui("Preis_submodul"),
+      mod_address_tables_ui(ns("Preis_submodul")),
       
       # # Action Link for Hand Changes (counts)
       # useShinyjs(),
@@ -97,7 +97,7 @@ mod_address_ui <- function(id, choicesapp){
 #' address Server Functions
 #'
 #' @noRd 
-mod_address_server <- function(id, data){
+mod_address_server <- function(id, data, data2){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -113,7 +113,12 @@ mod_address_server <- function(id, data){
       )
     })
     
-    mod_address_info_server("address_info")
+    mod_address_info_server(id = "address_info", 
+                            data = data, 
+                            data2 = data2, 
+                            start = input$start_query, 
+                            filter_street = input$select_street, 
+                            filter_number = input$select_number)
     
     
     mod_download_server(id = "download_3", 
@@ -123,7 +128,16 @@ mod_address_server <- function(id, data){
                         filter_1 = input$select_street, 
                         filter_2 = input$select_number,
                         filter_3 = NULL)
- 
+    
+    
+    ### Change Action Query Button when first selected
+    ## All Apps
+    observe({
+      req(input$start_query)
+      updateActionButton(session, "start_query",
+                         label = "Erneute Abfrage"
+      )
+    })
   })
 }
     

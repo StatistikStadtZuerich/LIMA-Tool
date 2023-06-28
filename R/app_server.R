@@ -14,15 +14,9 @@ app_server <- function(input, output, session) {
                   data = data_vector[["zones"]])
   
   mod_address_server("addresses",
-                     data = data_vector[["addresses"]])
+                     data = data_vector[["addresses"]],
+                     data2 = data_vector[["series"]])
   
   
-  ### Change Action Query Button when first selected
-  ## All Apps
-  observe({
-    req(input$buttonStart)
-    updateActionButton(session, "buttonStart",
-                       label = "Erneute Abfrage"
-    )
-  })
+
 }

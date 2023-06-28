@@ -198,6 +198,15 @@ mod_area_server <- function(id, data){
                         filter_1 = input$select_area, 
                         filter_2 = input$select_price, 
                         filter_3 = input$select_group)
+    
+    ### Change Action Query Button when first selected
+    ## All Apps
+    observe({
+      req(input$start_query)
+      updateActionButton(session, "start_query",
+                         label = "Erneute Abfrage"
+      )
+    })
   })
 }
     
