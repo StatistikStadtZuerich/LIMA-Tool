@@ -20,18 +20,35 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
   
   if (unique(filtered$BZO) == "BZO16") {
     filtered <- filtered %>%
-      select(Jahr, Total, Z, K, Q, W2, W3, W4, W5, W6) 
+      select(Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56) %>% 
+      rename(Total = ALLE,
+             Z = ZE,
+             K = KE,
+             Q = QU,
+             W3 = W23,
+             W4 = W34,
+             W5 = W45,
+             W6 = W56)
   } else {
     filtered <- filtered %>%
-      select(Jahr, Total, Z, K, Q, ` `, W2, W3, W4, W5) 
+      select(Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56) %>% 
+      rename(Total = ALLE,
+             Z = ZE,
+             K = KE,
+             Q = QU,
+             ` ` = W2,
+             W2 = W23,
+             W3 = W34,
+             W4 = W45,
+             W5 = W56)
   }
   if (target_value == "Preis") {
     if(max(filtered$Jahr) > 2018){
       filtered <- filtered %>%
-        mutate_at(vars(-Jahr), as.numeric)
+        suppressWarnings(mutate_at(vars(-Jahr), as.numeric))
     } else {
       filtered <- filtered %>%
-        mutate_at(vars(-Jahr, -` `), as.numeric)
+        suppressWarnings(mutate_at(vars(-Jahr, -` `), as.numeric))
     }
   } else {
     filtered <- filtered %>%
@@ -39,3 +56,5 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
   }
   return(filtered)
 }
+# test <- filter_area_zone(data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
+# data_zones <- data_vector[["zones"]]

@@ -12,10 +12,10 @@ app_server <- function(input, output, session) {
   
   mod_area_server(id = "area_zones", 
                   data = data_vector[["zones"]])
-  
-  mod_address_server("addresses",
-                     data = data_vector[["addresses"]],
-                     data2 = data_vector[["series"]])
+  # 
+  # mod_address_server("addresses",
+  #                    data = data_vector[["addresses"]],
+  #                    data2 = data_vector[["series"]])
   
   
 

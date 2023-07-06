@@ -1,7 +1,7 @@
 ui <- tagList(
-  mod_area_tables_ui("Preis", "target")
+  mod_area_tables_ui("PreisID", "Preis")
 )
 server <- function(input, output){
-  mod_area_tables_server("Preis", "target", data = data_vector[["zones"]])
+  mod_area_tables_server("PreisID", data_vector[["zones"]], "Preis", reactive("Rathaus"), reactive("Preis pro m² Grundstücksfläche"), reactive("Stockwerkeigentum"))
 }
 shinyApp(ui = ui, server = server)

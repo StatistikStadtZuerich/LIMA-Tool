@@ -11,7 +11,7 @@
 #' @importFrom shiny NS tagList 
 mod_area_tables_ui <- function(id, target_value){
   ns <- NS(id)
-  # ns2 <- NS(target_value)
+ 
   tagList(
     
     # Title for BZO16
@@ -22,17 +22,17 @@ mod_area_tables_ui <- function(id, target_value){
     ),
     
     # Table for BZO 16
-    reactableOutput(ns("results16"))
+    reactableOutput(ns("results16")),
 
-    # # title for BZO99
-    # tags$div(
-    #   id = "tableTitle99_id",
-    #   class = "tableTitle_div",
-    #   textOutput(ns("tableTitle99"))
-    # ),
-    # 
-    # # Table for BZO 99
-    # reactableOutput(ns("results99"))
+    # title for BZO99
+    tags$div(
+      # id = "tableTitle99_id",
+      class = "tableTitle_div",
+      textOutput(ns("tableTitle99"))
+    ),
+
+    # Table for BZO 99
+    reactableOutput(ns("results99"))
 
   )
 }
@@ -40,44 +40,57 @@ mod_area_tables_ui <- function(id, target_value){
 #' area_tables Server Functions
 #'
 #' @noRd 
-mod_area_tables_server <- function(id, data, target_value, filter_area, filter_price, filter_group){
+mod_area_tables_server <- function(id, data, target_value, trigger, filter_area, filter_price, filter_group){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    stopifnot(!is.reactive(data))
+    stopifnot(is.reactive(trigger))
+    stopifnot(is.reactive(filter_area))
+    stopifnot(is.reactive(filter_price))
+    stopifnot(is.reactive(filter_group))
+    stopifnot(!is.reactive(target_value))
+    
+    # call data_filter function to get data for table 19
     output$tableTitle16 <- renderText({
       tableTitle16 <- paste0("Nach Zonenart gemäss BZO 2016")
       tableTitle16
     })
 
     # call data_filter function to get data for table 16
-    Output16 <- eventReactive(input$buttonStart, {
-      filtered_data <- filter_area_zone(data, target_value, filter_area, filter_price, filter_group, "BZO16")
-      filtered_data
-    })
-
-
+    # filtered_data16 <- reactive({
+    #   filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO16")
+    #   filtered_data
+    #   print("Trigger")
+    # })
     output$results16 <- renderReactable({
-      out16 <- reactable_area(Output16(), 5)
+      req(trigger()>0)
+      filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO16")
+      
+      out16 <- reactable_area(filtered_data, 5)
       out16
     })
 
-    # call data_filter function to get data for table 99
-    #   output$tableTitle99 <- renderText({
-    #     tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
-    #     tableTitle99
-    #   })
-    # 
-    #   # call data_filter function to get data for table 99
-    #   Output99 <- eventReactive(input$buttonStart, {
-    #     filtered_data <- filter_area_zone(data, target_value, filter_area, filter_price, filter_group, "BZO99")
-    #     filtered_data
-    #   })
-    # 
-    #   output$results99 <- renderReactable({
-    #     out99 <- reactable_area(Output99(), 15)
-    #     out99
-    #   })
-    # })
+      # call data_filter function to get data for table 99
+      output$tableTitle99 <- renderText({
+        tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
+        tableTitle99
+      })
+
+      # call data_filter function to get data for table 99
+      # filtered_data99 <- reactive({
+      #   filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
+      #   filtered_data
+      #   print("Trigger")
+      # })
+      output$results99 <- renderReactable({
+        req(trigger())
+        
+        filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
+        
+        out99 <- reactable_area(filtered_data, 15)
+        out99
+      })
     
     
   })

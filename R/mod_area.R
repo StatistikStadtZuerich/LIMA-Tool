@@ -66,11 +66,11 @@ mod_area_ui <- function(id, data, choicesapp){
         class = "title_div",
         textOutput(ns("title"))
       ),
-      conditionalPanel(
-        condition = "input.start_query",
-        ns = ns,
-        hr()
-      ),
+      # conditionalPanel(
+      #   condition = "input.start_query",
+      #   ns = ns,
+      #   hr()
+      # ),
       
       # Table Subtitle (prices)
       tags$div(
@@ -85,8 +85,12 @@ mod_area_ui <- function(id, data, choicesapp){
         class = "subSubtitle_div",
         textOutput(ns("subSubtitle"))
       ),
-
-      mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
+      
+      conditionalPanel(
+        condition = "input.start_query",
+        ns = ns,
+        mod_area_tables_ui(ns("Preis_submodul"), "Preis")
+      ),
 
       # Action Link for Hand Changes (counts)
       # golem::activate_js(),
@@ -158,14 +162,15 @@ mod_area_server <- function(id, data){
  
     
     # Output price
-    # eventReactive(input$start_query, {
-      mod_area_tables_server(id = "Preis_submodul", 
-                             data = data, 
-                             target_value = "Preis", 
-                             filter_area = input$select_area, 
-                             filter_price = input$select_price, 
-                             filter_group = input$select_group)
-    # })
+    mod_area_tables_server(id = "Preis_submodul", 
+                           data = data, 
+                           target_value = "Preis", 
+                           trigger = reactive(input$start_query),
+                           filter_area = reactive(input$select_area), 
+                           filter_price = reactive(input$select_price), 
+                           filter_group = reactive(input$select_group))
+    
+    
     
     
     # Show Output Counts

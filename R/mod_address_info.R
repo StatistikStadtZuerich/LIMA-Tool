@@ -28,14 +28,38 @@ mod_address_info_ui <- function(id){
 #' @noRd 
 mod_address_info_server <- function(id, data, data2, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
-    ns <- session$ns
+    # ns <- session$ns
  
     # Get Information of Address
-    infosReactive <- reactive({
-      req(filter_street)
-      req(filter_number)
-      
-      infosFiltered <- data %>%
+    # infosReactive <- reactive({
+    #   req(filter_street)
+    #   req(filter_number)
+    #   
+    #   print("Esgeht..")
+      # 
+      # infosFiltered <- data %>%
+      #   filter(StrasseLang == filter_street & Hnr == filter_number) %>%
+      #   mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
+      #   select(Adresse, QuarLang, Zones) %>%
+      #   mutate(pivot = 1) %>%
+      #   pivot_longer(!pivot) %>%
+      #   mutate(name = case_when(
+      #     name == "Adresse" ~ "Die Adresse",
+      #     name == "QuarLang" ~ "liegt im Quartier",
+      #     name == "Zones" ~ "in folgender Zone"
+      #   )) %>%
+      #   select(-pivot) %>%
+      #   kable("html",
+      #         align = "lr",
+      #         col.names = NULL
+      #   ) %>%
+      #   kable_styling(bootstrap_options = c("condensed"))
+    #   infosFiltered
+    # })
+    
+    # Show Output Information Address
+    output$results_info <- renderText({
+      data %>%
         filter(StrasseLang == filter_street & Hnr == filter_number) %>%
         mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
         select(Adresse, QuarLang, Zones) %>%
@@ -52,13 +76,7 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
               col.names = NULL
         ) %>%
         kable_styling(bootstrap_options = c("condensed"))
-      infosFiltered
-    })
-    
-    # Show Output Information Address
-    output$results_info <- renderText({
-      outInfos <- infosReactive()
-      outInfos
+  
     })
     
     # # Get Information if Data Frame is empty
