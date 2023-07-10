@@ -58,16 +58,12 @@ mod_area_tables_server <- function(id, data, target_value, trigger, filter_area,
     })
 
     # call data_filter function to get data for table 16
-    # filtered_data16 <- reactive({
-    #   filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO16")
-    #   filtered_data
-    #   print("Trigger")
-    # })
-    output$results16 <- renderReactable({
-      req(trigger()>0)
+    outputData16 <- eventReactive(trigger(), {
       filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO16")
-      
-      out16 <- reactable_area(filtered_data, 5)
+    })
+    
+    output$results16 <- renderReactable({
+      out16 <- reactable_area(outputData16(), 5)
       out16
     })
 
@@ -78,17 +74,12 @@ mod_area_tables_server <- function(id, data, target_value, trigger, filter_area,
       })
 
       # call data_filter function to get data for table 99
-      # filtered_data99 <- reactive({
-      #   filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
-      #   filtered_data
-      #   print("Trigger")
-      # })
-      output$results99 <- renderReactable({
-        req(trigger())
-        
+      outputData99 <- eventReactive(trigger(), {
         filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
-        
-        out99 <- reactable_area(filtered_data, 15)
+      })
+      
+      output$results99 <- renderReactable({
+        out99 <- reactable_area(outputData99(), 15)
         out99
       })
     

@@ -129,11 +129,11 @@ mod_address_server <- function(id, data, data2){
     
     mod_address_tables_server(id = "Preis_submodul", 
                               data = data, 
-                              data2 = data2, 
+                              data2 = data2,
+                              trigger = reactive(input$start_query),
                               target_value = "Preis", 
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
-    
     
     mod_download_server(id = "download_3", 
                         data_1 = data, 

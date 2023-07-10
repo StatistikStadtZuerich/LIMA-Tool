@@ -20,24 +20,47 @@ mod_address_tables_ui <- function(id){
 #' address_tables Server Functions
 #'
 #' @noRd 
-mod_address_tables_server <- function(id, data, data2, target_value, filter_street, filter_number){
+mod_address_tables_server <- function(id, data, data2, trigger, target_value, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     stopifnot(!is.reactive(data))
     stopifnot(!is.reactive(data2))
+    stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
     stopifnot(!is.reactive(target_value))
- 
-    output$results <- renderReactable({
+  
+    # Check if data is available for the zone
+    dataAvailable <- reactive({
       
-      filtered_data <- filter_address(data, data2, target_value, filter_street(), filter_number())
+      filtered_addresses <- get_information_address(data, data2, "Preis", filter_street(), filter_number())
       
-      out <- reactable_address(filtered_data)
-      out
+      SerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
+        select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
+      
+      if (nrow(SerieTotal) > 0) {
+        available <- 1
+      } else {
+        avaiable <- 0
+      }
     })
     
+    # Table if data is available for zone
+    outputData <- eventReactive(trigger(), {
+      filtered_data <- filter_address(data, data2, target_value, filter_street(), filter_number())
+    })
+    
+    output$results <- renderReactable({
+      
+      availability <- dataAvailable()
+      if (availability > 0) {
+        out <- reactable_address(outputData())
+        out
+      } else {
+        NULL
+      }
+    })
   })
 }
     
