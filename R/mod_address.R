@@ -67,7 +67,11 @@ mod_address_ui <- function(id, choicesapp){
       ),
       br(),
       
-      mod_address_tables_ui(ns("Preis_submodul")),
+      conditionalPanel(
+        condition = "input.select_street && input.select_number && input.start_query",
+        ns = ns,
+        mod_address_tables_ui(ns("Preis_submodul"))
+      ),
       
       # # Action Link for Hand Changes (counts)
       # useShinyjs(),
@@ -122,6 +126,13 @@ mod_address_server <- function(id, data, data2){
                             data2 = data2, 
                             filter_street = reactive(input$select_street), 
                             filter_number = reactive(input$select_number))
+    
+    mod_address_tables_server(id = "Preis_submodul", 
+                              data = data, 
+                              data2 = data2, 
+                              target_value = "Preis", 
+                              filter_street = reactive(input$select_street), 
+                              filter_number = reactive(input$select_number))
     
     
     mod_download_server(id = "download_3", 

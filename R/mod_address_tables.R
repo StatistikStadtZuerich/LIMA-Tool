@@ -20,10 +20,24 @@ mod_address_tables_ui <- function(id){
 #' address_tables Server Functions
 #'
 #' @noRd 
-mod_address_tables_server <- function(id){
+mod_address_tables_server <- function(id, data, data2, target_value, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    stopifnot(!is.reactive(data))
+    stopifnot(!is.reactive(data2))
+    stopifnot(is.reactive(filter_street))
+    stopifnot(is.reactive(filter_number))
+    stopifnot(!is.reactive(target_value))
  
+    output$results <- renderReactable({
+      
+      filtered_data <- filter_address(data, data2, target_value, filter_street(), filter_number())
+      
+      out <- reactable_address(filtered_data)
+      out
+    })
+    
   })
 }
     

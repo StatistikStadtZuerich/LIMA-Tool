@@ -61,10 +61,10 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
     # Get Information if Data Frame is empty
     dataAvailable <- reactive({
       
-      filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number())
+      filtered_addresses <- get_information_address(data, data2, "Preis", filter_street(), filter_number())
 
       # Total series
-      priceSerieTotal <- bind_rows(filtered_addresses[["priceSerieBZO16"]], filtered_addresses[["priceSerieBZO99"]]) %>%
+      priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
         select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
 
       if (nrow(priceSerieTotal) > 0) {
@@ -79,7 +79,7 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
 
       availability <- dataAvailable()
       if (availability > 0) {
-        filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number())
+        filtered_addresses <- get_information_address(data, data2, "Preis", filter_street(), filter_number())
 
         zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
         infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)
