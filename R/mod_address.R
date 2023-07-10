@@ -60,7 +60,11 @@ mod_address_ui <- function(id, choicesapp){
       br(),
       
       # Info Table
-      mod_address_info_ui(ns("address_info")),
+      conditionalPanel(
+        condition = "input.select_street && input.select_number && input.start_query",
+        ns = ns,
+        mod_address_info_ui(ns("address_info"))
+      ),
       br(),
       
       mod_address_tables_ui(ns("Preis_submodul")),
@@ -116,9 +120,8 @@ mod_address_server <- function(id, data, data2){
     mod_address_info_server(id = "address_info", 
                             data = data, 
                             data2 = data2, 
-                            start = input$start_query, 
-                            filter_street = input$select_street, 
-                            filter_number = input$select_number)
+                            filter_street = reactive(input$select_street), 
+                            filter_number = reactive(input$select_number))
     
     
     mod_download_server(id = "download_3", 

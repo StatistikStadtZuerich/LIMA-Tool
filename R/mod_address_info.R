@@ -34,33 +34,7 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
     stopifnot(!is.reactive(data2))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
- 
-    # Get Information of Address
-    # infosReactive <- reactive({
-    #   req(filter_street)
-    #   req(filter_number)
-    #   
-    #   print("Esgeht..")
-      # 
-      # infosFiltered <- data %>%
-      #   filter(StrasseLang == filter_street & Hnr == filter_number) %>%
-      #   mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
-      #   select(Adresse, QuarLang, Zones) %>%
-      #   mutate(pivot = 1) %>%
-      #   pivot_longer(!pivot) %>%
-      #   mutate(name = case_when(
-      #     name == "Adresse" ~ "Die Adresse",
-      #     name == "QuarLang" ~ "liegt im Quartier",
-      #     name == "Zones" ~ "in folgender Zone"
-      #   )) %>%
-      #   select(-pivot) %>%
-      #   kable("html",
-      #         align = "lr",
-      #         col.names = NULL
-      #   ) %>%
-      #   kable_styling(bootstrap_options = c("condensed"))
-    #   infosFiltered
-    # })
+
     
     # Show Output Information Address
     output$results_info <- renderText({
@@ -86,41 +60,11 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
     
     # Get Information if Data Frame is empty
     dataAvailable <- reactive({
-      req(filter_street)
-      req(filter_number)
-      # Pull district
-      district <- data %>%
-        filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-        pull(QuarLang)
-
-      # Pull zone BZO16
-      zoneBZO16 <- data %>%
-        filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-        pull(ZoneBZO16Lang)
-
-      # Pull zone BZO99
-      zoneBZO99 <- data %>%
-        filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-        pull(ZoneBZO99Lang)
-
-      # Price serie BZO16
-      priceSerieBZO16 <- data2 %>%
-        filter(
-          QuarLang == district & ZoneLang == zoneBZO16,
-          Typ == "Preis",
-          Jahr >= 2019
-        )
-
-      # Price serie BZO99
-      priceSerieBZO99 <- data2 %>%
-        filter(
-          QuarLang == district & ZoneLang == zoneBZO99,
-          Typ == "Preis",
-          Jahr < 2019
-        )
+      
+      filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number())
 
       # Total series
-      priceSerieTotal <- bind_rows(priceSerieBZO16, priceSerieBZO99) %>%
+      priceSerieTotal <- bind_rows(filtered_addresses[["priceSerieBZO16"]], filtered_addresses[["priceSerieBZO99"]]) %>%
         select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
 
       if (nrow(priceSerieTotal) > 0) {
@@ -132,22 +76,13 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
 
     # Reactive Info
     infoReactive <- reactive({
-      req(filter_street)
-      req(filter_number)
 
       availability <- dataAvailable()
       if (availability > 0) {
-        district <- data %>%
-          filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-          pull(QuarLang)
-        zoneBZO16 <- data %>%
-          filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-          pull(ZoneBZO16Lang)
-        zoneBZO99 <- data %>%
-          filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-          pull(ZoneBZO99Lang)
-        zones <- paste0(zoneBZO16, " (bis 2018: ", zoneBZO99, ")")
-        infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", district, ", in der ", zones)
+        filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number())
+
+        zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
+        infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)
       } else {
         infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
       }
@@ -176,10 +111,6 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
         )
       }
     })
-
-
-    
-    
   })
 }
     
