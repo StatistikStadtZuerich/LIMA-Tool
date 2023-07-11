@@ -26,12 +26,13 @@ mod_address_info_ui <- function(id){
 #' address_info Server Functions
 #'
 #' @noRd 
-mod_address_info_server <- function(id, data, data2, filter_street, filter_number){
+mod_address_info_server <- function(id, data, data2, trigger, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     stopifnot(!is.reactive(data))
     stopifnot(!is.reactive(data2))
+    stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
 
@@ -59,7 +60,7 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
     })
     
     # Get Information if Data Frame is empty
-    dataAvailable <- reactive({
+    dataAvailable <- eventReactive(trigger(), {
       
       filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number(), "Preis")
 
@@ -75,7 +76,7 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
     })
 
     # Reactive Info
-    infoReactive <- reactive({
+    infoReactive <- eventReactive(trigger(), {
 
       availability <- dataAvailable()
       if (availability > 0) {

@@ -122,14 +122,15 @@ mod_address_server <- function(id, data, data2){
     mod_address_info_server(id = "address_info", 
                             data = data, 
                             data2 = data2, 
+                            trigger = reactive(input$start_query),
                             filter_street = reactive(input$select_street), 
                             filter_number = reactive(input$select_number))
     
     mod_address_tables_server(id = "Preis_submodul", 
                               data = data, 
                               data2 = data2,
-                              trigger = reactive(input$start_query),
                               target_value = "Preis", 
+                              trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     

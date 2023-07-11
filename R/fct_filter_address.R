@@ -60,7 +60,7 @@ get_information_address <- function(data, data2, filter_street, filter_number, t
 filter_address <- function(data, data2, target_value, filter_street, filter_number){
 
   #Filter data with function
-  data_address <- get_information_address(data, data2, target_value, filter_street, filter_number)
+  data_address <- get_information_address(data, data2, filter_street, filter_number, target_value)
   
   # Total series
   if(target_value == "Preis"){

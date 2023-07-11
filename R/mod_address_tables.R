@@ -32,7 +32,7 @@ mod_address_tables_server <- function(id, data, data2, trigger, target_value, fi
     stopifnot(!is.reactive(target_value))
   
     # Check if data is available for the zone
-    dataAvailable <- reactive({
+    dataAvailable <- eventReactive(trigger(), {
       
       filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number(), "Preis")
       
