@@ -135,10 +135,22 @@ mod_address_server <- function(id, data, data2){
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     
+    # Filter data for download name
+    filename <- eventReactive(input$start_query, {
+      district <- data %>%
+        filter(StrasseLang == input$select_street & Hnr == input$select_number) %>%
+        pull(QuarLang)
+       
+      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district))
+      name
+      print(name)
+    })
+    
     mod_download_server(id = "download_3", 
-                        data_1 = data, 
-                        data_2 = data2,
+                        function_filter = filter_address_download(data, data2, input$select_street, input$select_number),
+                        filename_download = filename(),
                         filter_app = "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe", 
+                        trigger = input$start_query,
                         filter_1 = input$select_street, 
                         filter_2 = input$select_number,
                         filter_3 = NULL)

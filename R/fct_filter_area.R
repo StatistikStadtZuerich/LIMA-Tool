@@ -58,3 +58,22 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
 }
 # test <- filter_area_zone(data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
 # data_zones <- data_vector[["zones"]]
+
+#' filter_area_download 
+#'
+#' @description A fct function
+#' @param data zones
+#'
+#' @return The return value, if any, from executing the function.
+#'
+#' @noRd
+filter_area_download <- function(data, filter_area, filter_price, filter_group){
+  filtered <- data %>%
+    filter(
+      GebietLang == filter_area,
+      PreisreiheLang == filter_price,
+      ArtLang == filter_group
+    ) %>%
+    select(Typ, GebietLang, PreisreiheLang, ArtLang, BZO, Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56)
+  return(filtered)
+}

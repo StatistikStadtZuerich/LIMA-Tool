@@ -34,7 +34,7 @@ mod_address_tables_server <- function(id, data, data2, trigger, target_value, fi
     # Check if data is available for the zone
     dataAvailable <- reactive({
       
-      filtered_addresses <- get_information_address(data, data2, "Preis", filter_street(), filter_number())
+      filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number(), "Preis")
       
       SerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
         select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)

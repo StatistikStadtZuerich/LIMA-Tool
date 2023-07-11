@@ -42,74 +42,17 @@ mod_download_ui <- function(id){
 #' download Server Functions
 #'
 #' @noRd 
-mod_download_server <- function(id, data_1, data_2 = NULL, filter_app, filter_1, filter_2, filter_3 = NULL){
+mod_download_server <- function(id, function_filter, filename_download, filter_app, trigger, filter_1, filter_2, filter_3 = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     ### Get Data for Download 
     # App 1
-    dataDownload <- reactive({
-     
-      if (filter_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete") {
-        filtered <- data_1 %>%
-          filter(
-            GebietLang == filter_1,
-            PreisreiheLang == filter_2,
-            ArtLang == filter_3
-          ) %>%
-          select(Typ, GebietLang, PreisreiheLang, ArtLang, BZO, Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56)
-        filtered
-      } else if (filter_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete"){
-        
-      } else{
-        # Pull district
-        district <- data_1 %>%
-          filter(StrasseLang == filter_1 & Hnr == filter_2) %>%
-          pull(QuarLang)
-        
-        # Pull zone BZO16
-        zoneBZO16 <- data_1 %>%
-          filter(StrasseLang == filter_1 & Hnr == filter_2) %>%
-          pull(ZoneBZO16Lang)
-        
-        # Pull zone BZO99
-        zoneBZO99 <- data_1 %>%
-          filter(StrasseLang == filter_1 & Hnr == filter_2) %>%
-          pull(ZoneBZO99Lang)
-        
-        # Serie BZO16
-        serieBZO16 <- data_2 %>%
-          filter(
-            QuarLang == district & ZoneLang == zoneBZO16,
-            Jahr >= 2019
-          )
-        
-        # Serie BZO99
-        serieBZO99 <- data_2 %>%
-          filter(
-            QuarLang == district & ZoneLang == zoneBZO99,
-            Jahr < 2019
-          )
-        
-        # Total series
-        seriesPriceCount <- bind_rows(serieBZO16, serieBZO99) %>%
-          select(-QuarCd, -ZoneSort, -ZoneLang) %>%
-          arrange(
-            factor(Typ, levels = c(
-              "Preis",
-              "Zahl"
-            )),
-            desc(Jahr)
-          )
-        seriesPriceCount
-      }
- 
-    })
-    
-    # App 2
-    dataDownloadTwo <- eventReactive(input$buttonStartTwo, {
+    dataDownload <- eventReactive(trigger, {
       
-     
+      seriesPriceCount <- function_filter
+      seriesPriceCount
+ 
     })
     
     ### Write Download Table
@@ -117,20 +60,8 @@ mod_download_server <- function(id, data_1, data_2 = NULL, filter_app, filter_1,
     # CSV
     output$csvDownload <- downloadHandler(
       filename = function(app) {
-        app <- filter_app
-        if (app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete") {
-          price <- gsub(" ", "-", filter_2, fixed = TRUE)
-          group <- gsub(" ", "-", filter_3, fixed = TRUE)
-          area <- gsub(" ", "-", filter_1, fixed = TRUE)
-          paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area, ".csv")
-        } else if (app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete"){
-          
-        } else {
-          district <- data_1 %>%
-            filter(StrasseLang == filter_1 & Hnr == filter_2) %>%
-            pull(QuarLang)
-          paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district, ".csv")
-        }
+        app <- filename_download
+        paste0(app, ".csv")
       },
       content = function(file) {
         write.csv(dataDownload(), file, row.names = FALSE, na = " ")
@@ -140,20 +71,8 @@ mod_download_server <- function(id, data_1, data_2 = NULL, filter_app, filter_1,
     # Excel
     output$excelDownload <- downloadHandler(
       filename = function(app) {
-        app <- filter_app
-        if (app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete") {
-          price <- gsub(" ", "-", filter_2, fixed = TRUE)
-          group <- gsub(" ", "-", filter_3, fixed = TRUE)
-          area <- gsub(" ", "-", filter_1, fixed = TRUE)
-          paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area, ".xlsx")
-        } else if (app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete"){
-          
-        } else {
-          district <- data_1 %>%
-            filter(StrasseLang == filter_1 & Hnr == filter_2) %>%
-            pull(QuarLang)
-          paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district, ".xlsx")
-        }
+        app <- filename_download
+        paste0(app, ".xlsx")
       },
       content = function(file) {
         sszDownloadExcel(dataDownload(), file, filter_app, filter_1, filter_2, filter_3)

@@ -195,11 +195,23 @@ mod_area_server <- function(id, data){
     #     shinyjs::removeClass("linkCount", "visitedLink")
     #   }
     # })
-  
     
-    mod_download_server(id = "download_1", 
-                        data_1 = data, 
+    
+    # Filter data for download name
+    filename <- eventReactive(input$start_query, {
+      price <- gsub(" ", "-", input$select_price, fixed = TRUE)
+      group <- gsub(" ", "-", input$select_group, fixed = TRUE)
+      area <- gsub(" ", "-", input$select_area, fixed = TRUE)
+      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area))
+      name
+      return(name)
+    })
+   
+    mod_download_server(id = "download_1",
+                        function_filter = filter_area_download(data, input$select_area, input$select_price, input$select_group),
+                        filename_download = filename(), 
                         filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
+                        trigger = input$start_query,
                         filter_1 = input$select_area, 
                         filter_2 = input$select_price, 
                         filter_3 = input$select_group)
