@@ -66,11 +66,6 @@ mod_area_ui <- function(id, data, choicesapp){
         class = "title_div",
         textOutput(ns("title"))
       ),
-      # conditionalPanel(
-      #   condition = "input.start_query",
-      #   ns = ns,
-      #   hr()
-      # ),
       
       # Table Subtitle (prices)
       tags$div(
@@ -211,7 +206,6 @@ mod_area_server <- function(id, data){
                         function_filter = filter_area_download(data, input$select_area, input$select_price, input$select_group),
                         filename_download = filename(), 
                         filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
-                        trigger = input$start_query,
                         filter_1 = input$select_area, 
                         filter_2 = input$select_price, 
                         filter_3 = input$select_group)

@@ -28,7 +28,6 @@ mod_address_ui <- function(id, choicesapp){
         ns("select_street"),
         "Geben Sie eine Strasse ein",
         choicesapp[["choices_street"]]
-        # choices = unique(data_vector[["addresses"]]$StrasseLang)
       ),
 
       # Number input
@@ -36,7 +35,6 @@ mod_address_ui <- function(id, choicesapp){
         ns("select_number"),
         "Wählen Sie eine Hausnummer aus",
         choices = choicesapp[["choices_streetnr"]],
-        # choices = c("", sort(unique(data_vector[["addresses"]]$Hnr))),
         selected = NULL
       ),
       
@@ -109,7 +107,7 @@ mod_address_server <- function(id, data, data2){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    # Show Output Info (App 2)
+    # Filter Hnr to the according address
     # Sort for House Number in Drop Down
     observe({
       updateSelectInput(
@@ -150,7 +148,6 @@ mod_address_server <- function(id, data, data2){
                         function_filter = filter_address_download(data, data2, input$select_street, input$select_number),
                         filename_download = filename(),
                         filter_app = "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe", 
-                        trigger = input$start_query,
                         filter_1 = input$select_street, 
                         filter_2 = input$select_number,
                         filter_3 = NULL)

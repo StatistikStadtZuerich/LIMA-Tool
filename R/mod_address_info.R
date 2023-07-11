@@ -90,6 +90,9 @@ mod_address_info_server <- function(id, data, data2, filter_street, filter_numbe
 
     # Show Info (App 2)
     output$more_info <- renderUI({
+      ### Set up directory for icons
+      ssz_icons <- icon_set("inst/app/www/icons/")
+      
       availability <- dataAvailable()
       if (availability > 0) {
         tags$div(

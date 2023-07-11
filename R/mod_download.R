@@ -42,13 +42,13 @@ mod_download_ui <- function(id){
 #' download Server Functions
 #'
 #' @noRd 
-mod_download_server <- function(id, function_filter, filename_download, filter_app, trigger, filter_1, filter_2, filter_3 = NULL){
+mod_download_server <- function(id, function_filter, filename_download, filter_app, filter_1, filter_2, filter_3 = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     ### Get Data for Download 
     # App 1
-    dataDownload <- eventReactive(trigger, {
+    dataDownload <- reactive({
       
       seriesPriceCount <- function_filter
       seriesPriceCount
@@ -59,9 +59,9 @@ mod_download_server <- function(id, function_filter, filename_download, filter_a
     ## App 1
     # CSV
     output$csvDownload <- downloadHandler(
-      filename = function(app) {
-        app <- filename_download
-        paste0(app, ".csv")
+      filename = function(name) {
+        name <- filename_download
+        paste0(name, ".csv")
       },
       content = function(file) {
         write.csv(dataDownload(), file, row.names = FALSE, na = " ")
@@ -70,9 +70,9 @@ mod_download_server <- function(id, function_filter, filename_download, filter_a
     
     # Excel
     output$excelDownload <- downloadHandler(
-      filename = function(app) {
-        app <- filename_download
-        paste0(app, ".xlsx")
+      filename = function(name) {
+        name <- filename_download
+        paste0(name, ".xlsx")
       },
       content = function(file) {
         sszDownloadExcel(dataDownload(), file, filter_app, filter_1, filter_2, filter_3)
