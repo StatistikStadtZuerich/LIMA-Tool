@@ -1,5 +1,12 @@
 #' sszDownloadExcel
 #'
+#' @param filteredData the filtered dataset that is displayed in the download
+#' @param file filename
+#' @param queryinput selected app (the layout differs slightly depending on the app)
+#' @param input1 selected input nr. 1 from app
+#' @param input2 selected input nr. 2 from app
+#' @param input3 selected input nr. 3 from app (optional)
+#'
 #' @description A utils function
 #'
 #' @return The return value, if any, from executing the utility.

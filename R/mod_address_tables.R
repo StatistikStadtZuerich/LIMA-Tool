@@ -1,8 +1,8 @@
 #' address_tables UI Function
 #'
-#' @description A shiny Module.
+#' @param id 
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module.
 #'
 #' @noRd 
 #'
@@ -18,6 +18,14 @@ mod_address_tables_ui <- function(id){
 }
     
 #' address_tables Server Functions
+#'
+#' @param id 
+#' @param data 
+#' @param data2 
+#' @param trigger 
+#' @param target_value 
+#' @param filter_street 
+#' @param filter_number 
 #'
 #' @noRd 
 mod_address_tables_server <- function(id, data, data2, trigger, target_value, filter_street, filter_number){

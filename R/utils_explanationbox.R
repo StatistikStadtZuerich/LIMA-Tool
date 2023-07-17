@@ -1,6 +1,6 @@
 #' explanationbox 
 #'
-#' @description A utils function
+#' @description A utils function to display the explanation box of the according app
 #'
 #' @return The return value, if any, from executing the utility.
 #'

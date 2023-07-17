@@ -2,7 +2,8 @@
 #'
 #' @description A fct function to create the tables for the area apps
 #' 
-#' @param target_data filtered data
+#' @param target_data the filtered dataset that is displayed in the table
+#' @param pagesize is 5 for BZO16 and 15 for BZO99
 #'
 #' @return The return value, if any, from executing the function.
 #'

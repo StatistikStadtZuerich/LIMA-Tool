@@ -38,8 +38,8 @@ mod_address_info_server <- function(id, data, data2, trigger, filter_street, fil
 
     
     # Show Output Information Address
-    output$results_info <- renderText({
-      data %>%
+    dataInfo <- eventReactive(trigger(), {
+      filtered_data <- data %>%
         filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
         mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
         select(Adresse, QuarLang, Zones) %>%
@@ -50,13 +50,16 @@ mod_address_info_server <- function(id, data, data2, trigger, filter_street, fil
           name == "QuarLang" ~ "liegt im Quartier",
           name == "Zones" ~ "in folgender Zone"
         )) %>%
-        select(-pivot) %>%
+        select(-pivot)
+      filtered_data
+    })
+    output$results_info <- renderText({
+      dataInfo() %>%
         kable("html",
               align = "lr",
               col.names = NULL
         ) %>%
         kable_styling(bootstrap_options = c("condensed"))
-  
     })
     
     # Get Information if Data Frame is empty

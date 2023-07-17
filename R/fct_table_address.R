@@ -1,5 +1,7 @@
 #' table_address 
 #'
+#' @param target_data the filtered dataset that is displayed in the table
+#'
 #' @description A fct function
 #'
 #' @return The return value, if any, from executing the function.

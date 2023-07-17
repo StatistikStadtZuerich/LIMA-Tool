@@ -1,5 +1,11 @@
 #' get_information_address 
 #'
+#' @param data is the dataset addresses
+#' @param data2 is the dataset series
+#' @param filter_street filters the street with the given input in the app 
+#' @param filter_number filters the number with the given input in the app 
+#' @param target_value  the value has to be either "Preis" or "Zahl"
+#'
 #' @description A fct function
 #'
 #' @return The return value, if any, from executing the function.
@@ -52,6 +58,12 @@ get_information_address <- function(data, data2, filter_street, filter_number, t
 
 #' filter_address 
 #'
+#' @param data is the dataset addresses
+#' @param data2 is the dataset series
+#' @param target_value  the value has to be either "Preis" or "Zahl"
+#' @param filter_street filters the street with the given input in the app 
+#' @param filter_number filters the number with the given input in the app 
+#'
 #' @description A fct function
 #'
 #' @return The return value, if any, from executing the function.
@@ -88,6 +100,11 @@ filter_address <- function(data, data2, target_value, filter_street, filter_numb
 
 
 #' filter_address_download 
+#'
+#' @param data is the dataset addresses
+#' @param data2 is the dataset series
+#' @param filter_street filters the street with the given input in the app 
+#' @param filter_number filters the number with the given input in the app
 #'
 #' @description A fct function
 #'

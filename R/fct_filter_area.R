@@ -1,8 +1,13 @@
 #' filter_area_zone 
 #'
 #' @description A fct function
-#' @param target_value Preis or Zahl
+#'
 #' @param data zonesBZO16 or zonesBZO99
+#' @param target_value the value has to be either "Preis" or "Zahl"
+#' @param filter_area filters the area with the given input in the app
+#' @param filter_price filters the price with the given input in the app
+#' @param filter_group filters the group with the given input in the app
+#' @param BZO_year the value has to be either "BZO16" or "BZO99"
 #'
 #' @return The return value, if any, from executing the function.
 #'
@@ -43,26 +48,26 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
              W5 = W56)
   }
   if (target_value == "Preis") {
-    if(max(filtered$Jahr) > 2018){
-      filtered <- filtered %>%
-        suppressWarnings(mutate_at(vars(-Jahr), as.numeric))
-    } else {
-      filtered <- filtered %>%
-        suppressWarnings(mutate_at(vars(-Jahr, -` `), as.numeric))
-    }
+    suppressWarnings(filtered <- filtered %>%
+        mutate_at(vars(-Jahr), as.numeric))
   } else {
     filtered <- filtered %>%
       mutate_all(., ~ replace(., is.na(.), " "))
   }
   return(filtered)
 }
-# test <- filter_area_zone(data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
 # data_zones <- data_vector[["zones"]]
+# test <- filter_area_zone(data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
+
 
 #' filter_area_download 
 #'
 #' @description A fct function
+#'
 #' @param data zones
+#' @param filter_area filters the area with the given input in the app
+#' @param filter_price filters the price with the given input in the app
+#' @param filter_group filters the group with the given input in the app
 #'
 #' @return The return value, if any, from executing the function.
 #'
