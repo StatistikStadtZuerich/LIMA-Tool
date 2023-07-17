@@ -6,67 +6,79 @@
 #' @import zuericssstyle
 #' @noRd
 app_ui <- function(request) {
-  
-  ## Set unique choices
-  choices_app1 <- list(
-    choices_area = unique(data_vector[["zones"]]$GebietLang),
-    choices_price = unique(data_vector[["zones"]]$PreisreiheLang),
-    choices_group = unique(data_vector[["zones"]]$ArtLang)
-  )
-  choices_app3 <- list(
-    choices_street = unique(data_vector[["addresses"]]$StrasseLang),
-    choices_streetnr = c("", sort(unique(data_vector[["addresses"]]$Hnr)))
-  )
-  
-  tagList(
-    # Leave this function for adding external resources
-    golem_add_external_resources(),
-    # Your application UI logic
-    fluidPage(
-      # CSS
-      includeCSS("inst/app/www/sszThemeShiny.css"),
-      includeCSS("inst/app/www/LimaTheme.css"),
-      
-      # App Selection
-      tags$div(
-        class = "queryDiv",
-        h1("Wählen Sie eine Abfrage"),
-        hr(),
-        sszRadioButtons(
-          inputId = "choose_app",
-          label = NULL,
-          choices = c(
-            "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete",
-            "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
-            "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe"
-          ),
-          selected = character(0)
-        )
-      ),
-      
-      # Conditional Panel which App to choose
-      # App 1
-      conditionalPanel(
-        condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
-        # Show App 1 Code
-        mod_area_ui(id = "area_zones",
-                    data = data_vector[["zones"]],
-                    choicesapp = choices_app1)
-      ),
-      # App 2
-      conditionalPanel(
-        condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
-        # Show App 2 Code
-      ),
-      # App 2
-      conditionalPanel(
-        condition = 'input.choose_app == "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
-        # Show App 3 Code
-        mod_address_ui(id = "addresses",
-                       choicesapp = choices_app3)
+  if(is.null(data_vector)){
+    tagList(
+      fluidPage(
+        # Include CSS
+        includeCSS("inst/app/www/sszThemeShiny.css"),
+        includeCSS("inst/app/www/LimaTheme.css"),
+        h1("Fehler"),
+        p("Aufgrund momentaner Wartungsarbeiten ist die Applikation zur Zeit nicht verfügbar.")
       )
     )
-  )
+  } else {
+    ## Set unique choices
+    choices_app1 <- list(
+      choices_area = unique(data_vector[["zones"]]$GebietLang),
+      choices_price = unique(data_vector[["zones"]]$PreisreiheLang),
+      choices_group = unique(data_vector[["zones"]]$ArtLang)
+    )
+    choices_app3 <- list(
+      choices_street = unique(data_vector[["addresses"]]$StrasseLang),
+      choices_streetnr = c("", sort(unique(data_vector[["addresses"]]$Hnr)))
+    )
+    
+    tagList(
+      # Leave this function for adding external resources
+      golem_add_external_resources(),
+      # Your application UI logic
+      fluidPage(
+        # CSS
+        includeCSS("inst/app/www/sszThemeShiny.css"),
+        includeCSS("inst/app/www/LimaTheme.css"),
+        
+        # App Selection
+        tags$div(
+          class = "queryDiv",
+          h1("Wählen Sie eine Abfrage"),
+          hr(),
+          sszRadioButtons(
+            inputId = "choose_app",
+            label = NULL,
+            choices = c(
+              "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete",
+              "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
+              "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe"
+            ),
+            selected = character(0)
+          )
+        ),
+        
+        # Conditional Panel which App to choose
+        # App 1
+        conditionalPanel(
+          condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
+          # Show App 1 Code
+          mod_area_ui(id = "area_zones",
+                      data = data_vector[["zones"]],
+                      choicesapp = choices_app1)
+        ),
+        # App 2
+        conditionalPanel(
+          condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
+          # Show App 2 Code
+        ),
+        # App 2
+        conditionalPanel(
+          condition = 'input.choose_app == "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
+          # Show App 3 Code
+          mod_address_ui(id = "addresses",
+                         choicesapp = choices_app3)
+        )
+      )
+    )
+  }
+  
 }
 
 #' Add external Resources to the Application
