@@ -47,15 +47,21 @@ mod_address_tables_server <- function(id, data, data2, trigger, target_value, fi
       SerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
         select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
       
+      available <- 0
+      
       if (nrow(SerieTotal) > 0) {
         available <- 1
       } else {
-        avaiable <- 0
+        available <- 0
       }
+      
+      print(available)
     })
     
     # Table if data is available for zone
     outputData <- eventReactive(trigger(), {
+      # print(filter_street())
+      
       filtered_data <- filter_address(data, data2, target_value, filter_street(), filter_number())
     })
     

@@ -6,6 +6,9 @@
 #' @import zuericssstyle
 #' @noRd
 app_ui <- function(request) {
+  # get data with function
+  data_vector <- get_data()
+  
   if(is.null(data_vector)){
     tagList(
       fluidPage(

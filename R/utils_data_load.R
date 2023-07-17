@@ -126,8 +126,6 @@ get_data <- function() {
       ))
 
   }
-  
-  
 }
 
 

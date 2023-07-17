@@ -27,7 +27,8 @@ mod_address_ui <- function(id, choicesapp){
       sszAutocompleteInput(
         ns("select_street"),
         "Geben Sie eine Strasse ein",
-        choicesapp[["choices_street"]]
+        choicesapp[["choices_street"]],
+        max_options = 500
       ),
 
       # Number input
@@ -117,6 +118,7 @@ mod_address_server <- function(id, data, data2){
           pull(Hnr) %>%
           mixedsort()
       )
+      print(input$select_street)
     })
     
     mod_address_info_server(id = "address_info", 
