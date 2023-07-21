@@ -64,7 +64,7 @@ mod_download_server <- function(id, function_filter, filename_download, filter_a
         paste0(name, ".csv")
       },
       content = function(file) {
-        write.csv(dataDownload(), file, row.names = FALSE, na = " ")
+        write.csv(dataDownload(), file, row.names = FALSE, na = " ", fileEncoding = "UTF-8")
       }
     )
     
