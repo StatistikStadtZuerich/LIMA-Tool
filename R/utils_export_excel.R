@@ -25,7 +25,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
   # Read Data
   data <- read_excel(hauptPfad, sheet = 1) %>%
     mutate(Date = ifelse(is.na(Date), 
-                  NA, 
+                  NA,
                   format(Sys.Date(), "%d.%m.%Y")))
   
   # Manipulate Data for the two queries
