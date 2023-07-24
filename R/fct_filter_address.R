@@ -1,7 +1,7 @@
 #' get_information_address 
 #'
-#' @param data is the dataset addresses
-#' @param data2 is the dataset series
+#' @param addresses address dataset
+#' @param series series dataset
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app 
 #' @param target_value  the value has to be either "Preis" or "Zahl"
@@ -11,24 +11,24 @@
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-get_information_address <- function(data, data2, filter_street, filter_number, target_value = NULL){
+get_information_address <- function(addresses, series, filter_street, filter_number, target_value = NULL){
   # Pull district
-  district <- data %>%
+  district <- addresses %>%
     filter(StrasseLang == filter_street & Hnr == filter_number) %>%
     pull(QuarLang)
   
   # Pull zone BZO16
-  zoneBZO16 <- data %>%
+  zoneBZO16 <- addresses %>%
     filter(StrasseLang == filter_street & Hnr == filter_number) %>%
     pull(ZoneBZO16Lang)
   
   # Pull zone BZO99
-  zoneBZO99 <- data %>%
+  zoneBZO99 <- addresses %>%
     filter(StrasseLang == filter_street & Hnr == filter_number) %>%
     pull(ZoneBZO99Lang)
   
   # Price serie BZO16
-  SerieBZO16 <- data2 %>%
+  SerieBZO16 <- series %>%
     filter(
       QuarLang == district & ZoneLang == zoneBZO16,
       if (!is.null(target_value)) Typ == target_value else Typ != "",
@@ -36,7 +36,7 @@ get_information_address <- function(data, data2, filter_street, filter_number, t
     ) 
   
   # Price serie BZO99
-  SerieBZO99 <- data2 %>%
+  SerieBZO99 <- series %>%
     filter(
       QuarLang == district & ZoneLang == zoneBZO99,
       if (!is.null(target_value)) Typ == target_value else Typ != "",
@@ -58,8 +58,8 @@ get_information_address <- function(data, data2, filter_street, filter_number, t
 
 #' filter_address 
 #'
-#' @param data is the dataset addresses
-#' @param data2 is the dataset series
+#' @param addresses address dataset
+#' @param series series dataset
 #' @param target_value  the value has to be either "Preis" or "Zahl"
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app 
@@ -69,10 +69,10 @@ get_information_address <- function(data, data2, filter_street, filter_number, t
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-filter_address <- function(data, data2, target_value, filter_street, filter_number){
+filter_address <- function(addresses, series, target_value, filter_street, filter_number){
 
   #Filter data with function
-  data_address <- get_information_address(data, data2, filter_street, filter_number, target_value)
+  data_address <- get_information_address(addresses, series, filter_street, filter_number, target_value)
   
   # Total series
   if(target_value == "Preis"){
@@ -101,8 +101,8 @@ filter_address <- function(data, data2, target_value, filter_street, filter_numb
 
 #' filter_address_download 
 #'
-#' @param data is the dataset addresses
-#' @param data2 is the dataset series
+#' @param addresses address dataset
+#' @param series series dataset
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app
 #'
@@ -111,9 +111,9 @@ filter_address <- function(data, data2, target_value, filter_street, filter_numb
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-filter_address_download <- function(data, data2, filter_street, filter_number){
+filter_address_download <- function(addresses, series, filter_street, filter_number){
   
-  filter_download <- get_information_address(data, data2, filter_street, filter_number)
+  filter_download <- get_information_address(addresses, series, filter_street, filter_number)
   
   # Total series
   seriesPriceCount <- bind_rows(filter_download[["SerieBZO16"]], filter_download[["SerieBZO99"]]) %>%
