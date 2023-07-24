@@ -26,7 +26,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
   data <- read_excel(hauptPfad, sheet = 1) %>%
     Date = ifelse(is.na(Date), 
                   NA, 
-                  paste0(format(Sys.Date(), "%d"), ".", format(Sys.Date(), "%m"), ".", format(Sys.Date(), "%Y")))
+                  format(Sys.Date(), "%d.%m.%Y"))
   
   # Manipulate Data for the two queries
   if (queryinput == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete") {
@@ -34,10 +34,19 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
       mutate(
         Titel = ifelse(is.na(Titel), 
                        NA, 
-                       paste0("Grundstückspreise (Median) nach Zonenart für Ihre Auswahl: ", input1, ", ", input2, ", ", input3))
+                       paste0("Grundstückspreise (Median) nach Zonenart für Ihre Auswahl: ", 
+                              input1, 
+                              ", ", 
+                              input2, 
+                              ", ", 
+                              input3))
       )
     
-    selected <- list(c("T_1", "Grundstückspreise (Median) nach Zonenart für Ihre Auswahl:", paste0(input1, ", ", input2, ", ", input3), "  ", "Quelle: Statistik Stadt Zürich, GWZ")) %>%
+    selected <- list(c("T_1", 
+                       "Grundstückspreise (Median) nach Zonenart für Ihre Auswahl:", 
+                       paste0(input1, ", ", input2, ", ", input3), 
+                       "  ", 
+                       "Quelle: Statistik Stadt Zürich, GWZ")) %>%
       as.data.frame()
     
     definitions <- read_excel(hauptPfad, sheet = 2)
@@ -47,10 +56,17 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
       mutate(
         Titel = ifelse(is.na(Titel), 
                        NA, 
-                       paste0("Grundstückspreise (Median) für Ihre Adresseingabe: ", input1, " ", input2))
+                       paste0("Grundstückspreise (Median) für Ihre Adresseingabe: ", 
+                              input1, 
+                              " ", 
+                              input2))
       )
     
-    selected <- list(c("T_1", "Grundstückspreise (Median) für Ihre Adresseingabe:", paste0(input1, " ", input2), "  ", "Quelle: Statistik Stadt Zürich, GWZ")) %>%
+    selected <- list(c("T_1", 
+                       "Grundstückspreise (Median) für Ihre Adresseingabe:", 
+                       paste0(input1, " ", input2), 
+                       "  ", 
+                       "Quelle: Statistik Stadt Zürich, GWZ")) %>%
       as.data.frame()
     
     definitions <- read_excel(hauptPfad, sheet = 3)
