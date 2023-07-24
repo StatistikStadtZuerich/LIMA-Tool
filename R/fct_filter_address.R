@@ -12,36 +12,37 @@
 #'
 #' @noRd
 get_information_address <- function(addresses, series, filter_street, filter_number, target_value = NULL){
+  # filter addresses so it is filtered only once
+  filtered_addresses <- addresses %>%
+    filter(StrasseLang == filter_street,
+           Hnr == filter_number)
+  
   # Pull district
-  district <- addresses %>%
-    filter(StrasseLang == filter_street & Hnr == filter_number) %>%
+  district <- filtered_addresses %>%
     pull(QuarLang)
   
   # Pull zone BZO16
-  zoneBZO16 <- addresses %>%
-    filter(StrasseLang == filter_street & Hnr == filter_number) %>%
+  zoneBZO16 <- filtered_addresses %>%
     pull(ZoneBZO16Lang)
   
   # Pull zone BZO99
-  zoneBZO99 <- addresses %>%
-    filter(StrasseLang == filter_street & Hnr == filter_number) %>%
+  zoneBZO99 <- filtered_addresses %>%
     pull(ZoneBZO99Lang)
   
-  # Price serie BZO16
-  SerieBZO16 <- series %>%
+  filtered_series <- series %>%
     filter(
-      QuarLang == district & ZoneLang == zoneBZO16,
+      QuarLang == district,
       if (!is.null(target_value)) Typ == target_value else Typ != "",
       Jahr >= 2019
     ) 
   
+  # Price serie BZO16
+  SerieBZO16 <- filtered_series %>%
+    filter(ZoneLang == zoneBZO16) 
+  
   # Price serie BZO99
-  SerieBZO99 <- series %>%
-    filter(
-      QuarLang == district & ZoneLang == zoneBZO99,
-      if (!is.null(target_value)) Typ == target_value else Typ != "",
-      Jahr < 2019
-    ) 
+  SerieBZO99 <- filtered_series %>%
+    filter(ZoneLang == zoneBZO99) 
   
   return(list(
     district = district,
@@ -75,7 +76,7 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
   data_address <- get_information_address(addresses, series, filter_street, filter_number, target_value)
   
   # Total series
-  if(target_value == "Preis"){
+  if (target_value == "Preis") {
     SerieTotal <- bind_rows(data_address[["SerieBZO16"]], data_address[["SerieBZO99"]]) %>%
       select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang) %>%
       mutate_all(funs(replace(., . == "–", ""))) %>%
@@ -83,7 +84,7 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
         "FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA", "FrQmBodenNettoGanzeLieg",
         "FrQmBodenNettoStwE", "FrQmBodenNettoAlleHA", "FrQmWohnflStwE"
       ), as.numeric)
-  }else{
+  } else {
     SerieTotal <- bind_rows(data_address[["SerieBZO16"]], data_address[["SerieBZO99"]]) %>%
       select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
   }
