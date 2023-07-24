@@ -47,16 +47,10 @@ get_data <- function() {
   )
   
   if (!is.null(data)) {
-
-    ## Data
-    zones <- data[[1]]
-    series <- data[[2]]
-    addresses <- data[[3]]
-
     ### Data Transformation
     
     ## Zones
-    zones <- zones %>%
+    zones <- data[[1]] %>%
       mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
@@ -98,7 +92,7 @@ get_data <- function() {
       mutate(across(everything(), \(x) replace(x, x == "", "–")))
 
     ## Series
-    series <- series %>%
+    series <- data[[2]] %>%
       mutate(across(everything(), \(x) replace(x, x == ".", "–"))) %>%
       mutate(across(c(
         FrQmBodenGanzeLieg,
@@ -109,7 +103,7 @@ get_data <- function() {
       )
 
     ## Addresses
-    addresses <- addresses %>%
+    addresses <- data[[3]] %>%
       mutate(Zones = case_when(
         ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
         TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
