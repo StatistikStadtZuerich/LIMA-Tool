@@ -79,11 +79,12 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
   if (target_value == "Preis") {
     SerieTotal <- bind_rows(data_address[["SerieBZO16"]], data_address[["SerieBZO99"]]) %>%
       select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang) %>%
-      mutate_all(funs(replace(., . == "–", ""))) %>%
-      mutate_at(c(
+      mutate(across(everything(), \(x) replace(x, x == "–", ""))) %>%
+      mutate(across(c(
         "FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA", "FrQmBodenNettoGanzeLieg",
         "FrQmBodenNettoStwE", "FrQmBodenNettoAlleHA", "FrQmWohnflStwE"
-      ), as.numeric)
+      ), 
+      as.numeric))
   } else {
     SerieTotal <- bind_rows(data_address[["SerieBZO16"]], data_address[["SerieBZO99"]]) %>%
       select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
