@@ -185,12 +185,13 @@ mod_area_server <- function(id, data){
     
     
     # Filter data for download name
-    filename <- eventReactive(input$start_query, {
+    filename <- reactive({
       price <- gsub(" ", "-", input$select_price, fixed = TRUE)
       group <- gsub(" ", "-", input$select_group, fixed = TRUE)
       area <- gsub(" ", "-", input$select_area, fixed = TRUE)
       name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area))
-     })
+     }) %>%
+      bindEvent(input$start_query)
    
     mod_download_server(id = "download_1",
                         function_filter = filter_area_download(data, input$select_area, input$select_price, input$select_group),
