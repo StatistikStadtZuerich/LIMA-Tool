@@ -22,7 +22,7 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
       ArtLang == filter_group,
       BZO == BZO_year
     ) %>%
-    select(Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56) %>% 
+    select(BZO, Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56) %>% 
     rename(Total = ALLE,
            Z = ZE,
            K = KE,
@@ -33,21 +33,23 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
       rename(W3 = W23,
              W4 = W34,
              W5 = W45,
-             W6 = W56)
+             W6 = W56) %>% 
+      select(-BZO)
   } else {
     filtered <- filtered  %>% 
       rename(` ` = W2,
              W2 = W23,
              W3 = W34,
              W4 = W45,
-             W5 = W56)
+             W5 = W56) %>% 
+      select(-BZO)
   }
   if (target_value == "Preis") {
     suppressWarnings(filtered <- filtered %>%
         mutate_at(vars(-Jahr), as.numeric))
   } else {
     filtered <- filtered %>%
-      mutate_all(., ~ replace(., is.na(.), " "))
+      mutate(across(everything(), \(x) replace_na(x, " ")))
   }
   return(filtered)
 }
