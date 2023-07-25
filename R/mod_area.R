@@ -198,9 +198,7 @@ mod_area_server <- function(id, data){
       group <- gsub(" ", "-", input$select_group, fixed = TRUE)
       area <- gsub(" ", "-", input$select_area, fixed = TRUE)
       name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area))
-      name
-      return(name)
-    })
+     })
    
     mod_download_server(id = "download_1",
                         function_filter = filter_area_download(data, input$select_area, input$select_price, input$select_group),
