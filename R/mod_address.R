@@ -137,15 +137,14 @@ mod_address_server <- function(id, data, data2){
                               filter_number = reactive(input$select_number))
     
     # Filter data for download name
-    filename <- eventReactive(input$start_query, {
+    filename <- reactive({
       district <- data %>%
         filter(StrasseLang == input$select_street & Hnr == input$select_number) %>%
         pull(QuarLang)
        
       name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district))
-      name
-      print(name)
-    })
+    }) %>%
+      bindEvent(input$start_query)
     
     mod_download_server(id = "download_3", 
                         function_filter = filter_address_download(data, data2, input$select_street, input$select_number),
