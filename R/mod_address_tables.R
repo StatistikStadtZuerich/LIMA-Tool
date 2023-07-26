@@ -38,7 +38,7 @@ mod_address_tables_server <- function(id, addresses, series, trigger, target_val
     stopifnot(!is.reactive(target_value))
   
     # Check if data is available for the zone
-    dataAvailable <- eventReactive(trigger(), {
+    dataAvailable <- reactive({
       
       filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
       
@@ -54,25 +54,22 @@ mod_address_tables_server <- function(id, addresses, series, trigger, target_val
       }
       
       print(available)
-    })
+    }) %>%
+      bindEvent(trigger())
     
     # Table if data is available for zone
-    outputData <- eventReactive(trigger(), {
-      # print(filter_street())
-      
-      filtered_data <- filter_address(addresses, series, target_value, filter_street(), filter_number())
-    })
-    
     output$results <- renderReactable({
+      filtered_data <- filter_address(addresses, series, target_value, filter_street(), filter_number())
       
       availability <- dataAvailable()
       if (availability > 0) {
-        out <- reactable_address(outputData())
+        out <- reactable_address(filtered_data)
         out
       } else {
         NULL
       }
-    })
+    }) %>%
+      bindEvent(trigger())
   })
 }
     

@@ -39,7 +39,7 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
 
     
     # Show Output Information Address
-    dataInfo <- eventReactive(trigger(), {
+    output$results_info <- renderText({
       filtered_data <- addresses %>%
         filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
         mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
@@ -51,36 +51,34 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
           name == "QuarLang" ~ "liegt im Quartier",
           name == "Zones" ~ "in folgender Zone"
         )) %>%
-        select(-pivot)
-      filtered_data
-    })
-    output$results_info <- renderText({
-      dataInfo() %>%
+        select(-pivot) %>%
         kable("html",
               align = "lr",
               col.names = NULL
         ) %>%
         kable_styling(bootstrap_options = c("condensed"))
-    })
+    }) %>%
+      bindEvent(trigger())
     
     # Get Information if Data Frame is empty
-    dataAvailable <- eventReactive(trigger(), {
+    dataAvailable <- reactive({
       
       filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
-
+      
       # Total series
       priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
         select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
-
+      
       if (nrow(priceSerieTotal) > 0) {
         available <- 1
       } else {
         avaiable <- 0
       }
-    })
+    }) %>%
+      bindEvent(trigger())
 
     # Reactive Info
-    infoReactive <- eventReactive(trigger(), {
+    infoReactive <- reactive({
 
       availability <- dataAvailable()
       if (availability > 0) {
@@ -91,7 +89,8 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
       } else {
         infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
       }
-    })
+    }) %>%
+      bindEvent(trigger())
 
     # Show Info (App 2)
     output$more_info <- renderUI({
