@@ -63,7 +63,6 @@ app_ui <- function(request) {
           condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
           # Show App 1 Code
           mod_area_ui(id = "area_zones",
-                      data = data_vector[["zones"]],
                       choicesapp = choices_app1)
         ),
         # App 2

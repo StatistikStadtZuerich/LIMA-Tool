@@ -1,6 +1,6 @@
 #' download UI Function
 #'
-#' @description A shiny Module.
+#' @description A shiny Module to call and render the three download options (Excel, CSV, OGD) that are available in every app
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'

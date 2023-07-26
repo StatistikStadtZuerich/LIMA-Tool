@@ -1,7 +1,9 @@
 #' The application server-side
 #'
-#' @param input,output,session Internal parameters for {shiny}.
-#'     DO NOT REMOVE.
+#' @param input 
+#' @param output 
+#' @param session 
+#'
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
@@ -13,10 +15,10 @@ app_server <- function(input, output, session) {
     # if data is null then there is nothing displayed in the server
   } else {
     mod_area_server(id = "area_zones", 
-                    data = data_vector[["zones"]])
+                    zones = data_vector[["zones"]])
     
     mod_address_server("addresses",
-                       data = data_vector[["addresses"]],
-                       data2 = data_vector[["series"]])
+                       addresses = data_vector[["addresses"]],
+                       series = data_vector[["series"]])
   }
 }

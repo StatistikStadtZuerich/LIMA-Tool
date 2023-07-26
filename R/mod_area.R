@@ -1,6 +1,6 @@
 #' area UI Function
 #'
-#' @description A shiny Module.
+#' @description A shiny Module to render the apps (zones and bebauungsart) with the app-architecture 'zones'
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
@@ -13,7 +13,7 @@
 #' @import zuericssstyle
 #' @importFrom shiny NS tagList
 library(shinyjs) 
-mod_area_ui <- function(id, data, choicesapp){
+mod_area_ui <- function(id, choicesapp){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
   
@@ -125,7 +125,7 @@ mod_area_ui <- function(id, data, choicesapp){
 #' area Server Functions
 #'
 #' @noRd 
-mod_area_server <- function(id, data){
+mod_area_server <- function(id, zones){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -153,7 +153,7 @@ mod_area_server <- function(id, data){
  
     # Output price
     mod_area_tables_server(id = "Preis_submodul", 
-                           data = data, 
+                           zones = zones, 
                            target_value = "Preis", 
                            trigger = reactive(input$start_query),
                            filter_area = reactive(input$select_area), 
@@ -166,7 +166,7 @@ mod_area_server <- function(id, data){
     # 
     # # Output count
     # mod_area_tables_server(id = "Zahl_submodul",
-    #                        data = data,
+    #                        zones = zones,
     #                        target_value = "Zahl",
     #                        filter_area = input$select_area,
     #                        filter_price = input$select_price,
@@ -194,7 +194,7 @@ mod_area_server <- function(id, data){
       bindEvent(input$start_query)
    
     mod_download_server(id = "download_1",
-                        function_filter = filter_area_download(data, input$select_area, input$select_price, input$select_group),
+                        function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
                         filename_download = filename(), 
                         filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
                         filter_1 = input$select_area, 

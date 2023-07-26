@@ -2,7 +2,7 @@
 #'
 #' @description A utils function to display the explanation box of the according app
 #'
-#' @return The return value, if any, from executing the utility.
+#' @return The return value is a div that is called and rendered in the according app
 #'
 #' @noRd
 explanationbox_app1 <- function(){

@@ -1,6 +1,6 @@
 #' address_info UI Function
 #'
-#' @description A shiny Module.
+#' @description A shiny Module to display further reactive information in the app with the address-architecture
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
@@ -26,12 +26,12 @@ mod_address_info_ui <- function(id){
 #' address_info Server Functions
 #'
 #' @noRd 
-mod_address_info_server <- function(id, data, data2, trigger, filter_street, filter_number){
+mod_address_info_server <- function(id, addresses, series, trigger, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(!is.reactive(data))
-    stopifnot(!is.reactive(data2))
+    stopifnot(!is.reactive(addresses))
+    stopifnot(!is.reactive(series))
     stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
@@ -39,7 +39,7 @@ mod_address_info_server <- function(id, data, data2, trigger, filter_street, fil
     
     # Show Output Information Address
     dataInfo <- eventReactive(trigger(), {
-      filtered_data <- data %>%
+      filtered_data <- addresses %>%
         filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
         mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
         select(Adresse, QuarLang, Zones) %>%
@@ -65,7 +65,7 @@ mod_address_info_server <- function(id, data, data2, trigger, filter_street, fil
     # Get Information if Data Frame is empty
     dataAvailable <- eventReactive(trigger(), {
       
-      filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number(), "Preis")
+      filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
 
       # Total series
       priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
@@ -83,7 +83,7 @@ mod_address_info_server <- function(id, data, data2, trigger, filter_street, fil
 
       availability <- dataAvailable()
       if (availability > 0) {
-        filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number(), "Preis")
+        filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
 
         zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
         infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)

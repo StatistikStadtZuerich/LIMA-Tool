@@ -2,7 +2,7 @@
 #'
 #' @param id 
 #'
-#' @description A shiny Module.
+#' @description A shiny Module to render the titles and tables of the apps with the address-architecture
 #'
 #' @noRd 
 #'
@@ -20,20 +20,20 @@ mod_address_tables_ui <- function(id){
 #' address_tables Server Functions
 #'
 #' @param id 
-#' @param data 
-#' @param data2 
+#' @param addresses 
+#' @param series 
 #' @param trigger 
 #' @param target_value 
 #' @param filter_street 
 #' @param filter_number 
 #'
 #' @noRd 
-mod_address_tables_server <- function(id, data, data2, trigger, target_value, filter_street, filter_number){
+mod_address_tables_server <- function(id, addresses, series, trigger, target_value, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(!is.reactive(data))
-    stopifnot(!is.reactive(data2))
+    stopifnot(!is.reactive(addresses))
+    stopifnot(!is.reactive(series))
     stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
@@ -42,7 +42,7 @@ mod_address_tables_server <- function(id, data, data2, trigger, target_value, fi
     # Check if data is available for the zone
     dataAvailable <- eventReactive(trigger(), {
       
-      filtered_addresses <- get_information_address(data, data2, filter_street(), filter_number(), "Preis")
+      filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
       
       SerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
         select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
@@ -62,7 +62,7 @@ mod_address_tables_server <- function(id, data, data2, trigger, target_value, fi
     outputData <- eventReactive(trigger(), {
       # print(filter_street())
       
-      filtered_data <- filter_address(data, data2, target_value, filter_street(), filter_number())
+      filtered_data <- filter_address(addresses, series, target_value, filter_street(), filter_number())
     })
     
     output$results <- renderReactable({

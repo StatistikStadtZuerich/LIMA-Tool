@@ -7,9 +7,10 @@
 #' @param input2 selected input nr. 2 from app
 #' @param input3 selected input nr. 3 from app (optional)
 #'
-#' @description A utils function
+#' @description A utils function to prepare the Excel download file
 #'
-#' @return The return value, if any, from executing the utility.
+#' @return The return value is a function that is called in the module to render the Excel download
+#' 
 #' @import ggplot2
 #' @import jpeg
 #' @import openxlsx

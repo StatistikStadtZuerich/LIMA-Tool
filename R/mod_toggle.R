@@ -1,6 +1,6 @@
 #' toggle UI Function
 #'
-#' @description A shiny Module.
+#' @description A shiny Module for the toggle to have the option to show more information on click
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'

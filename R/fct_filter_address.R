@@ -6,9 +6,9 @@
 #' @param filter_number filters the number with the given input in the app 
 #' @param target_value  the value has to be either "Preis" or "Zahl"
 #'
-#' @description A fct function
+#' @description A function that filters the datasets 'series' and 'zones' according to the given inputs of the street and house number
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is a list containing the district, the zones16 & 99, and the price/count of the ownership transfers
 #'
 #' @noRd
 get_information_address <- function(addresses, series, filter_street, filter_number, target_value = NULL){
@@ -65,9 +65,9 @@ get_information_address <- function(addresses, series, filter_street, filter_num
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app 
 #'
-#' @description A fct function
+#' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the table output
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is the data for the table that is displayed in the addresses app
 #'
 #' @noRd
 filter_address <- function(addresses, series, target_value, filter_street, filter_number){
@@ -108,9 +108,9 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app
 #'
-#' @description A fct function
+#' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the download output
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is the data for the download table that is displayed in the addresses app
 #'
 #' @noRd
 filter_address_download <- function(addresses, series, filter_street, filter_number){

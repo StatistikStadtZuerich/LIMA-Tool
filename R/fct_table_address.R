@@ -2,9 +2,9 @@
 #'
 #' @param target_data the filtered dataset that is displayed in the table
 #'
-#' @description A fct function
+#' @description A fct function that renders the correct setting for the reactable() table for the addresses app
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is the styled reactable table that needs a data input
 #'
 #' @noRd
 reactable_address <- function(target_data){
