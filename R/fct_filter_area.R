@@ -45,8 +45,8 @@ filter_area_zone <- function(zones, target_value, filter_area, filter_price, fil
       select(-BZO)
   }
   if (target_value == "Preis") {
-    suppressWarnings(filtered <- filtered %>%
-        mutate_at(vars(-Jahr), as.numeric))
+    filtered <- filtered %>%
+      mutate(across(c(everything(), -Jahr), as.numeric))
   } else {
     filtered <- filtered %>%
       mutate(across(everything(), \(x) replace_na(x, " ")))
