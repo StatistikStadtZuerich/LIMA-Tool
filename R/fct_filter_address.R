@@ -4,7 +4,7 @@
 #' @param series series dataset
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app 
-#' @param target_value  the value has to be either "Preis" or "Zahl"
+#' @param target_value  the value has to be either "Preis" or "Zahl", if target_value is NULL then both "Preis" and "Zahl" are filtered
 #'
 #' @description A function that filters the datasets 'series' and 'zones' according to the given inputs of the street and house number
 #'
