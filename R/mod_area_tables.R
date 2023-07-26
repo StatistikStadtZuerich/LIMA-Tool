@@ -6,10 +6,6 @@
 #' @description A shiny Module to render the titles and tables of the apps with the area-architecture
 #'
 #' @noRd 
-#'
-#' @import reactable
-#' @import shiny 
-#' @importFrom shiny NS tagList 
 mod_area_tables_ui <- function(id, target_value){
   ns <- NS(id)
   

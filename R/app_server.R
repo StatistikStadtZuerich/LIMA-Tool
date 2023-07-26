@@ -4,7 +4,6 @@
 #' @param output 
 #' @param session 
 #'
-#' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
   # get data with function

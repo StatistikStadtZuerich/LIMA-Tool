@@ -5,8 +5,6 @@
 #' @description A shiny Module to render the titles and tables of the apps with the address-architecture
 #'
 #' @noRd 
-#'
-#' @importFrom shiny NS tagList 
 mod_address_tables_ui <- function(id){
   ns <- NS(id)
   tagList(

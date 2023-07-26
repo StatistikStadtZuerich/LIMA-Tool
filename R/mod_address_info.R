@@ -5,12 +5,6 @@
 #' @description A shiny Module to display further reactive information in the app with the address-architecture
 #'
 #' @noRd 
-#'
-#' @importFrom shiny NS tagList htmlOutput
-#' @importFrom tidyr pivot_longer
-#' @importFrom knitr kable
-#' @importFrom kableExtra kable_styling
-#' @import dplyr
 mod_address_info_ui <- function(id){
   ns <- NS(id)
   tagList(

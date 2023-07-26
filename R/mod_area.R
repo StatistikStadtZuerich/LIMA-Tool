@@ -6,13 +6,6 @@
 #' @description A shiny Module to render the apps (zones and bebauungsart) with the app-architecture 'zones'
 #'
 #' @noRd 
-#'
-#' @import shinyjs
-#' @import reactable
-#' @import shiny
-#' @import icons
-#' @import zuericssstyle
-#' @importFrom shiny NS tagList
 mod_area_ui <- function(id, choicesapp){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")

@@ -6,15 +6,6 @@
 #' @description A shiny Module to render the app (address) with the app-architecture 'address'
 #'
 #' @noRd 
-#'
-#' @import shinyjs
-#' @import reactable
-#' @import shiny
-#' @import icons
-#' @import zuericssstyle
-#' @importFrom dqshiny autocomplete_input
-#' @importFrom shiny NS tagList 
-#' @importFrom gtools mixedsort
 mod_address_ui <- function(id, choicesapp){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")

@@ -5,8 +5,6 @@
 #' @description A shiny Module for the toggle to have the option to show more information on click
 #'
 #' @noRd 
-#'
-#' @importFrom shiny NS tagList 
 mod_toggle_ui <- function(id){
   ns <- NS(id)
   tagList(

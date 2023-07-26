@@ -11,11 +11,6 @@
 #'
 #' @return The return value is a function that is called in the module to render the Excel download
 #' 
-#' @import ggplot2
-#' @import jpeg
-#' @import openxlsx
-#' @importFrom readxl read_excel
-#' @import dplyr
 #' @noRd
 sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, input3 = NULL) {
   

@@ -5,10 +5,6 @@
 #' @description A shiny Module to call and render the three download options (Excel, CSV, OGD) that are available in every app
 #'
 #' @noRd 
-#'
-#' @import icons
-#' @import zuericssstyle
-#' @importFrom shiny NS tagList 
 mod_download_ui <- function(id){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
