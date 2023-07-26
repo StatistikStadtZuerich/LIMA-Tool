@@ -1,6 +1,6 @@
 #' address_tables UI Function
 #'
-#' @param id 
+#' @param id id of the module called in the app
 #'
 #' @description A shiny Module to render the titles and tables of the apps with the address-architecture
 #'
@@ -19,13 +19,13 @@ mod_address_tables_ui <- function(id){
     
 #' address_tables Server Functions
 #'
-#' @param id 
-#' @param addresses 
-#' @param series 
-#' @param trigger 
-#' @param target_value 
-#' @param filter_street 
-#' @param filter_number 
+#' @param id id of the module called in the app
+#' @param addresses dataset addresses
+#' @param series dataset series
+#' @param trigger reactive trigger input to render the output
+#' @param target_value target value of the app ("Preis" or "Zahl")
+#' @param filter_street filter value (street) selected from input widget
+#' @param filter_number filter value (number) selected from input widget
 #'
 #' @noRd 
 mod_address_tables_server <- function(id, addresses, series, trigger, target_value, filter_street, filter_number){

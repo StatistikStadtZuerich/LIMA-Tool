@@ -1,8 +1,9 @@
 #' area_tables UI Function
 #'
-#' @description A shiny Module to render the titles and tables of the apps with the area-architecture
+#' @param id id of the module called in the app
+#' @param target_value target value of the app ("Preis" or "Zahl")
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module to render the titles and tables of the apps with the area-architecture
 #'
 #' @noRd 
 #'
@@ -38,6 +39,14 @@ mod_area_tables_ui <- function(id, target_value){
 }
 
 #' area_tables Server Functions
+#'
+#' @param id id of the module called in the app
+#' @param zones dataset zones
+#' @param target_value target value of the app ("Preis" or "Zahl")
+#' @param trigger reactive trigger input to render the output
+#' @param filter_area filter value (area) selected from input widget
+#' @param filter_price filter value (price) selected from input widget
+#' @param filter_group filter value (group) selected from input widget
 #'
 #' @noRd 
 mod_area_tables_server <- function(id, zones, target_value, trigger, filter_area, filter_price, filter_group){

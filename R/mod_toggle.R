@@ -1,8 +1,8 @@
 #' toggle UI Function
 #'
-#' @description A shiny Module for the toggle to have the option to show more information on click
+#' @param id filter value (street) selected from input widget
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module for the toggle to have the option to show more information on click
 #'
 #' @noRd 
 #'
@@ -15,6 +15,8 @@ mod_toggle_ui <- function(id){
 }
     
 #' toggle Server Functions
+#'
+#' @param id filter value (street) selected from input widget
 #'
 #' @noRd 
 mod_toggle_server <- function(id){

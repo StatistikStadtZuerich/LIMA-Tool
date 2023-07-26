@@ -1,8 +1,8 @@
 #' address_info UI Function
 #'
-#' @description A shiny Module to display further reactive information in the app with the address-architecture
+#' @param id id of the module called in the app
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module to display further reactive information in the app with the address-architecture
 #'
 #' @noRd 
 #'
@@ -24,6 +24,13 @@ mod_address_info_ui <- function(id){
 }
     
 #' address_info Server Functions
+#'
+#' @param id id of the module called in the app
+#' @param addresses dataset addresses
+#' @param series dataset series
+#' @param trigger target value of the app ("Preis" or "Zahl")
+#' @param filter_street filter value (street) selected from input widget
+#' @param filter_number filter value (number) selected from input widget
 #'
 #' @noRd 
 mod_address_info_server <- function(id, addresses, series, trigger, filter_street, filter_number){

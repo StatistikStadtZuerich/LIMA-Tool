@@ -1,8 +1,9 @@
 #' address UI Function
 #'
-#' @description A shiny Module to render the app (address) with the app-architecture 'address'
+#' @param id id of the module called in the app
+#' @param choicesapp choices that are selectable in the input widget
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module to render the app (address) with the app-architecture 'address'
 #'
 #' @noRd 
 #'
@@ -102,6 +103,10 @@ mod_address_ui <- function(id, choicesapp){
 }
     
 #' address Server Functions
+#'
+#' @param id id of the module called in the app
+#' @param addresses dataset addresses
+#' @param series dataset series
 #'
 #' @noRd 
 mod_address_server <- function(id, addresses, series){
