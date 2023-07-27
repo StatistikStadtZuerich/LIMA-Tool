@@ -50,8 +50,7 @@ reactable_address <- function(target_data){
                 # Format only numeric columns with thousands separators
                 if (!is.numeric(value)) {
                   return(value)
-                }
-                if (!is.na(value)) {
+                } else if (!is.na(value)) {
                   format(value, big.mark = "\ua0")
                 } else {
                   "–"
