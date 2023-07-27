@@ -44,14 +44,12 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
         filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
         mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
         select(Adresse, QuarLang, Zones) %>%
-        mutate(pivot = 1) %>%
-        pivot_longer(!pivot) %>%
+        pivot_longer(everything()) %>%
         mutate(name = case_when(
           name == "Adresse" ~ "Die Adresse",
           name == "QuarLang" ~ "liegt im Quartier",
           name == "Zones" ~ "in folgender Zone"
         )) %>%
-        select(-pivot) %>%
         kable("html",
               align = "lr",
               col.names = NULL
