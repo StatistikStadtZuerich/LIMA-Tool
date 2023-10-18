@@ -127,31 +127,33 @@ mod_area_ui <- function(id, choicesapp, test){
             mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
             
             # Action Link for Hand Changes (counts)
-            # golem::activate_js(),
-            # shinyjs::useShinyjs(),
-            # conditionalPanel(
-            #   condition = "input.start_query",
-            #   ns = ns,
-            #   tags$div(
-            #     class = "linkCount",
-            #     actionLink("linkCount",
-            #                "Anzahl Handänderungen einblenden",
-            #                icon = icon("angle-down")
-            #     )
-            #   )
-            # ),
-            # 
-            # # Hidden Titles and Tables for Hand Changes
-            # shinyjs::hidden(
-            #   div(
-            #     id = "countDiv",
-            #     
-            #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
-            #   )
-            #   ),
+              tags$div(
+                class = "linkCount",
+                actionLink(ns("linkCount"),
+                           "Anzahl Handänderungen einblenden",
+                           icon = icon("angle-down")
+                ),
+                # conditionalPanel(
+                #   condition = "input.linkCount  %% 2 == 1",
+                #   ns = ns,
+                  mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
+                # )
+              
+                # shinyjs::hidden(
+                #   div(
+                #     id = ns("countDiv"),
+                #     
+                #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
+                #   )
+                # )
+                 ),
+    
+                # Hidden Titles and Tables for Hand Changes
+                
             
             explanationbox_app2()
         )
+        
       )
     )  
   )
@@ -226,9 +228,20 @@ mod_area_server <- function(id, zones){
                            BZO = "BZO99")
     
     # Show Output Counts
-    # observeEvent(input$linkCount, {
-    #   shinyjs::toggle("countDiv")
-    # 
+    observeEvent(input$linkCount, {
+      # shinyjs::toggle("countDiv")
+      print("toggled")
+      if (input$linkCount %% 2 == 1) {
+        txt <- "Anzahl Handänderungen verbergen"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+        shinyjs::addClass("linkCount", "visitedLink")
+      } else {
+        txt <- "Anzahl Handänderungen einblenden"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
+        shinyjs::removeClass("linkCount", "visitedLink")
+      }
+    })
+
     # # Output count
     # mod_area_tables_server(id = "Zahl_submodul16",
     #                        zones = zones,
@@ -242,25 +255,16 @@ mod_area_server <- function(id, zones){
     #                        filter_area = input$select_area,
     #                        filter_price = input$select_price,
     #                        filter_group = input$select_group)
-    # mod_area_tables_server(id = "Zahl_submodul",
-    #                        zones = zones,
-    #                        target_value = "Zahl",
-    #                        filter_area = input$select_area,
-    #                        filter_price = input$select_price,
-    #                        filter_group = input$select_group)
-    # 
-    #   if (input$linkCount %% 2 == 1) {
-    #     txt <- "Anzahl Handänderungen verbergen"
-    #     updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
-    #     shinyjs::addClass("linkCount", "visitedLink")
-    #   } else {
-    #     txt <- "Anzahl Handänderungen einblenden"
-    #     updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
-    #     shinyjs::removeClass("linkCount", "visitedLink")
-    #   }
-    # })
-    
-    
+    mod_area_tables_server(id = "Zahl_submodul",
+                           zones = zones,
+                           target_app = "Types", 
+                           target_value = "Zahl",
+                           trigger = reactive(input$start_query), 
+                           filter_area = reactive(input$select_area),
+                           filter_price = reactive(input$select_price),
+                           filter_group = reactive(input$select_group),
+                           title = paste0("Nach Bebauungsart"),
+                           BZO = "BZO99")
     
     ## App 2
     

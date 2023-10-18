@@ -4,6 +4,10 @@
 #'     DO NOT REMOVE.
 #' @noRd
 app_ui <- function(request) {
+  
+  golem::activate_js()
+  shinyjs::useShinyjs(debug = TRUE)
+  
   # get data with function
   data_vector <- get_data()
   
