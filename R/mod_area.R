@@ -46,6 +46,7 @@ mod_area_ui <- function(id, choicesapp, test){
         mod_download_ui(ns("download_1"))
       )
     ),
+    
     # Main Panel (Results)
     mainPanel(
       
@@ -71,88 +72,86 @@ mod_area_ui <- function(id, choicesapp, test){
       ),
       
       # Mainpanel for App 1
-      # conditionalPanel(
-      #   condition = paste0("input.start_query && input.", ns('choose_app'), "']  == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'"),
-      #   ns = ns,
       conditionalPanel(
-        condition = "input.start_query",
-        ns = ns,
-        
-        golem_add_external_resources(),
-        mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
-        mod_area_tables_ui(ns("Preis_submodul99"), "Preis"),
-        
-        
-        # Action Link for Hand Changes (counts)
-        # golem::activate_js(),
-        # shinyjs::useShinyjs(),
-        # conditionalPanel(
-        #   condition = "input.start_query",
-        #   ns = ns,
-        #   tags$div(
-        #     class = "linkCount",
-        #     actionLink("linkCount",
-        #                "Anzahl Handänderungen einblenden",
-        #                icon = icon("angle-down")
-        #     )
-        #   )
-        # ),
-        # 
-        # # Hidden Titles and Tables for Hand Changes
-        # shinyjs::hidden(
-        #   div(
-        #     id = "countDiv",
-        #     
-        #     mod_area_tables_ui(ns("Zahl_submodul16"), "Zahl"),
-        #     mod_area_tables_ui(ns("Zahl_submodul99"), "Zahl")
-        #   )
-        #   ),
-        
-        
-          explanationbox_app1()
-          
-      
+        # This condition is not in a module, therefore there is no need for a Namespace
+        condition = "input.choose_app == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'",
+     
+          # Start Query Button is in the module, so the conditionalPanel() needs a ns()
+          conditionalPanel(
+            condition = "input.start_query",
+            ns = ns,
+
+            mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
+            mod_area_tables_ui(ns("Preis_submodul99"), "Preis"),
+
+            # Action Link for Hand Changes (counts)
+            # golem::activate_js(),
+            # shinyjs::useShinyjs(),
+            # conditionalPanel(
+            #   condition = "input.start_query",
+            #   ns = ns,
+            #   tags$div(
+            #     class = "linkCount",
+            #     actionLink("linkCount",
+            #                "Anzahl Handänderungen einblenden",
+            #                icon = icon("angle-down")
+            #     )
+            #   )
+            # ),
+            # 
+            # # Hidden Titles and Tables for Hand Changes
+            # shinyjs::hidden(
+            #   div(
+            #     id = "countDiv",
+            #     
+            #     mod_area_tables_ui(ns("Zahl_submodul16"), "Zahl"),
+            #     mod_area_tables_ui(ns("Zahl_submodul99"), "Zahl")
+            #   )
+            #   ),
+
+              explanationbox_app1()
+              
+          )
         ),
       
       # Mainpanel for App 2
-      # conditionalPanel(
-      #   condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete' && input.start_query",
-      #   ns = ns,
       conditionalPanel(
-        condition = "input.start_query",
-        ns = ns,
+        # This condition is not in a module, therefore there is no need for a Namespace
+        condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete'",
         
-        mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
-        
-        
-        # Action Link for Hand Changes (counts)
-        # golem::activate_js(),
-        # shinyjs::useShinyjs(),
-        # conditionalPanel(
-        #   condition = "input.start_query",
-        #   ns = ns,
-        #   tags$div(
-        #     class = "linkCount",
-        #     actionLink("linkCount",
-        #                "Anzahl Handänderungen einblenden",
-        #                icon = icon("angle-down")
-        #     )
-        #   )
-        # ),
-        # 
-        # # Hidden Titles and Tables for Hand Changes
-        # shinyjs::hidden(
-        #   div(
-        #     id = "countDiv",
-        #     
-        #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
-        #   )
-        #   ),
-        
-        
-        explanationbox_app2()
-        
-        
+        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
+        conditionalPanel(
+          condition = "input.start_query",
+            ns = ns,
+            
+            mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
+            
+            # Action Link for Hand Changes (counts)
+            # golem::activate_js(),
+            # shinyjs::useShinyjs(),
+            # conditionalPanel(
+            #   condition = "input.start_query",
+            #   ns = ns,
+            #   tags$div(
+            #     class = "linkCount",
+            #     actionLink("linkCount",
+            #                "Anzahl Handänderungen einblenden",
+            #                icon = icon("angle-down")
+            #     )
+            #   )
+            # ),
+            # 
+            # # Hidden Titles and Tables for Hand Changes
+            # shinyjs::hidden(
+            #   div(
+            #     id = "countDiv",
+            #     
+            #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
+            #   )
+            #   ),
+            
+            explanationbox_app2()
+        )
       )
     )  
   )
