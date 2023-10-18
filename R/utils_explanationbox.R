@@ -21,6 +21,19 @@ explanationbox_app1 <- function(){
 }
 explanationbox_app2 <- function(){
   tags$div(
+    class = "infoDiv",
+    h5("eeeee"),
+    hr(),
+    p("eeeee"),
+    p("eeeee"),
+    p("eeeee"),
+    p("eeeee"),
+    p("eeeee"),
+    p("eeeee")
+  )
+}
+explanationbox_app3 <- function(){
+  tags$div(
     id = "defs",
     class = "infoDiv",
     h5("Begriffserklärung"),

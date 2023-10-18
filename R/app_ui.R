@@ -61,14 +61,16 @@ app_ui <- function(request) {
           condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
           # Show App 1 Code
           mod_area_ui(id = "area_zones",
-                      choicesapp = choices_app12)
+                      choicesapp = choices_app12,
+                      target_app = "Zones")
         ),
         # App 2
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
           # Show App 2 Code
           mod_area_ui(id = "area_types",
-                      choicesapp = choices_app12)
+                      choicesapp = choices_app12,
+                      target_app = "Types")
         ),
         # App 2
         conditionalPanel(

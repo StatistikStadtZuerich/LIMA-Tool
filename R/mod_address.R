@@ -87,7 +87,7 @@ mod_address_ui <- function(id, choicesapp){
       conditionalPanel(
         condition = "input.select_street && input.select_number && input.start_query",
         ns = ns,
-        explanationbox_app2()
+        explanationbox_app3()
       )
     )
   )

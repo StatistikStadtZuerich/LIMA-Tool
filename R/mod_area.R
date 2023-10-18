@@ -6,10 +6,11 @@
 #' @description A shiny Module to render the apps (zones and bebauungsart) with the app-architecture 'zones'
 #'
 #' @noRd 
-mod_area_ui <- function(id, choicesapp){
+mod_area_ui <- function(id, choicesapp, target_app){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
-  
+  stopifnot(!is.reactive(target_app))
+  targetApp <- target_app
   ns <- NS(id)
   tagList(
     sidebarPanel(
@@ -22,18 +23,14 @@ mod_area_ui <- function(id, choicesapp){
       sszRadioButtons(ns("select_price"),
                       "Preise",
                       # choices = choicesapp[["choices_price"]]
-                      choices = c("Preis pro m² Grundstücksfläche", 
-                                  "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert")),
+                      choices = c("Preis pro m² Grundstücksfläche",
+                                  "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert")
+                      ),
       
       # Group (conditional to price)
       sszRadioButtons(ns("select_group"),
                       "Art",
-                      # choices = choicesapp[["choices_group"]]
-                      choices = c(
-                        "Ganze Liegenschaften",
-                        "Stockwerkeigentum",
-                        "Alle Verkäufe"
-                      )
+                      choices = choicesapp[["choices_group"]]
       ),
       
       # Action Button
@@ -74,41 +71,50 @@ mod_area_ui <- function(id, choicesapp){
         textOutput(ns("subSubtitle"))
       ),
       
+      # Mainpanel for App 1
       conditionalPanel(
-        condition = "input.start_query",
+        condition = "targetApp == 'Zones' && input.start_query",
         ns = ns,
-        mod_area_tables_ui(ns("Preis_submodul"), "Preis")
-      ),
-
-      # Action Link for Hand Changes (counts)
-      # golem::activate_js(),
-      # shinyjs::useShinyjs(),
-      # conditionalPanel(
-      #   condition = "input.start_query",
-      #   ns = ns,
-      #   tags$div(
-      #     class = "linkCount",
-      #     actionLink("linkCount",
-      #                "Anzahl Handänderungen einblenden",
-      #                icon = icon("angle-down")
-      #     )
-      #   )
-      # ),
-      # 
-      # # Hidden Titles and Tables for Hand Changes
-      # shinyjs::hidden(
-      #   div(
-      #     id = "countDiv",
-      #     
-      #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
-      #   )
-      #   ),
+        
+        conditionalPanel(
+          condition = "input.start_query",
+          ns = ns,
+          mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
+          mod_area_tables_ui(ns("Preis_submodul99"), "Preis")
+          ),
+          
+          # Action Link for Hand Changes (counts)
+          # golem::activate_js(),
+          # shinyjs::useShinyjs(),
+          # conditionalPanel(
+          #   condition = "input.start_query",
+          #   ns = ns,
+          #   tags$div(
+          #     class = "linkCount",
+          #     actionLink("linkCount",
+          #                "Anzahl Handänderungen einblenden",
+          #                icon = icon("angle-down")
+          #     )
+          #   )
+          # ),
+          # 
+          # # Hidden Titles and Tables for Hand Changes
+          # shinyjs::hidden(
+          #   div(
+          #     id = "countDiv",
+          #     
+          #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
+          #   )
+          #   ),
+          
+          conditionalPanel(
+            condition = "input.start_query",
+            ns = ns,
+            explanationbox_app1()
+          )
       
-      conditionalPanel(
-        condition = "input.start_query",
-        ns = ns,
-        explanationbox_app1()
-      )
+        )
+  
     )  
   )
  
@@ -147,14 +153,27 @@ mod_area_server <- function(id, zones){
     }) %>%
       bindEvent(input$start_query)
  
+    
+    ## App 1
     # Output price
-    mod_area_tables_server(id = "Preis_submodul", 
+    mod_area_tables_server(id = "Preis_submodul16", 
                            zones = zones, 
                            target_value = "Preis", 
                            trigger = reactive(input$start_query),
                            filter_area = reactive(input$select_area), 
                            filter_price = reactive(input$select_price), 
-                           filter_group = reactive(input$select_group))
+                           filter_group = reactive(input$select_group),
+                           title = paste0("Nach Zonenart gemäss BZO 2016"),
+                           BZO = "BZO16")
+    mod_area_tables_server(id = "Preis_submodul99", 
+                           zones = zones, 
+                           target_value = "Preis", 
+                           trigger = reactive(input$start_query),
+                           filter_area = reactive(input$select_area), 
+                           filter_price = reactive(input$select_price), 
+                           filter_group = reactive(input$select_group),
+                           title = paste0("Nach Zonenart gemäss BZO 1999"),
+                           BZO = "BZO99")
     
     # Show Output Counts
     # observeEvent(input$linkCount, {
@@ -180,6 +199,13 @@ mod_area_server <- function(id, zones){
     # })
     
     
+    
+    ## App 2
+    
+    
+    
+    
+    ## Download
     # Filter data for download name
     filename <- reactive({
       price <- gsub(" ", "-", input$select_price, fixed = TRUE)
