@@ -22,7 +22,7 @@ explanationbox_app1 <- function(){
 explanationbox_app2 <- function(){
   tags$div(
     class = "infoDiv",
-    h5("eeeee"),
+    h5("Erklärung Bebauungsarten"),
     hr(),
     p("EFH = Einfamilienhäuser"),
     p("MFH = Mehrfamilienhäuser"),
