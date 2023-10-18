@@ -47,21 +47,15 @@ get_data <- function() {
   )
   
   if (!is.null(data)) {
-
-    ## Data
-    zones <- data[[1]]
-    series <- data[[2]]
-    addresses <- data[[3]]
-
     ### Data Transformation
-
+    
     ## Zones
-    zones <- zones %>%
+    zones <- data[[1]] %>%
       mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
-      mutate_all(funs(replace(., . == ".", "–"))) %>%
-      mutate_all(funs(replace(., . == "", "–")))
+      mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
+      mutate(across(everything(), \(x) replace(x, x == "", "–")))
 
     ## BZO16
     zonesBZO16 <- zones %>%
@@ -77,8 +71,8 @@ get_data <- function() {
         W5 = W45,
         W6 = W56
       ) %>%
-      mutate_all(funs(replace(., . == ".", "–"))) %>%
-      mutate_all(funs(replace(., . == "", "–")))
+      mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
+      mutate(across(everything(), \(x) replace(x, x == "", "–")))
 
     ## BZO99
     zonesBZO99 <- zones %>%
@@ -94,24 +88,22 @@ get_data <- function() {
         W4 = W45,
         W5 = W56
       ) %>%
-      mutate_all(funs(replace(., . == ".", "–"))) %>%
-      mutate_all(funs(replace(., . == "", "–")))
+      mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
+      mutate(across(everything(), \(x) replace(x, x == "", "–")))
 
     ## Series
-    series <- series %>%
-      mutate_all(funs(replace(., . == ".", "–"))) %>%
-      mutate_at(
-        vars(
-          FrQmBodenGanzeLieg,
-          FrQmBodenStwE,
-          FrQmBodenAlleHA,
-          FrQmWohnflStwE
-        ),
-        funs(replace(., . == "", "–"))
+    series <- data[[2]] %>%
+      mutate(across(everything(), \(x) replace(x, x == ".", "–"))) %>%
+      mutate(across(c(
+        FrQmBodenGanzeLieg,
+        FrQmBodenStwE,
+        FrQmBodenAlleHA,
+        FrQmWohnflStwE
+        ), \(x) replace(x, x == "", "–"))
       )
 
     ## Addresses
-    addresses <- addresses %>%
+    addresses <- data[[3]] %>%
       mutate(Zones = case_when(
         ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
         TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")

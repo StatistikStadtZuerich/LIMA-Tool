@@ -130,32 +130,27 @@ mod_area_server <- function(id, data){
     ns <- session$ns
     
     # Captions
-    # Reactive Title
-    titleReactive <- eventReactive(input$start_query, {
-      input$select_price
-    })
+    # Title
+    # only updated when button is pressed
     output$title <- renderText({
-      titleReactive()
-    })
+      input$select_price
+    }) %>%
+      bindEvent(input$start_query)
     
-    # Reactive Subtitle
-    subtitleReactive <- eventReactive(input$start_query, {
-      title <- input$select_group
-    })
+    # Subtitle
+    # only updated when button is pressed
     output$subtitle <- renderText({
-      subtitleReactive()
-    })
+      input$select_group
+    }) %>%
+      bindEvent(input$start_query)
     
-    # Reactive Sub-Subtitle
-    subSubtitleReactive <- eventReactive(input$start_query, {
-      input$select_area
-    })
+    # Sub-Subtitle
+    # only updated when button is pressed
     output$subSubtitle <- renderText({
-      req(subSubtitleReactive())
-      paste0(subSubtitleReactive(), ", Medianpreise in CHF")
-    })
+      paste0(input$select_area, ", Medianpreise in CHF")
+    }) %>%
+      bindEvent(input$start_query)
  
-    
     # Output price
     mod_area_tables_server(id = "Preis_submodul", 
                            data = data, 
@@ -164,9 +159,6 @@ mod_area_server <- function(id, data){
                            filter_area = reactive(input$select_area), 
                            filter_price = reactive(input$select_price), 
                            filter_group = reactive(input$select_group))
-    
-    
-    
     
     # Show Output Counts
     # observeEvent(input$linkCount, {
@@ -193,14 +185,13 @@ mod_area_server <- function(id, data){
     
     
     # Filter data for download name
-    filename <- eventReactive(input$start_query, {
+    filename <- reactive({
       price <- gsub(" ", "-", input$select_price, fixed = TRUE)
       group <- gsub(" ", "-", input$select_group, fixed = TRUE)
       area <- gsub(" ", "-", input$select_area, fixed = TRUE)
       name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area))
-      name
-      return(name)
-    })
+     }) %>%
+      bindEvent(input$start_query)
    
     mod_download_server(id = "download_1",
                         function_filter = filter_area_download(data, input$select_area, input$select_price, input$select_group),
