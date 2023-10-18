@@ -2,9 +2,9 @@
 #'
 #' @param target_data the filtered dataset that is displayed in the table
 #'
-#' @description A fct function
+#' @description A fct function that renders the correct setting for the reactable() table for the addresses app
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is the styled reactable table that needs a data input
 #'
 #' @noRd
 reactable_address <- function(target_data){
@@ -50,8 +50,7 @@ reactable_address <- function(target_data){
                 # Format only numeric columns with thousands separators
                 if (!is.numeric(value)) {
                   return(value)
-                }
-                if (!is.na(value)) {
+                } else if (!is.na(value)) {
                   format(value, big.mark = "\ua0")
                 } else {
                   "–"

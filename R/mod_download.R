@@ -1,14 +1,10 @@
 #' download UI Function
 #'
-#' @description A shiny Module.
+#' @param id of the module called in the app
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module to call and render the three download options (Excel, CSV, OGD) that are available in every app
 #'
 #' @noRd 
-#'
-#' @import icons
-#' @import zuericssstyle
-#' @importFrom shiny NS tagList 
 mod_download_ui <- function(id){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
@@ -40,6 +36,14 @@ mod_download_ui <- function(id){
 }
     
 #' download Server Functions
+#'
+#' @param id of the module called in the app
+#' @param function_filter function to filter the data for the download
+#' @param filename_download filename for the download file
+#' @param filter_app app that is selected
+#' @param filter_1 input (filter) of the first widget
+#' @param filter_2 input (filter) of the second widget
+#' @param filter_3 input (filter) of the optional third widget
 #'
 #' @noRd 
 mod_download_server <- function(id, function_filter, filename_download, filter_app, filter_1, filter_2, filter_3 = NULL){

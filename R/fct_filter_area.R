@@ -1,20 +1,20 @@
 #' filter_area_zone 
 #'
-#' @description A fct function
+#' @description A function that filters the dataset 'zones' according to the given inputs of the area, price and group
 #'
-#' @param data zonesBZO16 or zonesBZO99
+#' @param zones dataset zones
 #' @param target_value the value has to be either "Preis" or "Zahl"
 #' @param filter_area filters the area with the given input in the app
 #' @param filter_price filters the price with the given input in the app
 #' @param filter_group filters the group with the given input in the app
 #' @param BZO_year the value has to be either "BZO16" or "BZO99"
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is the data for the table that is displayed in the area app
 #'
 #' @noRd
-filter_area_zone <- function(data, target_value, filter_area, filter_price, filter_group, BZO_year){
+filter_area_zone <- function(zones, target_value, filter_area, filter_price, filter_group, BZO_year){
   
-  filtered <- data %>%
+  filtered <- zones %>%
     filter(
       Typ == target_value,
       GebietLang == filter_area,
@@ -45,8 +45,8 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
       select(-BZO)
   }
   if (target_value == "Preis") {
-    suppressWarnings(filtered <- filtered %>%
-        mutate_at(vars(-Jahr), as.numeric))
+    filtered <- filtered %>%
+      mutate(across(c(everything(), -Jahr), as.numeric))
   } else {
     filtered <- filtered %>%
       mutate(across(everything(), \(x) replace_na(x, " ")))
@@ -61,16 +61,16 @@ filter_area_zone <- function(data, target_value, filter_area, filter_price, filt
 #'
 #' @description A fct function
 #'
-#' @param data zones
+#' @param zones dataset zones
 #' @param filter_area filters the area with the given input in the app
 #' @param filter_price filters the price with the given input in the app
 #' @param filter_group filters the group with the given input in the app
 #'
-#' @return The return value, if any, from executing the function.
+#' @return The return value is the data for the download table that is displayed in the area app
 #'
 #' @noRd
-filter_area_download <- function(data, filter_area, filter_price, filter_group){
-  filtered <- data %>%
+filter_area_download <- function(zones, filter_area, filter_price, filter_group){
+  filtered <- zones %>%
     filter(
       GebietLang == filter_area,
       PreisreiheLang == filter_price,

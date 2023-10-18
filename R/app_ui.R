@@ -2,8 +2,6 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny
-#' @import zuericssstyle
 #' @noRd
 app_ui <- function(request) {
   # get data with function
@@ -63,7 +61,6 @@ app_ui <- function(request) {
           condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
           # Show App 1 Code
           mod_area_ui(id = "area_zones",
-                      data = data_vector[["zones"]],
                       choicesapp = choices_app1)
         ),
         # App 2
@@ -89,8 +86,6 @@ app_ui <- function(request) {
 #' This function is internally used to add external
 #' resources inside the Shiny application.
 #'
-#' @import shiny
-#' @importFrom golem add_resource_path activate_js favicon bundle_resources
 #' @noRd
 golem_add_external_resources <- function() {
   add_resource_path(

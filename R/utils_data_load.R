@@ -4,10 +4,6 @@
 #'
 #' @details The sources of the datasets are https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142, 
 #' https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142 and https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143.
-#'
-#' @import dplyr
-#' @importFrom furrr future_map
-#' @importFrom data.table fread
 #' 
 #' @return a named list of tibbles with zones, series, and addresses
 #' @noRd

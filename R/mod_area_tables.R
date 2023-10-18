@@ -1,14 +1,11 @@
 #' area_tables UI Function
 #'
-#' @description A shiny Module.
+#' @param id id of the module called in the app
+#' @param target_value target value of the app ("Preis" or "Zahl")
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module to render the titles and tables of the apps with the area-architecture
 #'
 #' @noRd 
-#'
-#' @import reactable
-#' @import shiny 
-#' @importFrom shiny NS tagList 
 mod_area_tables_ui <- function(id, target_value){
   ns <- NS(id)
   
@@ -39,12 +36,20 @@ mod_area_tables_ui <- function(id, target_value){
 
 #' area_tables Server Functions
 #'
+#' @param id id of the module called in the app
+#' @param zones dataset zones
+#' @param target_value target value of the app ("Preis" or "Zahl")
+#' @param trigger reactive trigger input to render the output
+#' @param filter_area filter value (area) selected from input widget
+#' @param filter_price filter value (price) selected from input widget
+#' @param filter_group filter value (group) selected from input widget
+#'
 #' @noRd 
-mod_area_tables_server <- function(id, data, target_value, trigger, filter_area, filter_price, filter_group){
+mod_area_tables_server <- function(id, zones, target_value, trigger, filter_area, filter_price, filter_group){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(!is.reactive(data))
+    stopifnot(!is.reactive(zones))
     stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_area))
     stopifnot(is.reactive(filter_price))
@@ -59,7 +64,7 @@ mod_area_tables_server <- function(id, data, target_value, trigger, filter_area,
     
     # render table 16 but only when trigger input is updated
     output$results16 <- renderReactable({
-      filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO16")
+      filtered_data <- filter_area_zone(zones, target_value, filter_area(), filter_price(), filter_group(), "BZO16")
       out16 <- reactable_area(filtered_data, 5)
       out16
     }) %>%
@@ -73,7 +78,7 @@ mod_area_tables_server <- function(id, data, target_value, trigger, filter_area,
     
     # render table 99 but only when the trigger input is updated
     output$results99 <- renderReactable({
-      filtered_data <- filter_area_zone(data, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
+      filtered_data <- filter_area_zone(zones, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
       out99 <- reactable_area(filtered_data, 15)
       out99
     }) %>%

@@ -1,19 +1,11 @@
 #' address UI Function
 #'
-#' @description A shiny Module.
+#' @param id id of the module called in the app
+#' @param choicesapp choices that are selectable in the input widget
 #'
-#' @param id,input,output,session Internal parameters for {shiny}.
+#' @description A shiny Module to render the app (address) with the app-architecture 'address'
 #'
 #' @noRd 
-#'
-#' @import shinyjs
-#' @import reactable
-#' @import shiny
-#' @import icons
-#' @import zuericssstyle
-#' @importFrom dqshiny autocomplete_input
-#' @importFrom shiny NS tagList 
-#' @importFrom gtools mixedsort
 mod_address_ui <- function(id, choicesapp){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
@@ -103,8 +95,12 @@ mod_address_ui <- function(id, choicesapp){
     
 #' address Server Functions
 #'
+#' @param id id of the module called in the app
+#' @param addresses dataset addresses
+#' @param series dataset series
+#'
 #' @noRd 
-mod_address_server <- function(id, data, data2){
+mod_address_server <- function(id, addresses, series){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -113,7 +109,7 @@ mod_address_server <- function(id, data, data2){
     observe({
       updateSelectInput(
         session, "select_number",
-        choices = data %>%
+        choices = addresses %>%
           filter(StrasseLang == input$select_street) %>%
           pull(Hnr) %>%
           mixedsort()
@@ -122,15 +118,15 @@ mod_address_server <- function(id, data, data2){
     })
     
     mod_address_info_server(id = "address_info", 
-                            data = data, 
-                            data2 = data2, 
+                            addresses = addresses, 
+                            series = series, 
                             trigger = reactive(input$start_query),
                             filter_street = reactive(input$select_street), 
                             filter_number = reactive(input$select_number))
     
     mod_address_tables_server(id = "Preis_submodul", 
-                              data = data, 
-                              data2 = data2,
+                              addresses = addresses, 
+                              series = series,
                               target_value = "Preis", 
                               trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
@@ -138,7 +134,7 @@ mod_address_server <- function(id, data, data2){
     
     # Filter data for download name
     filename <- reactive({
-      district <- data %>%
+      district <- addresses %>%
         filter(StrasseLang == input$select_street & Hnr == input$select_number) %>%
         pull(QuarLang)
        
@@ -147,7 +143,7 @@ mod_address_server <- function(id, data, data2){
       bindEvent(input$start_query)
     
     mod_download_server(id = "download_3", 
-                        function_filter = filter_address_download(data, data2, input$select_street, input$select_number),
+                        function_filter = filter_address_download(addresses, series, input$select_street, input$select_number),
                         filename_download = filename(),
                         filter_app = "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe", 
                         filter_1 = input$select_street, 
