@@ -50,8 +50,8 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
       filtered <- filtered %>%
         mutate(across(c(everything(), -Jahr), as.numeric))
     } else {
-      filtered <- filtered %>%
-        mutate(across(everything(), \(x) replace_na(x, " ")))
+      filtered <- filtered %>% 
+        mutate_all(., ~ replace(., is.na(.), " "))
     }
     return(filtered)
   } else {
@@ -69,7 +69,7 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
   }
 }
 # data_zones <- data_vector[["zones"]]
-# test <- filter_area_zone("Zones", data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
+test <- filter_area_zone("Zones", data_vector[["zones"]], "Zahl", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
 # test <- filter_area_zone("Types", data_vector[["types"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften")
 
 

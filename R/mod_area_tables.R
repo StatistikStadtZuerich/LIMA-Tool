@@ -35,7 +35,7 @@ mod_area_tables_ui <- function(id, target_value){
 #' @param filter_group filter value (group) selected from input widget
 #'
 #' @noRd 
-mod_area_tables_server <- function(id, target_app, zones, target_value, trigger, filter_area, filter_price, filter_group, title, BZO){
+mod_area_tables_server <- function(id, target_app, zones, target_value, trigger, filter_area, filter_price, filter_group, title, BZO = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
