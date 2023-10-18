@@ -124,14 +124,14 @@ mod_area_ui <- function(id, choicesapp, test){
           # Action Link for Hand Changes (counts)
           tags$div(
             class = "linkCount",
-            actionLink(ns("linkCount"),
+            actionLink(ns("linkCount2"),
                        "Anzahl Handänderungen einblenden",
                        icon = icon("angle-down")
             ),
             
             # Hidden Titles and Tables for Hand Changes
             conditionalPanel(
-              condition = "input.linkCount % 2 == 1",
+              condition = "input.linkCount2 % 2 == 1",
               ns = ns,
               mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
             )
@@ -251,6 +251,21 @@ mod_area_server <- function(id, zones){
                            filter_group = reactive(input$select_group),
                            title = paste0("Nach Zonenart gemäss BZO 1999"),
                            BZO = "BZO99")
+    
+    # Show Output Counts (again needed for App 2)
+    observeEvent(input$linkCount2, {
+      # shinyjs::toggle("countDiv")
+      print("toggled")
+      if (input$linkCount2 %% 2 == 1) {
+        txt <- "Anzahl Handänderungen verbergen"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+        shinyjs::addClass("linkCount2", "visitedLink")
+      } else {
+        txt <- "Anzahl Handänderungen einblenden"
+        updateActionLink(session, "linkCount2", label = txt, icon = icon("angle-down"))
+        shinyjs::removeClass("linkCount2", "visitedLink")
+      }
+    })
     mod_area_tables_server(id = "Zahl_submodul",
                            zones = zones,
                            target_app = "Types", 

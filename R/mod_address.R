@@ -54,40 +54,27 @@ mod_address_ui <- function(id, choicesapp){
       conditionalPanel(
         condition = "input.select_street && input.select_number && input.start_query",
         ns = ns,
-        mod_address_info_ui(ns("address_info"))
-      ),
-      br(),
-      
-      conditionalPanel(
-        condition = "input.select_street && input.select_number && input.start_query",
-        ns = ns,
-        mod_address_tables_ui(ns("Preis_submodul"))
-      ),
-      
-      # # Action Link for Hand Changes (counts)
-      # useShinyjs(),
-      # conditionalPanel(
-      #   condition = "input.buttonStartTwo",
-      #   tags$div(
-      #     id = "linkCountTwoId",
-      #     class = "linkCountTwoDiv",
-      #     uiOutput("linken")
-      #   )
-      # ),
-      # 
-      # # Hidden Table for Hand Changes
-      # shinyjs::hidden(
-      #   div(
-      #     id = "countDivTwo",
-      #     mod_address_tables_ui("Zahl_submodul")
-      #   )
-      # ),
-      
-      
-      conditionalPanel(
-        condition = "input.select_street && input.select_number && input.start_query",
-        ns = ns,
-        explanationbox_app3()
+        mod_address_info_ui(ns("address_info")),
+        br(),
+        mod_address_tables_ui(ns("Preis_submodul")),
+        
+        # Action Link for Hand Changes (counts)
+        tags$div(
+          class = "linkCount",
+          actionLink(ns("linkCount"),
+                     "Anzahl Handänderungen einblenden",
+                     icon = icon("angle-down")
+          ),
+          
+          # Hidden Titles and Tables for Hand Changes
+          conditionalPanel(
+            condition = "input.linkCount % 2 == 1",
+            ns = ns,
+            mod_area_tables_ui(ns("Zahl_submodul"))
+          ),
+          
+          explanationbox_app3()
+        )
       )
     )
   )
@@ -128,6 +115,28 @@ mod_address_server <- function(id, addresses, series){
                               addresses = addresses, 
                               series = series,
                               target_value = "Preis", 
+                              trigger = reactive(input$start_query),
+                              filter_street = reactive(input$select_street), 
+                              filter_number = reactive(input$select_number))
+    
+    observeEvent(input$linkCount, {
+      # shinyjs::toggle("countDiv")
+      print("toggled")
+      if (input$linkCount %% 2 == 1) {
+        txt <- "Anzahl Handänderungen verbergen"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+        shinyjs::addClass("linkCount", "visitedLink")
+      } else {
+        txt <- "Anzahl Handänderungen einblenden"
+        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
+        shinyjs::removeClass("linkCount", "visitedLink")
+      }
+    })
+    
+    mod_address_tables_server(id = "Zahl_submodul", 
+                              addresses = addresses, 
+                              series = series,
+                              target_value = "Zahl", 
                               trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
