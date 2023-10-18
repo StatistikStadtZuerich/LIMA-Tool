@@ -44,7 +44,7 @@ app_ui <- function(request) {
           h1("Wählen Sie eine Abfrage"),
           hr(),
           sszRadioButtons(
-            inputId = "choose_app",
+            inputId = "choose_app", # these choices are also used in the module mod_area.R
             label = NULL,
             choices = c(
               "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete",
@@ -61,18 +61,16 @@ app_ui <- function(request) {
           condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
           # Show App 1 Code
           mod_area_ui(id = "area_zones",
-                      choicesapp = choices_app12,
-                      target_app = "Zones")
+                      choicesapp = choices_app12)
         ),
         # App 2
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
           # Show App 2 Code
           mod_area_ui(id = "area_types",
-                      choicesapp = choices_app12,
-                      target_app = "Types")
+                      choicesapp = choices_app12)
         ),
-        # App 2
+        # App 3
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
           # Show App 3 Code
@@ -96,7 +94,7 @@ golem_add_external_resources <- function() {
     "www",
     app_sys("app/www")
   )
-
+  
   tags$head(
     favicon(),
     bundle_resources(

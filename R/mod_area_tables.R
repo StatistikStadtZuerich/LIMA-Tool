@@ -19,17 +19,7 @@ mod_area_tables_ui <- function(id, target_value){
     ),
     
     # Table for results
-    reactableOutput(ns("results")),
-    
-    # # title for BZO99
-    # tags$div(
-    #   # id = "tableTitle99_id",
-    #   class = "tableTitle_div",
-    #   textOutput(ns("tableTitle99"))
-    # ),
-    # 
-    # # Table for BZO 99
-    # reactableOutput(ns("results99"))
+    reactableOutput(ns("results"))
     
   )
 }
@@ -45,10 +35,11 @@ mod_area_tables_ui <- function(id, target_value){
 #' @param filter_group filter value (group) selected from input widget
 #'
 #' @noRd 
-mod_area_tables_server <- function(id, zones, target_value, trigger, filter_area, filter_price, filter_group, title, BZO){
+mod_area_tables_server <- function(id, target_app, zones, target_value, trigger, filter_area, filter_price, filter_group, title, BZO){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    stopifnot(!is.reactive(target_app))
     stopifnot(!is.reactive(zones))
     stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_area))
@@ -66,25 +57,12 @@ mod_area_tables_server <- function(id, zones, target_value, trigger, filter_area
     
     # render table but only when trigger input is updated
     output$results <- renderReactable({
-      filtered_data <- filter_area_zone(zones, target_value, filter_area(), filter_price(), filter_group(), BZO)
-      out <- reactable_area(filtered_data, 20)
+      filtered_data <- filter_area_zone(target_app, zones, target_value, filter_area(), filter_price(), filter_group(), BZO)
+      out <- reactable_area(filtered_data, 25)
       out
     }) %>%
       bindEvent(trigger())
     
-    # # title for table 99
-    # output$tableTitle99 <- renderText({
-    #   tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
-    #   tableTitle99
-    # })
-    # 
-    # # render table 99 but only when the trigger input is updated
-    # output$results99 <- renderReactable({
-    #   filtered_data <- filter_area_zone(zones, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
-    #   out99 <- reactable_area(filtered_data, 15)
-    #   out99
-    # }) %>%
-    #   bindEvent(trigger())
   })
 }
 

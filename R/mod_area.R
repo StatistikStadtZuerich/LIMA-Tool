@@ -6,11 +6,10 @@
 #' @description A shiny Module to render the apps (zones and bebauungsart) with the app-architecture 'zones'
 #'
 #' @noRd 
-mod_area_ui <- function(id, choicesapp, target_app){
+mod_area_ui <- function(id, choicesapp, test){
   ### Set up directory for icons
   ssz_icons <- icon_set("inst/app/www/icons/")
-  stopifnot(!is.reactive(target_app))
-  targetApp <- target_app
+
   ns <- NS(id)
   tagList(
     sidebarPanel(
@@ -72,49 +71,86 @@ mod_area_ui <- function(id, choicesapp, target_app){
       ),
       
       # Mainpanel for App 1
+      # conditionalPanel(
+      #   condition = paste0("input.start_query && input.", ns('choose_app'), "']  == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'"),
+      #   ns = ns,
       conditionalPanel(
-        condition = "targetApp == 'Zones' && input.start_query",
+        condition = "input.start_query",
         ns = ns,
         
-        conditionalPanel(
-          condition = "input.start_query",
-          ns = ns,
-          mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
-          mod_area_tables_ui(ns("Preis_submodul99"), "Preis")
-          ),
+        golem_add_external_resources(),
+        mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
+        mod_area_tables_ui(ns("Preis_submodul99"), "Preis"),
+        
+        
+        # Action Link for Hand Changes (counts)
+        # golem::activate_js(),
+        # shinyjs::useShinyjs(),
+        # conditionalPanel(
+        #   condition = "input.start_query",
+        #   ns = ns,
+        #   tags$div(
+        #     class = "linkCount",
+        #     actionLink("linkCount",
+        #                "Anzahl Handänderungen einblenden",
+        #                icon = icon("angle-down")
+        #     )
+        #   )
+        # ),
+        # 
+        # # Hidden Titles and Tables for Hand Changes
+        # shinyjs::hidden(
+        #   div(
+        #     id = "countDiv",
+        #     
+        #     mod_area_tables_ui(ns("Zahl_submodul16"), "Zahl"),
+        #     mod_area_tables_ui(ns("Zahl_submodul99"), "Zahl")
+        #   )
+        #   ),
+        
+        
+          explanationbox_app1()
           
-          # Action Link for Hand Changes (counts)
-          # golem::activate_js(),
-          # shinyjs::useShinyjs(),
-          # conditionalPanel(
-          #   condition = "input.start_query",
-          #   ns = ns,
-          #   tags$div(
-          #     class = "linkCount",
-          #     actionLink("linkCount",
-          #                "Anzahl Handänderungen einblenden",
-          #                icon = icon("angle-down")
-          #     )
-          #   )
-          # ),
-          # 
-          # # Hidden Titles and Tables for Hand Changes
-          # shinyjs::hidden(
-          #   div(
-          #     id = "countDiv",
-          #     
-          #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
-          #   )
-          #   ),
-          
-          conditionalPanel(
-            condition = "input.start_query",
-            ns = ns,
-            explanationbox_app1()
-          )
       
-        )
-  
+        ),
+      
+      # Mainpanel for App 2
+      conditionalPanel(
+        condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete' && input.start_query",
+        ns = ns,
+        
+        mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
+        
+        
+        # Action Link for Hand Changes (counts)
+        # golem::activate_js(),
+        # shinyjs::useShinyjs(),
+        # conditionalPanel(
+        #   condition = "input.start_query",
+        #   ns = ns,
+        #   tags$div(
+        #     class = "linkCount",
+        #     actionLink("linkCount",
+        #                "Anzahl Handänderungen einblenden",
+        #                icon = icon("angle-down")
+        #     )
+        #   )
+        # ),
+        # 
+        # # Hidden Titles and Tables for Hand Changes
+        # shinyjs::hidden(
+        #   div(
+        #     id = "countDiv",
+        #     
+        #     mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
+        #   )
+        #   ),
+        
+        
+        explanationbox_app2()
+        
+        
+      )
     )  
   )
  
@@ -157,6 +193,7 @@ mod_area_server <- function(id, zones){
     ## App 1
     # Output price
     mod_area_tables_server(id = "Preis_submodul16", 
+                           target_app = "Zones",
                            zones = zones, 
                            target_value = "Preis", 
                            trigger = reactive(input$start_query),
@@ -166,6 +203,7 @@ mod_area_server <- function(id, zones){
                            title = paste0("Nach Zonenart gemäss BZO 2016"),
                            BZO = "BZO16")
     mod_area_tables_server(id = "Preis_submodul99", 
+                           target_app = "Zones",
                            zones = zones, 
                            target_value = "Preis", 
                            trigger = reactive(input$start_query),
@@ -174,12 +212,34 @@ mod_area_server <- function(id, zones){
                            filter_group = reactive(input$select_group),
                            title = paste0("Nach Zonenart gemäss BZO 1999"),
                            BZO = "BZO99")
+    mod_area_tables_server(id = "Preis_submodul", 
+                           target_app = "Types",
+                           zones = zones, 
+                           target_value = "Preis", 
+                           trigger = reactive(input$start_query),
+                           filter_area = reactive(input$select_area), 
+                           filter_price = reactive(input$select_price), 
+                           filter_group = reactive(input$select_group),
+                           title = paste0("Nach Bebauungsart"),
+                           BZO = NULL)
     
     # Show Output Counts
     # observeEvent(input$linkCount, {
     #   shinyjs::toggle("countDiv")
     # 
     # # Output count
+    # mod_area_tables_server(id = "Zahl_submodul16",
+    #                        zones = zones,
+    #                        target_value = "Zahl",
+    #                        filter_area = input$select_area,
+    #                        filter_price = input$select_price,
+    #                        filter_group = input$select_group)
+    # mod_area_tables_server(id = "Zahl_submodul99",
+    #                        zones = zones,
+    #                        target_value = "Zahl",
+    #                        filter_area = input$select_area,
+    #                        filter_price = input$select_price,
+    #                        filter_group = input$select_group)
     # mod_area_tables_server(id = "Zahl_submodul",
     #                        zones = zones,
     #                        target_value = "Zahl",
