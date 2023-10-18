@@ -27,7 +27,7 @@ mod_area_tables_ui <- function(id, target_value){
       class = "tableTitle_div",
       textOutput(ns("tableTitle99"))
     ),
-    
+
     # Table for BZO 99
     reactableOutput(ns("results99"))
     
@@ -75,7 +75,7 @@ mod_area_tables_server <- function(id, zones, target_value, trigger, filter_area
       tableTitle99 <- paste0("Nach Zonenart gemäss BZO 1999")
       tableTitle99
     })
-    
+
     # render table 99 but only when the trigger input is updated
     output$results99 <- renderReactable({
       filtered_data <- filter_area_zone(zones, target_value, filter_area(), filter_price(), filter_group(), "BZO99")
