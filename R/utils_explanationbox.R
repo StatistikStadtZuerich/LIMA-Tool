@@ -24,12 +24,13 @@ explanationbox_app2 <- function(){
     class = "infoDiv",
     h5("eeeee"),
     hr(),
-    p("eeeee"),
-    p("eeeee"),
-    p("eeeee"),
-    p("eeeee"),
-    p("eeeee"),
-    p("eeeee")
+    p("EFH = Einfamilienhäuser"),
+    p("MFH = Mehrfamilienhäuser"),
+    p("WHG = Wohnhäuser mit Geschäftsräumen"),
+    p("UWH = Übrige Wohnhäuser"),
+    p("NB = Nutzbauten in Wohn- und Mischzonen"),
+    p("IGZ = Bauten in Industrie- und Gewerbezone"),
+    p("UG = Bauten in übrigen Zonen")
   )
 }
 explanationbox_app3 <- function(){
