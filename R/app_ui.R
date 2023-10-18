@@ -19,7 +19,7 @@ app_ui <- function(request) {
     )
   } else {
     ## Set unique choices
-    choices_app1 <- list(
+    choices_app12 <- list(
       choices_area = unique(data_vector[["zones"]]$GebietLang),
       choices_price = unique(data_vector[["zones"]]$PreisreiheLang),
       choices_group = unique(data_vector[["zones"]]$ArtLang)
@@ -61,12 +61,14 @@ app_ui <- function(request) {
           condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
           # Show App 1 Code
           mod_area_ui(id = "area_zones",
-                      choicesapp = choices_app1)
+                      choicesapp = choices_app12)
         ),
         # App 2
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
           # Show App 2 Code
+          mod_area_ui(id = "area_types",
+                      choicesapp = choices_app12)
         ),
         # App 2
         conditionalPanel(
