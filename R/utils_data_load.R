@@ -112,6 +112,9 @@ get_data <- function() {
       mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
+      mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
+                                 ArtSort == 32 ~ "Stockwerkeigentum",
+                                 ArtSort == 39 ~ "Alle Verkäufe")) %>%
       mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
       mutate(across(everything(), \(x) replace(x, x == "", "–")))
     

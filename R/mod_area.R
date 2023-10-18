@@ -115,8 +115,11 @@ mod_area_ui <- function(id, choicesapp, test){
         ),
       
       # Mainpanel for App 2
+      # conditionalPanel(
+      #   condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete' && input.start_query",
+      #   ns = ns,
       conditionalPanel(
-        condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete' && input.start_query",
+        condition = "input.start_query",
         ns = ns,
         
         mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
@@ -221,7 +224,7 @@ mod_area_server <- function(id, zones){
                            filter_price = reactive(input$select_price), 
                            filter_group = reactive(input$select_group),
                            title = paste0("Nach Bebauungsart"),
-                           BZO = NULL)
+                           BZO = "BZO99")
     
     # Show Output Counts
     # observeEvent(input$linkCount, {

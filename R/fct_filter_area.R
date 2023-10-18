@@ -53,22 +53,24 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
       filtered <- filtered %>%
         mutate(across(everything(), \(x) replace_na(x, " ")))
     }
+    return(filtered)
   } else {
-    filtered <- zones %>%
+    filteredd <- zones %>%
       filter(
         Typ == target_value,
         GebietLang == filter_area,
         PreisreiheLang == filter_price,
         ArtLang == filter_group,
-      ) %>%
-      select(Jahr, EFH, MFH, WHG, UWH, NB, IGZ, UG) %>%
+      ) %>% 
+      select(Jahr, EFH, MFH, WHG, UWH, NB, IGZ, UG) %>% 
       mutate(across(c(everything(), -Jahr), as.numeric))
+    filteredd
+    return(filteredd)
   }
-  
-  return(filtered)
 }
 # data_zones <- data_vector[["zones"]]
-# test <- filter_area_zone(data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
+# test <- filter_area_zone("Zones", data_vector[["zones"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
+# test <- filter_area_zone("Types", data_vector[["types"]], "Preis", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften")
 
 
 #' filter_area_download 
