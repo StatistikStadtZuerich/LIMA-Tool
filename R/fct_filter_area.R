@@ -92,6 +92,7 @@ filter_area_download <- function(zones, filter_area, filter_price, filter_group)
       PreisreiheLang == filter_price,
       ArtLang == filter_group
     ) %>%
-    select(Typ, GebietLang, PreisreiheLang, ArtLang, BZO, Jahr, ALLE, ZE, KE, QU, W2, W23, W34, W45, W56)
+    select(-PreisreiheSort, -ArtSort, -GebietSort)
   return(filtered)
 }
+

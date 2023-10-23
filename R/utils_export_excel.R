@@ -47,7 +47,28 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
     
     definitions <- read_excel(hauptPfad, sheet = 2)
     
-  } else {
+  } else if (queryinput == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete"){
+    data <- data %>%
+      mutate(
+        Titel = ifelse(is.na(Titel), 
+                       NA, 
+                       paste0("Grundstückspreise (Median) nach Bebauungsart für Ihre Auswahl: ", 
+                              input1, 
+                              ", ", 
+                              input2, 
+                              ", ", 
+                              input3))
+      )
+    
+    selected <- list(c("T_1", 
+                       "Grundstückspreise (Median) nach Bebauungsart für Ihre Auswahl:", 
+                       paste0(input1, ", ", input2, ", ", input3), 
+                       "  ", 
+                       "Quelle: Statistik Stadt Zürich, GWZ")) %>%
+      as.data.frame()
+    
+    definitions <- read_excel(hauptPfad, sheet = 3)
+  }else {
     data <- data %>%
       mutate(
         Titel = ifelse(is.na(Titel), 
@@ -65,7 +86,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
                        "Quelle: Statistik Stadt Zürich, GWZ")) %>%
       as.data.frame()
     
-    definitions <- read_excel(hauptPfad, sheet = 3)
+    definitions <- read_excel(hauptPfad, sheet = 4)
   }
   
   # Styling

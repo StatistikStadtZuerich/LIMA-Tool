@@ -39,11 +39,28 @@ mod_area_ui <- function(id, choicesapp, test){
       ),
       br(),
       
-      # Downloads
+      # Downloads for App1 & App2
       conditionalPanel(
-        condition = "input.start_query",
-        ns = ns,
-        mod_download_ui(ns("download_1"))
+        # This condition is not in a module, therefore there is no need for a Namespace
+        condition = "input.choose_app == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'",
+        
+        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
+        conditionalPanel(
+          condition = "input.start_query",
+          ns = ns,
+          mod_download_ui(ns("download_1"))
+        )
+      ),
+      conditionalPanel(
+        # This condition is not in a module, therefore there is no need for a Namespace
+        condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete'",
+        
+        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
+        conditionalPanel(
+          condition = "input.start_query",
+          ns = ns,
+          mod_download_ui(ns("download_2"))
+        )
       )
     ),
     
@@ -279,18 +296,33 @@ mod_area_server <- function(id, zones){
     
     ## Download
     # Filter data for download name
-    filename <- reactive({
+    filename_zones <- reactive({
       price <- gsub(" ", "-", input$select_price, fixed = TRUE)
       group <- gsub(" ", "-", input$select_group, fixed = TRUE)
       area <- gsub(" ", "-", input$select_area, fixed = TRUE)
       name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area))
     }) %>%
       bindEvent(input$start_query)
+    filename_types <- reactive({
+      price <- gsub(" ", "-", input$select_price, fixed = TRUE)
+      group <- gsub(" ", "-", input$select_group, fixed = TRUE)
+      area <- gsub(" ", "-", input$select_area, fixed = TRUE)
+      name <- list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", price, "_", group, "_", area))
+    }) %>%
+      bindEvent(input$start_query)
     
     mod_download_server(id = "download_1",
                         function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
-                        filename_download = filename(), 
+                        filename_download = filename_zones(), 
                         filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
+                        filter_1 = input$select_area, 
+                        filter_2 = input$select_price, 
+                        filter_3 = input$select_group)
+    
+    mod_download_server(id = "download_2",
+                        function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
+                        filename_download = filename_types(), 
+                        filter_app = "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete", 
                         filter_1 = input$select_area, 
                         filter_2 = input$select_price, 
                         filter_3 = input$select_group)
