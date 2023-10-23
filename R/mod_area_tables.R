@@ -19,8 +19,11 @@ mod_area_tables_ui <- function(id, target_value){
     ),
     
     # Table for results
-    reactableOutput(ns("results"))
-    
+    shinycssloaders::withSpinner(
+      reactableOutput(ns("results")),
+      type = 7,
+      color = "#0F05A0"
+    )
   )
 }
 

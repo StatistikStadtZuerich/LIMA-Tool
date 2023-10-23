@@ -10,7 +10,12 @@ mod_address_tables_ui <- function(id){
   tagList(
     
     # Table for prices
-    reactableOutput(ns("results"))
+    shinycssloaders::withSpinner(
+      reactableOutput(ns("results")),
+      type = 7,
+      color = "#0F05A0"
+    )
+    
  
   )
 }
