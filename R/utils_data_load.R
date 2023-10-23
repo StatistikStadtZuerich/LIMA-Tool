@@ -3,7 +3,7 @@
 #' @description Function to read the three open government datasets on which the app is based
 #'
 #' @details The sources of the datasets are https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142, 
-#' https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142 and https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143.
+#' https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142, https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143, https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144 and https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145.
 #' 
 #' @return a named list of tibbles with zones, series, and addresses
 #' @noRd
@@ -19,7 +19,9 @@ get_data <- function() {
       URLs <- c(
         "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_od5141/download/BAU514OD5141.csv",
         "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142/download/BAU514OD5142.csv",
-        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143/download/BAU514OD5143.csv"
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143/download/BAU514OD5143.csv",
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144/download/BAU514OD5144.csv",
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145/download/BAU514OD5145.csv"
       )
       
       ## Download
@@ -93,8 +95,7 @@ get_data <- function() {
       mutate(across(c(
         FrQmBodenGanzeLieg,
         FrQmBodenStwE,
-        FrQmBodenAlleHA,
-        FrQmWohnflStwE
+        FrQmBodenAlleHA
         ), \(x) replace(x, x == "", "–"))
       )
 
@@ -104,13 +105,38 @@ get_data <- function() {
         ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
         TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
       ))
+    
+    
+    ## Building Type
+    types <- data[[4]] %>%
+      mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
+                                        PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
+                                        PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
+      mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
+                                 ArtSort == 32 ~ "Stockwerkeigentum",
+                                 ArtSort == 39 ~ "Alle Verkäufe")) %>%
+      mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
+      mutate(across(everything(), \(x) replace(x, x == "", "–")))
+    
+    
+    ## Series Building Type
+    seriestypes <- data[[5]] %>%
+      mutate(across(everything(), \(x) replace(x, x == ".", "–"))) %>%
+      mutate(across(c(
+        FrQmBodenGanzeLieg,
+        FrQmBodenStwE,
+        FrQmBodenAlleHA
+      ), \(x) replace(x, x == "", "–"))
+      )
 
     return(list(
       zones = zones,
       zonesBZO16 = zonesBZO16,
       zonesBZO99 = zonesBZO99,
       series = series,
-      addresses = addresses
+      addresses = addresses,
+      types = types,
+      seriestypes = seriestypes
       ))
 
   }

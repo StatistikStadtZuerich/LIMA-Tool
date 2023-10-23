@@ -21,6 +21,20 @@ explanationbox_app1 <- function(){
 }
 explanationbox_app2 <- function(){
   tags$div(
+    class = "infoDiv",
+    h5("Erklärung Bebauungsarten"),
+    hr(),
+    p("EFH = Einfamilienhäuser"),
+    p("MFH = Mehrfamilienhäuser"),
+    p("WHG = Wohnhäuser mit Geschäftsräumen"),
+    p("UWH = Übrige Wohnhäuser"),
+    p("NB = Nutzbauten in Wohn- und Mischzonen"),
+    p("IGZ = Bauten in Industrie- und Gewerbezone"),
+    p("UG = Bauten in übrigen Zonen")
+  )
+}
+explanationbox_app3 <- function(){
+  tags$div(
     id = "defs",
     class = "infoDiv",
     h5("Begriffserklärung"),
