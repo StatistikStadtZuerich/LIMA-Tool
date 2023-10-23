@@ -217,7 +217,6 @@ mod_area_server <- function(id, zones){
     
     # Show Output Counts
     observeEvent(input$linkCount, {
-      # shinyjs::toggle("countDiv")
       print("toggled")
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"
@@ -254,7 +253,6 @@ mod_area_server <- function(id, zones){
     
     # Show Output Counts (again needed for App 2)
     observeEvent(input$linkCount2, {
-      # shinyjs::toggle("countDiv")
       print("toggled")
       if (input$linkCount2 %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"

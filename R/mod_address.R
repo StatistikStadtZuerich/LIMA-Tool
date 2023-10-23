@@ -120,7 +120,6 @@ mod_address_server <- function(id, addresses, series){
                               filter_number = reactive(input$select_number))
     
     observeEvent(input$linkCount, {
-      # shinyjs::toggle("countDiv")
       print("toggled")
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"

@@ -1,22 +1,23 @@
 #' @keywords internal
 "_PACKAGE"
-#' @import shiny
-#' @import zuericssstyle
-#' @importFrom golem add_resource_path activate_js favicon bundle_resources
-#' @import icons
-#' @import shinyjs
-#' @import reactable
-#' @importFrom gtools mixedsort
-#' @importFrom tidyr pivot_longer
-#' @importFrom knitr kable
-#' @importFrom kableExtra kable_styling
+#' 
+#' @importFrom data.table fread
 #' @import dplyr
 #' @importFrom furrr future_map
-#' @importFrom data.table fread
 #' @import ggplot2
+#' @importFrom golem add_resource_path activate_js favicon bundle_resources
+#' @importFrom gtools mixedsort
+#' @import icons
 #' @import jpeg
+#' @importFrom kableExtra kable_styling
+#' @importFrom knitr kable
 #' @import openxlsx
+#' @import reactable
 #' @importFrom readxl read_excel
+#' @import shiny
+#' @import shinyjs
+#' @importFrom tidyr pivot_longer
+#' @import zuericssstyle
 #' 
 ## usethis namespace: start
 ## usethis namespace: end
