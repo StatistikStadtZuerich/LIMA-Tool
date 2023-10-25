@@ -6,11 +6,10 @@
 #' @description A shiny Module to render the apps (zones and bebauungsart) with the app-architecture 'zones'
 #'
 #' @noRd 
-mod_area_ui <- function(id, choicesapp, test){
-  ### Set up directory for icons
-  ssz_icons <- icon_set("inst/app/www/icons/")
-  
+mod_area_ui <- function(id, choicesapp){
+
   ns <- NS(id)
+  
   tagList(
     sidebarPanel(
       # Area
@@ -39,33 +38,26 @@ mod_area_ui <- function(id, choicesapp, test){
       ),
       br(),
       
-      # Downloads for App1 & App2
+      # Downloads
       conditionalPanel(
-        # This condition is not in a module, therefore there is no need for a Namespace
-        condition = "input.choose_app == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'",
-        
-        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
-        conditionalPanel(
-          condition = "input.start_query",
-          ns = ns,
-          mod_download_ui(ns("download_1"))
-        )
-      ),
-      conditionalPanel(
-        # This condition is not in a module, therefore there is no need for a Namespace
-        condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete'",
-        
-        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
-        conditionalPanel(
-          condition = "input.start_query",
-          ns = ns,
-          mod_download_ui(ns("download_2"))
-        )
+         condition = "input.start_query",
+         ns = ns, 
+         
+         conditionalPanel(
+           condition = "input.choose_app == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'",
+           mod_download_ui(ns("download_1"))
+         ),
+         conditionalPanel(
+           condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete'",
+           mod_download_ui(ns("download_2"))
+         )
       )
     ),
-    
     # Main Panel (Results)
     mainPanel(
+    conditionalPanel(
+      condition = "input.start_query",
+      ns = ns,
       
       # Table Title (prices)
       tags$div(
@@ -88,83 +80,20 @@ mod_area_ui <- function(id, choicesapp, test){
         textOutput(ns("subSubtitle"))
       ),
       
-      
-      ########################## App specific code #############################
-      
-      # Mainpanel for App 1
+      # Modules for App1 & App2
       conditionalPanel(
         # This condition is not in a module, therefore there is no need for a Namespace
         condition = "input.choose_app == 'Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete'",
-        
-        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
-        conditionalPanel(
-          condition = "input.start_query",
-          ns = ns,
-          
-          mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
-          mod_area_tables_ui(ns("Preis_submodul99"), "Preis"),
-          
-          # Action Link for Hand Changes (counts)
-          tags$div(
-            class = "linkCount",
-            actionLink(ns("linkCount"),
-                       "Anzahl Handänderungen einblenden",
-                       icon = icon("angle-down")
-            ),
-
-          # Hidden Titles and Tables for Hand Changes
-          conditionalPanel(
-            condition = "input.linkCount % 2 == 1",
-            ns = ns,
-              mod_area_tables_ui(ns("Zahl_submodul16"), "Zahl"),
-              mod_area_tables_ui(ns("Zahl_submodul99"), "Zahl")
-            )
-            ),
-          
-          explanationbox_app1()
-          
-        )
+        mod_area_zones_ui(ns("mod_zones"))
       ),
-      
-      # Mainpanel for App 2
       conditionalPanel(
         # This condition is not in a module, therefore there is no need for a Namespace
         condition = "input.choose_app == 'Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete'",
-        
-        # Start Query Button is in the module, so the conditionalPanel() needs a ns()
-        conditionalPanel(
-          condition = "input.start_query",
-          ns = ns,
-          
-          mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
-          
-          # Action Link for Hand Changes (counts)
-          tags$div(
-            class = "linkCount",
-            actionLink(ns("linkCount2"),
-                       "Anzahl Handänderungen einblenden",
-                       icon = icon("angle-down")
-            ),
-            
-            # Hidden Titles and Tables for Hand Changes
-            conditionalPanel(
-              condition = "input.linkCount2 % 2 == 1",
-              ns = ns,
-              mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
-            )
-            
-          ),
-          explanationbox_app2()
-        )
+        mod_area_types_ui(ns("mod_types"))
       )
-      
-      ##########################################################################
-      
-    )  
+    )
   )
-  
-  
-}
+)}
 
 #' area Server Functions
 #'
@@ -198,119 +127,27 @@ mod_area_server <- function(id, zones){
     }) %>%
       bindEvent(input$start_query)
     
-    
-    ## App 1
-    # Output price
-    mod_area_tables_server(id = "Preis_submodul16", 
-                           target_app = "Zones",
-                           zones = zones, 
-                           target_value = "Preis", 
-                           trigger = reactive(input$start_query),
-                           filter_area = reactive(input$select_area), 
-                           filter_price = reactive(input$select_price), 
-                           filter_group = reactive(input$select_group),
-                           title = paste0("Nach Zonenart gemäss BZO 2016"),
-                           BZO = "BZO16")
-    mod_area_tables_server(id = "Preis_submodul99", 
-                           target_app = "Zones",
-                           zones = zones, 
-                           target_value = "Preis", 
-                           trigger = reactive(input$start_query),
-                           filter_area = reactive(input$select_area), 
-                           filter_price = reactive(input$select_price), 
-                           filter_group = reactive(input$select_group),
-                           title = paste0("Nach Zonenart gemäss BZO 1999"),
-                           BZO = "BZO99")
-    mod_area_tables_server(id = "Preis_submodul", 
-                           target_app = "Types",
-                           zones = zones, 
-                           target_value = "Preis", 
-                           trigger = reactive(input$start_query),
-                           filter_area = reactive(input$select_area), 
-                           filter_price = reactive(input$select_price), 
-                           filter_group = reactive(input$select_group),
-                           title = paste0("Nach Bebauungsart"),
-                           BZO = "BZO99")
-    
-    # Show Output Counts
-    observeEvent(input$linkCount, {
-      print("toggled")
-      if (input$linkCount %% 2 == 1) {
-        txt <- "Anzahl Handänderungen verbergen"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
-        shinyjs::addClass("linkCount", "visitedLink")
-      } else {
-        txt <- "Anzahl Handänderungen einblenden"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
-        shinyjs::removeClass("linkCount", "visitedLink")
-      }
-    })
-    
-    # Output count
-    mod_area_tables_server(id = "Zahl_submodul16",
-                           zones = zones,
-                           target_app = "Zones", 
-                           target_value = "Zahl",
-                           trigger = reactive(input$start_query),
-                           filter_area = reactive(input$select_area), 
-                           filter_price = reactive(input$select_price), 
-                           filter_group = reactive(input$select_group),
-                           title = paste0("Nach Zonenart gemäss BZO 2016"),
-                           BZO = "BZO16")
-    mod_area_tables_server(id = "Zahl_submodul99",
-                           zones = zones,
-                           target_app = "Zones", 
-                           target_value = "Zahl",
-                           trigger = reactive(input$start_query),
-                           filter_area = reactive(input$select_area), 
-                           filter_price = reactive(input$select_price), 
-                           filter_group = reactive(input$select_group),
-                           title = paste0("Nach Zonenart gemäss BZO 1999"),
-                           BZO = "BZO99")
-    
-    # Show Output Counts (again needed for App 2)
-    observeEvent(input$linkCount2, {
-      print("toggled")
-      if (input$linkCount2 %% 2 == 1) {
-        txt <- "Anzahl Handänderungen verbergen"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
-        shinyjs::addClass("linkCount2", "visitedLink")
-      } else {
-        txt <- "Anzahl Handänderungen einblenden"
-        updateActionLink(session, "linkCount2", label = txt, icon = icon("angle-down"))
-        shinyjs::removeClass("linkCount2", "visitedLink")
-      }
-    })
-    mod_area_tables_server(id = "Zahl_submodul",
-                           zones = zones,
-                           target_app = "Types", 
-                           target_value = "Zahl",
-                           trigger = reactive(input$start_query), 
-                           filter_area = reactive(input$select_area),
-                           filter_price = reactive(input$select_price),
-                           filter_group = reactive(input$select_group),
-                           title = paste0("Nach Bebauungsart"))
-    
-    
-    
-    
-    ## Download
-    # Filter data for download name
-    filename_zones <- reactive({
+    # Inputs for download names
+    inputs <- reactive({
       price <- gsub(" ", "-", input$select_price, fixed = TRUE)
       group <- gsub(" ", "-", input$select_group, fixed = TRUE)
       area <- gsub(" ", "-", input$select_area, fixed = TRUE)
-      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", price, "_", group, "_", area))
+      name <- list(paste0(price, "_", group, "_", area))
+    })
+    filename_zones <- reactive({
+      req(inputs())
+      inputs <- inputs()
+      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", inputs))
     }) %>%
       bindEvent(input$start_query)
     filename_types <- reactive({
-      price <- gsub(" ", "-", input$select_price, fixed = TRUE)
-      group <- gsub(" ", "-", input$select_group, fixed = TRUE)
-      area <- gsub(" ", "-", input$select_area, fixed = TRUE)
-      name <- list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", price, "_", group, "_", area))
+      req(inputs())
+      inputs <- inputs()
+      name <- list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", inputs))
     }) %>%
       bindEvent(input$start_query)
     
+    # Call Download Module for App 1 & 2
     mod_download_server(id = "download_1",
                         function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
                         filename_download = filename_zones(), 
@@ -318,14 +155,29 @@ mod_area_server <- function(id, zones){
                         filter_1 = input$select_area, 
                         filter_2 = input$select_price, 
                         filter_3 = input$select_group)
-    
     mod_download_server(id = "download_2",
                         function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
-                        filename_download = filename_types(), 
-                        filter_app = "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete", 
-                        filter_1 = input$select_area, 
-                        filter_2 = input$select_price, 
+                        filename_download = filename_types(),
+                        filter_app = "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
+                        filter_1 = input$select_area,
+                        filter_2 = input$select_price,
                         filter_3 = input$select_group)
+    
+    
+    # Call Modules for App 1 & 2 (Module specifics code)
+    mod_area_zones_server("mod_zones", zones, 
+                          filename_download = filename(), 
+                          trigger = reactive(input$start_query), 
+                          filter_area = reactive(input$select_area), 
+                          filter_price = reactive(input$select_price), 
+                          filter_group = reactive(input$select_group))
+    mod_area_types_server("mod_types", zones, 
+                          filename_download = filename(), 
+                          trigger = reactive(input$start_query), 
+                          filter_area = reactive(input$select_area), 
+                          filter_price = reactive(input$select_price), 
+                          filter_group = reactive(input$select_group))
+  
     
     ### Change Action Query Button when first selected
     ## All Apps

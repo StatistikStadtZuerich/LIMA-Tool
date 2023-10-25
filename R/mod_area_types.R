@@ -1,19 +1,18 @@
-#' area_zones UI Function
+#' area_types UI Function
 #'
-#' @param id id of the module called in the appdevtool
+#' @param id id of the module called in the app
 #'
 #' @description A shiny Module.
 #'
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-mod_area_zones_ui <- function(id){
+mod_area_types_ui <- function(id){
   
   ns <- NS(id)
   tagList(
-
-    mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
-    mod_area_tables_ui(ns("Preis_submodul99"), "Preis"),
+    
+    mod_area_tables_ui(ns("Preis_submodul"), "Preis"),
       
     # Action Link for Hand Changes (counts)
     tags$div(
@@ -22,22 +21,21 @@ mod_area_zones_ui <- function(id){
                  "Anzahl Handänderungen einblenden",
                  icon = icon("angle-down")
       ),
-        
+      
       # Hidden Titles and Tables for Hand Changes
       conditionalPanel(
         condition = "input.linkCount % 2 == 1",
         ns = ns,
-        mod_area_tables_ui(ns("Zahl_submodul16"), "Zahl"),
-        mod_area_tables_ui(ns("Zahl_submodul99"), "Zahl")
+        mod_area_tables_ui(ns("Zahl_submodul"), "Zahl")
       )
-      ),
-      
-      explanationbox_app1()
-      
-    )
+    ),
+    
+    explanationbox_app2()
+
+  )
 }
     
-#' area_zones Server Functions
+#' area_types Server Functions
 #'
 #' @param id id of the module called in the app
 #' @param zones dataset zones
@@ -48,7 +46,7 @@ mod_area_zones_ui <- function(id){
 #' @param filter_group filter value (group) selected from input widget 
 #'
 #' @noRd 
-mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_area, filter_price, filter_group){
+mod_area_types_server <- function(id, zones, filename_download,  trigger, filter_area, filter_price, filter_group){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -57,29 +55,19 @@ mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_
     stopifnot(is.reactive(filter_price))
     stopifnot(is.reactive(filter_group))
     
-    # Call Table Modules for Prices in App 1
-    mod_area_tables_server(id = "Preis_submodul16", 
-                           target_app = "Zones",
-                           zones = zones, 
-                           target_value = "Preis", 
+    # Call Table Modules for Prices in App 2
+    mod_area_tables_server(id = "Preis_submodul",
+                           target_app = "Types",
+                           zones = zones,
+                           target_value = "Preis",
                            trigger = reactive(trigger()),
                            filter_area = reactive(filter_area()), 
                            filter_price = reactive(filter_price()), 
                            filter_group = reactive(filter_group()),
-                           title = paste0("Nach Zonenart gemäss BZO 2016"),
-                           BZO = "BZO16")
-    mod_area_tables_server(id = "Preis_submodul99", 
-                           target_app = "Zones",
-                           zones = zones, 
-                           target_value = "Preis", 
-                           trigger = reactive(trigger()),
-                           filter_area = reactive(filter_area()), 
-                           filter_price = reactive(filter_price()), 
-                           filter_group = reactive(filter_group()),
-                           title = paste0("Nach Zonenart gemäss BZO 1999"),
+                           title = paste0("Nach Bebauungsart"),
                            BZO = "BZO99")
     
-    # Toggle for Showing Counts in App 1  
+    # Toggle for Showing Counts in App 2  
     observeEvent(input$linkCount, {
       print("toggled")
       if (input$linkCount %% 2 == 1) {
@@ -93,33 +81,23 @@ mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_
       }
     })
     
-    # Call Table Modules for Counts in App 1
-    mod_area_tables_server(id = "Zahl_submodul16",
+    # Call Table Modules for Counts in App 2
+    mod_area_tables_server(id = "Zahl_submodul",
                            zones = zones,
-                           target_app = "Zones", 
+                           target_app = "Types",
                            target_value = "Zahl",
                            trigger = reactive(trigger()),
                            filter_area = reactive(filter_area()), 
                            filter_price = reactive(filter_price()), 
                            filter_group = reactive(filter_group()),
-                           title = paste0("Nach Zonenart gemäss BZO 2016"),
-                           BZO = "BZO16")
-    mod_area_tables_server(id = "Zahl_submodul99",
-                           zones = zones,
-                           target_app = "Zones", 
-                           target_value = "Zahl",
-                           trigger = reactive(trigger()),
-                           filter_area = reactive(filter_area()), 
-                           filter_price = reactive(filter_price()), 
-                           filter_group = reactive(filter_group()),
-                           title = paste0("Nach Zonenart gemäss BZO 1999"),
-                           BZO = "BZO99")
-
+                           title = paste0("Nach Bebauungsart"))
+    
+    
   })
 }
     
 ## To be copied in the UI
-# mod_area_zones_ui("area_zones_1")
+# mod_area_types_ui("area_types_1")
     
 ## To be copied in the server
-# mod_area_zones_server("area_zones_1")
+# mod_area_types_server("area_types_1")
