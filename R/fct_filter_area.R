@@ -71,7 +71,6 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
         mutate_all(., ~ replace(., is.na(.), " "))
     }
     return(filtered)
-    return(filtered)
   }
 }
 # data_zones <- data_vector[["zones"]]
