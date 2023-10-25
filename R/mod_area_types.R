@@ -2,7 +2,7 @@
 #'
 #' @param id id of the module called in the app
 #'
-#' @description A shiny Module.
+#' @description A shiny Module to render the App specific code for App 2. This Module is then called in the Module mod_area.R.
 #'
 #' @noRd 
 #'
@@ -69,7 +69,6 @@ mod_area_types_server <- function(id, zones, filename_download,  trigger, filter
     
     # Toggle for Showing Counts in App 2  
     observeEvent(input$linkCount, {
-      print("toggled")
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"
         updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))

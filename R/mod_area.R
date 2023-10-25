@@ -136,14 +136,12 @@ mod_area_server <- function(id, zones){
     })
     filename_zones <- reactive({
       req(inputs())
-      inputs <- inputs()
-      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", inputs))
+      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", inputs()))
     }) %>%
       bindEvent(input$start_query)
     filename_types <- reactive({
       req(inputs())
-      inputs <- inputs()
-      name <- list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", inputs))
+      name <- list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", inputs()))
     }) %>%
       bindEvent(input$start_query)
     
