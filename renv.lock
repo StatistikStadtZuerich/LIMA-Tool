@@ -69,14 +69,14 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.10",
+      "Version": "1.0.11",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "methods",
         "utils"
       ],
-      "Hash": "e749cae40fa9ef469b6050959517453c"
+      "Hash": "ae6cbbe1492f4de79c45fce06f967ce8"
     },
     "anytime": {
       "Package": "anytime",
@@ -168,7 +168,7 @@
     },
     "bslib": {
       "Package": "bslib",
-      "Version": "0.4.2",
+      "Version": "0.5.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -184,7 +184,7 @@
         "rlang",
         "sass"
       ],
-      "Hash": "a7fbf03946ad741129dc81098722fca1"
+      "Hash": "1b117970533deb6d4e992c1b34e9d905"
     },
     "cachem": {
       "Package": "cachem",
@@ -403,14 +403,14 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.31",
+      "Version": "0.6.33",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "8b708f296afd9ae69f450f9640be8990"
+      "Hash": "b18a9cf3c003977b0cc49d5e76ebe48d"
     },
     "downlit": {
       "Package": "downlit",
@@ -461,15 +461,15 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "daqana",
       "RemoteRepo": "dqshiny",
-      "RemoteRef": "master",
+      "RemoteUsername": "daqana",
+      "RemoteRef": "HEAD",
       "RemoteSha": "b2c60d61e4554430c0b63d311efef7e97bd45873",
       "Requirements": [
         "htmltools",
         "shiny"
       ],
-      "Hash": "09c3dc6b14074eab14d331f1e4db2850"
+      "Hash": "13dee56efc2a0d88eceec40dbcf4a0bc"
     },
     "ellipsis": {
       "Package": "ellipsis",
@@ -533,14 +533,14 @@
     },
     "fs": {
       "Package": "fs",
-      "Version": "1.6.2",
+      "Version": "1.6.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "94af08e0aa9675a16fadbb3aaaa90d2a"
+      "Hash": "47b5f30c720c23999b913a1a635cf0bb"
     },
     "furrr": {
       "Package": "furrr",
@@ -851,9 +851,9 @@
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "mitchelloharawild",
       "RemoteRepo": "icons",
-      "RemoteRef": "master",
+      "RemoteUsername": "mitchelloharawild",
+      "RemoteRef": "HEAD",
       "RemoteSha": "6e4dc378ac86c1d4f4ea167f408bed07b3df14fb",
       "Requirements": [
         "R",
@@ -870,7 +870,7 @@
         "utils",
         "xml2"
       ],
-      "Hash": "73775362cd0dcad43ba00cfb9c89a928"
+      "Hash": "1ca4478a3466cb5d4b30b93c0b33036c"
     },
     "ini": {
       "Package": "ini",
@@ -912,13 +912,13 @@
     },
     "jsonlite": {
       "Package": "jsonlite",
-      "Version": "1.8.5",
+      "Version": "1.8.7",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "methods"
       ],
-      "Hash": "3ee4d9899e4db3e976fc82b98d24a31a"
+      "Hash": "266a20443ca13c65688b2116d5220f76"
     },
     "kableExtra": {
       "Package": "kableExtra",
@@ -1429,7 +1429,7 @@
     },
     "readxl": {
       "Package": "readxl",
-      "Version": "1.4.3",
+      "Version": "1.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1440,7 +1440,7 @@
         "tibble",
         "utils"
       ],
-      "Hash": "8cf9c239b96df1bbb133b74aef77ad0a"
+      "Hash": "2e6020b1399d95f947ed867045e9ca17"
     },
     "rematch": {
       "Package": "rematch",
@@ -1475,13 +1475,13 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.17.3",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "utils"
       ],
-      "Hash": "4543b8cd233ae25c6aba8548be9e747e"
+      "Hash": "41b847654f567341725473431dd0d5ab"
     },
     "rhub": {
       "Package": "rhub",
@@ -1643,7 +1643,7 @@
     },
     "sass": {
       "Package": "sass",
-      "Version": "0.4.6",
+      "Version": "0.4.7",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1653,7 +1653,7 @@
         "rappdirs",
         "rlang"
       ],
-      "Hash": "cc3ec7dd33982ef56570229b62d6388e"
+      "Hash": "6bd4d33b50ff927191ec9acbf52fd056"
     },
     "scales": {
       "Package": "scales",
@@ -1701,7 +1701,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.7.4",
+      "Version": "1.7.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1731,7 +1731,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "c2eae3d8c670fa9dfa35a12066f4a1d5"
+      "Hash": "5ec01cc255f2138fc2f0dc74d2b1a1a1"
     },
     "shinyWidgets": {
       "Package": "shinyWidgets",
@@ -1750,6 +1750,20 @@
         "shiny"
       ],
       "Hash": "fd889b32caa37b8ed9b1e9e7ef1564bc"
+    },
+    "shinycssloaders": {
+      "Package": "shinycssloaders",
+      "Version": "1.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "digest",
+        "glue",
+        "grDevices",
+        "shiny"
+      ],
+      "Hash": "f39bb3c44a9b496723ec7e86f9a771d8"
     },
     "shinyjs": {
       "Package": "shinyjs",
@@ -2171,20 +2185,20 @@
       "Package": "zuericssstyle",
       "Version": "0.0.1.0002",
       "Source": "GitHub",
+      "Remotes": "github::daqana/dqshiny",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteUsername": "StatistikStadtZuerich",
       "RemoteRepo": "zuericssstyle",
-      "RemoteRef": "main",
+      "RemoteUsername": "StatistikStadtZuerich",
+      "RemoteRef": "HEAD",
       "RemoteSha": "02f3b267992d374eb6f6e71a01dc11fefc0e0d62",
-      "Remotes": "github::daqana/dqshiny",
       "Requirements": [
         "dqshiny",
         "htmltools",
         "shiny",
         "shinyWidgets"
       ],
-      "Hash": "6800cba81ec0f2d6f2ffa10bbe9049bb"
+      "Hash": "09dbdfa244cf770fae7d3408977b917b"
     }
   }
 }
