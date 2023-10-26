@@ -120,7 +120,6 @@ mod_address_server <- function(id, addresses, series){
                               addresses = addresses, 
                               series = series,
                               target_value = "Preis", 
-                              trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     
@@ -141,7 +140,6 @@ mod_address_server <- function(id, addresses, series){
                               addresses = addresses, 
                               series = series,
                               target_value = "Zahl", 
-                              trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     

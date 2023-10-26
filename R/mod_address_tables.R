@@ -25,19 +25,17 @@ mod_address_tables_ui <- function(id){
 #' @param id id of the module called in the app
 #' @param addresses dataset addresses
 #' @param series dataset series
-#' @param trigger reactive trigger input to render the output
 #' @param target_value target value of the app ("Preis" or "Zahl")
 #' @param filter_street filter value (street) selected from input widget
 #' @param filter_number filter value (number) selected from input widget
 #'
 #' @noRd 
-mod_address_tables_server <- function(id, addresses, series, trigger, target_value, filter_street, filter_number){
+mod_address_tables_server <- function(id, addresses, series, target_value, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     stopifnot(!is.reactive(addresses))
     stopifnot(!is.reactive(series))
-    stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
     stopifnot(!is.reactive(target_value))
@@ -60,21 +58,22 @@ mod_address_tables_server <- function(id, addresses, series, trigger, target_val
       
       print(available)
     }) %>%
-      bindEvent(trigger())
+      bindEvent(filter_street(), filter_number())
     
     # Table if data is available for zone
     output$results <- renderReactable({
-      filtered_data <- filter_address(addresses, series, target_value, filter_street(), filter_number())
       
       availability <- dataAvailable()
       if (availability > 0) {
+        filtered_data <- filter_address(addresses, series, target_value, filter_street(), filter_number())
+        
         out <- reactable_address(filtered_data)
         out
       } else {
         NULL
       }
     }) %>%
-      bindEvent(trigger())
+      bindEvent(filter_street(), filter_number())
   })
 }
     
