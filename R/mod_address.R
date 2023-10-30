@@ -20,7 +20,8 @@ mod_address_ui <- function(id, choicesapp){
         ns("select_street"),
         "Geben Sie eine Strasse ein",
         choicesapp[["choices_street"]],
-        max_options = 500
+        max_options = 500,
+        value = "Napfgasse"
       ),
 
       # Number input
@@ -28,19 +29,24 @@ mod_address_ui <- function(id, choicesapp){
         ns("select_number"),
         "Wählen Sie eine Hausnummer aus",
         choices = choicesapp[["choices_streetnr"]],
-        selected = NULL
+        selected = 1
       ),
       
       # Action Button
-      sszActionButton(
-        inputId = ns("start_query"),
-        label = "Abfrage starten"
+      conditionalPanel(
+        condition = "input.start_query == 0",
+        ns = ns,
+        sszActionButton(
+          inputId = ns("start_query"),
+          label = "Abfrage starten"
+        )
       ),
+      
       br(),
       
       # Downloads
       conditionalPanel(
-        condition = "input.select_street && input.select_number && input.start_query",
+        condition = "input.start_query",
         ns = ns,
         mod_download_ui(ns("download_3"))
       )
@@ -52,7 +58,7 @@ mod_address_ui <- function(id, choicesapp){
       
       # Info Table
       conditionalPanel(
-        condition = "input.select_street && input.select_number && input.start_query",
+        condition = "input.start_query",
         ns = ns,
         mod_address_info_ui(ns("address_info")),
         br(),
@@ -94,6 +100,7 @@ mod_address_server <- function(id, addresses, series){
     # Filter Hnr to the according address
     # Sort for House Number in Drop Down
     observe({
+      freezeReactiveValue(input, "select_number")
       updateSelectInput(
         session, "select_number",
         choices = addresses %>%
@@ -101,13 +108,11 @@ mod_address_server <- function(id, addresses, series){
           pull(Hnr) %>%
           mixedsort()
       )
-      print(input$select_street)
     })
     
     mod_address_info_server(id = "address_info", 
                             addresses = addresses, 
-                            series = series, 
-                            trigger = reactive(input$start_query),
+                            series = series,
                             filter_street = reactive(input$select_street), 
                             filter_number = reactive(input$select_number))
     
@@ -115,12 +120,10 @@ mod_address_server <- function(id, addresses, series){
                               addresses = addresses, 
                               series = series,
                               target_value = "Preis", 
-                              trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     
-    observeEvent(input$linkCount, {
-      print("toggled")
+    observe({
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"
         updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
@@ -130,25 +133,26 @@ mod_address_server <- function(id, addresses, series){
         updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
         shinyjs::removeClass("linkCount", "visitedLink")
       }
-    })
+    }) |> 
+      bindEvent(input$linkCount)
     
     mod_address_tables_server(id = "Zahl_submodul", 
                               addresses = addresses, 
                               series = series,
                               target_value = "Zahl", 
-                              trigger = reactive(input$start_query),
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     
     # Filter data for download name
     filename <- reactive({
+      req(input$select_street, input$select_number)
       district <- addresses %>%
         filter(StrasseLang == input$select_street & Hnr == input$select_number) %>%
         pull(QuarLang)
        
       name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district))
     }) %>%
-      bindEvent(input$start_query)
+      bindEvent(input$select_street, input$select_number) 
     
     mod_download_server(id = "download_3", 
                         function_filter = filter_address_download(addresses, series, input$select_street, input$select_number),
@@ -157,16 +161,6 @@ mod_address_server <- function(id, addresses, series){
                         filter_1 = input$select_street, 
                         filter_2 = input$select_number,
                         filter_3 = NULL)
-    
-    
-    ### Change Action Query Button when first selected
-    ## All Apps
-    observe({
-      req(input$start_query)
-      updateActionButton(session, "start_query",
-                         label = "Erneute Abfrage"
-      )
-    })
   })
 }
     

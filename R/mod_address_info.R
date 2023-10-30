@@ -22,24 +22,23 @@ mod_address_info_ui <- function(id){
 #' @param id id of the module called in the app
 #' @param addresses dataset addresses
 #' @param series dataset series
-#' @param trigger target value of the app ("Preis" or "Zahl")
 #' @param filter_street filter value (street) selected from input widget
 #' @param filter_number filter value (number) selected from input widget
 #'
 #' @noRd 
-mod_address_info_server <- function(id, addresses, series, trigger, filter_street, filter_number){
+mod_address_info_server <- function(id, addresses, series, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     stopifnot(!is.reactive(addresses))
     stopifnot(!is.reactive(series))
-    stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_street))
     stopifnot(is.reactive(filter_number))
 
     
     # Show Output Information Address
     output$results_info <- renderText({
+      req(filter_street(), filter_number())
       filtered_data <- addresses %>%
         filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
         mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
@@ -56,10 +55,11 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
         ) %>%
         kable_styling(bootstrap_options = c("condensed"))
     }) %>%
-      bindEvent(trigger())
+      bindEvent(filter_street(), filter_number())
     
     # Get Information if Data Frame is empty
     dataAvailable <- reactive({
+      req(filter_street(), filter_number())
       
       filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
       
@@ -73,10 +73,11 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
         avaiable <- 0
       }
     }) %>%
-      bindEvent(trigger())
+      bindEvent(filter_street(), filter_number())
 
     # Reactive Info
     infoReactive <- reactive({
+      req(filter_street(), filter_number())
 
       availability <- dataAvailable()
       if (availability > 0) {
@@ -88,7 +89,7 @@ mod_address_info_server <- function(id, addresses, series, trigger, filter_stree
         infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
       }
     }) %>%
-      bindEvent(trigger())
+      bindEvent(filter_street(), filter_number())
 
     # Show Info (App 2)
     output$more_info <- renderUI({
