@@ -46,40 +46,82 @@ mod_download_ui <- function(id){
 #' @param filter_3 input (filter) of the optional third widget
 #'
 #' @noRd 
-mod_download_server <- function(id, function_filter, filename_download, filter_app, filter_1, filter_2, filter_3 = NULL){
+mod_download_server <- function(id, filter_function, static_parameters, reactive_parameters, filter_app){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
+    
+    # check input types
+    stopifnot(is.function(filter_function))
+    purrr::map(static_parameters, \(x) stopifnot(!is.reactive(x)))
+    purrr::map(reactive_parameters, \(x) stopifnot(is.reactive(x)))
     
     ### Get Data for Download 
     # App 1
     dataDownload <- reactive({
+      purrr::map(reactive_parameters,
+                 req)
       
-      seriesPriceCount <- function_filter
+      seriesPriceCount <- filter_function(unlist(static_parameters),
+                                          unlist(reactive_parameters))
       seriesPriceCount
  
     })
+    
+    # create appropriate filename
+      if (filter_app == 1) {
+        fn_for_download <- reactive({
+          price <- gsub(" ", "-", reactive_parameters$select_price, fixed = TRUE)
+          group <- gsub(" ", "-", reactive_parameters$select_group, fixed = TRUE)
+          area <- gsub(" ", "-", reactive_parameters$select_area, fixed = TRUE)
+          name <- list(paste0(price, "_", group, "_", area))
+          
+          list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", name))
+        })
+      } else if (filter_app == 2) {
+        fn_for_download <- reactive({
+          price <- gsub(" ", "-", reactive_parameters$select_price, fixed = TRUE)
+          group <- gsub(" ", "-", reactive_parameters$select_group, fixed = TRUE)
+          area <- gsub(" ", "-", reactive_parameters$select_area, fixed = TRUE)
+          name <- list(paste0(price, "_", group, "_", area))
+        
+        list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", name))
+        })
+      } else if (filter_app == 3) {
+        fn_for_download <- reactive({
+          req(reactive_parameters$select_street, reactive_parameters$select_number)
+          district <- static_parameters$addresses %>%
+            filter(StrasseLang == reactive_parameters$select_street() & Hnr == reactive_parameters$select_number()) %>%
+            pull(QuarLang)
+          
+          list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district))
+          })
+        
+      } else warning("no appropriate app chosen")
     
     ### Write Download Table
     ## App 1
     # CSV
     output$csvDownload <- downloadHandler(
-      filename = function(name) {
-        name <- filename_download
+      filename = function() {
+        name <- fn_for_download()
         paste0(name, ".csv")
       },
       content = function(file) {
-        write.csv(dataDownload(), file, row.names = FALSE, na = " ", fileEncoding = "UTF-8")
+        write.csv(head(iris), #dataDownload(), 
+                  file, row.names = FALSE, na = " ", fileEncoding = "UTF-8")
       }
     )
     
     # Excel
     output$excelDownload <- downloadHandler(
-      filename = function(name) {
-        name <- filename_download
+      filename = function() {
+        name <- fn_for_download
         paste0(name, ".xlsx")
       },
       content = function(file) {
-        sszDownloadExcel(dataDownload(), file, filter_app, filter_1, filter_2, filter_3)
+        #todo has das anpassen
+        sszDownloadExcel(head(iris), #dataDownload(), 
+                         file, filter_app, filter_1, filter_2, filter_3)
       }
     )
  

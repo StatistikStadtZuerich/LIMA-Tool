@@ -12,7 +12,7 @@ mod_address_ui <- function(id, choicesapp){
   
   ns <- NS(id)
   tagList(
- 
+    
     sidebarPanel(
       
       # Street input
@@ -23,7 +23,7 @@ mod_address_ui <- function(id, choicesapp){
         max_options = 500,
         value = "Napfgasse"
       ),
-
+      
       # Number input
       sszSelectInput(
         ns("select_number"),
@@ -51,7 +51,7 @@ mod_address_ui <- function(id, choicesapp){
         mod_download_ui(ns("download_3"))
       )
     ),
-        
+    
     # Main Panel (results)
     mainPanel(
       br(),
@@ -85,7 +85,7 @@ mod_address_ui <- function(id, choicesapp){
     )
   )
 }
-    
+
 #' address Server Functions
 #'
 #' @param id id of the module called in the app
@@ -143,29 +143,31 @@ mod_address_server <- function(id, addresses, series){
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     
-    # Filter data for download name
-    filename <- reactive({
-      req(input$select_street, input$select_number)
-      district <- addresses %>%
-        filter(StrasseLang == input$select_street & Hnr == input$select_number) %>%
-        pull(QuarLang)
-       
-      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district))
-    }) %>%
-      bindEvent(input$select_street, input$select_number) 
+    # filters_rv <- reactiveValues(
+    #   select_street = reactive(input$select_street),
+    #   select_number = reactive(input$select_number)
+    # )
+    # 
+    # observe({
+    #   filters_rv$select_street = input$select_street
+    #   filters_rv$select_number = input$select_number
+    #  })
     
     mod_download_server(id = "download_3", 
-                        function_filter = filter_address_download(addresses, series, input$select_street, input$select_number),
-                        filename_download = filename(),
-                        filter_app = 3, 
-                        filter_1 = input$select_street, 
-                        filter_2 = input$select_number,
-                        filter_3 = NULL)
+                        filter_function = filter_address_download,
+                        static_parameters = list("addresses" = addresses, 
+                                                 "series" = series),
+                        reactive_parameters = list(
+                          select_street = reactive(input$select_street),
+                          select_number = reactive(input$select_number)
+                        ),
+                        filter_app = 3
+    )
   })
 }
-    
+
 ## To be copied in the UI
 # mod_address_ui("address_1")
-    
+
 ## To be copied in the server
 # mod_address_server("address_1")
