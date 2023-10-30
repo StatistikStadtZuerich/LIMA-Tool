@@ -157,7 +157,7 @@ mod_address_server <- function(id, addresses, series){
     mod_download_server(id = "download_3", 
                         function_filter = filter_address_download(addresses, series, input$select_street, input$select_number),
                         filename_download = filename(),
-                        filter_app = "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe", 
+                        filter_app = 3, 
                         filter_1 = input$select_street, 
                         filter_2 = input$select_number,
                         filter_3 = NULL)

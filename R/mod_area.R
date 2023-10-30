@@ -149,14 +149,14 @@ mod_area_server <- function(id, zones){
     mod_download_server(id = "download_1",
                         function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
                         filename_download = filename_zones(), 
-                        filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
+                        filter_app = 1, 
                         filter_1 = input$select_area, 
                         filter_2 = input$select_price, 
                         filter_3 = input$select_group)
     mod_download_server(id = "download_2",
                         function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
                         filename_download = filename_types(),
-                        filter_app = "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
+                        filter_app = 2,
                         filter_1 = input$select_area,
                         filter_2 = input$select_price,
                         filter_3 = input$select_group)
