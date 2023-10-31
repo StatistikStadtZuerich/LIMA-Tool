@@ -59,11 +59,11 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
     # filter data appropriately (according to function and parameters given)
     data_for_download <- reactive({
       purrr::map(reactive_parameters, req)
-
+      
       seriesPriceCount <- rlang::inject(
         filter_function(!!!static_parameters,
                         !!!(purrr::map(reactive_parameters,
-                                   \(x) x()) |> 
+                                       \(x) x()) |> 
                               unname())
         )
       )
@@ -126,9 +126,13 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
         paste0(name, ".xlsx")
       },
       content = function(file) {
-        #todo has das anpassen
-        sszDownloadExcel(head(iris), #data_for_download(), 
-                         file, filter_app, filter_1, filter_2, filter_3)
+        
+        rlang::inject(sszDownloadExcel(data_for_download(), 
+                                       file, filter_app, 
+                                       !!!(purrr::map(reactive_parameters,
+                                                      \(x) x()) |> 
+                                             unname())
+        ))
       }
     )
     
