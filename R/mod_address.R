@@ -143,16 +143,6 @@ mod_address_server <- function(id, addresses, series){
                               filter_street = reactive(input$select_street), 
                               filter_number = reactive(input$select_number))
     
-    # filters_rv <- reactiveValues(
-    #   select_street = reactive(input$select_street),
-    #   select_number = reactive(input$select_number)
-    # )
-    # 
-    # observe({
-    #   filters_rv$select_street = input$select_street
-    #   filters_rv$select_number = input$select_number
-    #  })
-    
     mod_download_server(id = "download_3", 
                         filter_function = filter_address_download,
                         static_parameters = list("addresses" = addresses, 
