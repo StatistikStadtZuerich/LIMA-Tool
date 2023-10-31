@@ -80,7 +80,7 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
         area <- gsub(" ", "-", reactive_parameters$select_area(), fixed = TRUE)
         name <- list(paste0(price, "_", group, "_", area))
         
-        list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", name))
+        paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", name)
       })
     } else if (filter_app == 2) {
       fn_for_download <- reactive({
@@ -90,7 +90,7 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
         area <- gsub(" ", "-", reactive_parameters$select_area(), fixed = TRUE)
         name <- list(paste0(price, "_", group, "_", area))
         
-        list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", name))
+        paste0("Liegenschaftenhandel_nach_Bebauungsart_", name)
       })
     } else if (filter_app == 3) {
       
@@ -100,7 +100,7 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
           filter(StrasseLang == reactive_parameters$select_street() & Hnr == reactive_parameters$select_number()) %>%
           pull(QuarLang)
         
-        list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district))
+        paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district)
       })
       
     } else warning("no appropriate app chosen")
