@@ -32,10 +32,15 @@ mod_area_ui <- function(id, choicesapp){
       ),
       
       # Action Button
-      sszActionButton(
-        inputId = ns("start_query"),
-        label = "Abfrage starten"
+      conditionalPanel(
+        condition = "input.start_query == 0",
+        ns = ns,
+        sszActionButton(
+          inputId = ns("start_query"),
+          label = "Abfrage starten"
+        )
       ),
+      
       br(),
       
       # Downloads
@@ -111,21 +116,21 @@ mod_area_server <- function(id, zones){
     output$title <- renderText({
       input$select_price
     }) %>%
-      bindEvent(input$start_query)
+      bindEvent(input$select_area, input$select_price, input$select_group)
     
     # Subtitle
     # only updated when button is pressed
     output$subtitle <- renderText({
       input$select_group
     }) %>%
-      bindEvent(input$start_query)
+      bindEvent(input$select_area, input$select_price, input$select_group)
     
     # Sub-Subtitle
     # only updated when button is pressed
     output$subSubtitle <- renderText({
       paste0(input$select_area, ", Medianpreise in CHF")
     }) %>%
-      bindEvent(input$start_query)
+      bindEvent(input$select_area, input$select_price, input$select_group)
     
     # Call Download Module for App 1 & 2
     mod_download_server(id = "download_1",

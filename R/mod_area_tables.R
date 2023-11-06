@@ -64,7 +64,7 @@ mod_area_tables_server <- function(id, target_app, zones, target_value, trigger,
       out <- reactable_area(filtered_data, 25)
       out
     }) %>%
-      bindEvent(trigger())
+      bindEvent(trigger(), filter_area(), filter_price(), filter_group())
     
   })
 }
