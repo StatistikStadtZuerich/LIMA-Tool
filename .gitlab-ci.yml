@@ -22,6 +22,9 @@ deploy-job-test:
     APP_NAME: $TEST_NAME
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+  environment:
+    name: test
+    url: "https://${SHINY_ACC_NAME}.shinyapps.io/${APP_NAME}"
   script:
     - Rscript -e "renv::deactivate()"
     - Rscript -e "packageVersion('rsconnect')"
@@ -34,6 +37,9 @@ deploy-job-prod:
     APP_NAME: $PROD_NAME
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  environment:
+    name: prod
+    url: "https://${SHINY_ACC_NAME}.shinyapps.io/${APP_NAME}"
   script:
     - Rscript -e "renv::deactivate()"
     - Rscript -e "packageVersion('rsconnect')"
