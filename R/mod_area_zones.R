@@ -48,11 +48,10 @@ mod_area_zones_ui <- function(id){
 #' @param filter_group filter value (group) selected from input widget 
 #'
 #' @noRd 
-mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_area, filter_price, filter_group){
+mod_area_zones_server <- function(id, zones, filename_download, filter_area, filter_price, filter_group){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_area))
     stopifnot(is.reactive(filter_price))
     stopifnot(is.reactive(filter_group))
@@ -62,7 +61,6 @@ mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_
                            target_app = "Zones",
                            zones = zones, 
                            target_value = "Preis", 
-                           trigger = reactive(trigger()),
                            filter_area = reactive(filter_area()), 
                            filter_price = reactive(filter_price()), 
                            filter_group = reactive(filter_group()),
@@ -72,7 +70,6 @@ mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_
                            target_app = "Zones",
                            zones = zones, 
                            target_value = "Preis", 
-                           trigger = reactive(trigger()),
                            filter_area = reactive(filter_area()), 
                            filter_price = reactive(filter_price()), 
                            filter_group = reactive(filter_group()),
@@ -97,7 +94,6 @@ mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_
                            zones = zones,
                            target_app = "Zones", 
                            target_value = "Zahl",
-                           trigger = reactive(trigger()),
                            filter_area = reactive(filter_area()), 
                            filter_price = reactive(filter_price()), 
                            filter_group = reactive(filter_group()),
@@ -107,7 +103,6 @@ mod_area_zones_server <- function(id, zones, filename_download, trigger, filter_
                            zones = zones,
                            target_app = "Zones", 
                            target_value = "Zahl",
-                           trigger = reactive(trigger()),
                            filter_area = reactive(filter_area()), 
                            filter_price = reactive(filter_price()), 
                            filter_group = reactive(filter_group()),

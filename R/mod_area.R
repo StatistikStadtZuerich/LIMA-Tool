@@ -106,7 +106,7 @@ mod_area_ui <- function(id, choicesapp){
 #' @param zones dataset zones
 #'
 #' @noRd 
-mod_area_server <- function(id, zones){
+mod_area_server <- function(id, zones, choice_app){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -132,40 +132,39 @@ mod_area_server <- function(id, zones){
     }) %>%
       bindEvent(input$select_area, input$select_price, input$select_group)
     
-    # Call Download Module for App 1 & 2
-    mod_download_server(id = "download_1",
-                        filter_function = filter_area_download, 
-                        static_parameters = list("zones" = zones),
-                        reactive_parameters = list(
-                          select_area = reactive(input$select_area),
-                          select_price = reactive(input$select_price),
-                          select_group = reactive(input$select_group)
-                        ),
-                        filter_app = 1)
-    mod_download_server(id = "download_2",
-                        filter_function = filter_area_download,
-                        static_parameters = list("zones" = zones),
-                        reactive_parameters = list(
-                          select_area = reactive(input$select_area),
-                          select_price = reactive(input$select_price),
-                          select_group = reactive(input$select_group)
-                        ),
-                        filter_app = 2)
-    
-    
-    # Call Modules for App 1 & 2 (Module specifics code)
-    mod_area_zones_server("mod_zones", zones, 
-                          filename_download = filename(), 
-                          trigger = reactive(input$start_query), 
-                          filter_area = reactive(input$select_area), 
-                          filter_price = reactive(input$select_price), 
-                          filter_group = reactive(input$select_group))
-    mod_area_types_server("mod_types", zones, 
-                          filename_download = filename(), 
-                          trigger = reactive(input$start_query), 
-                          filter_area = reactive(input$select_area), 
-                          filter_price = reactive(input$select_price), 
-                          filter_group = reactive(input$select_group))
+    # Call Modules for App 1
+    if(choice_app == 1){
+      mod_download_server(id = "download_1",
+                          filter_function = filter_area_download, 
+                          static_parameters = list("zones" = zones),
+                          reactive_parameters = list(
+                            select_area = reactive(input$select_area),
+                            select_price = reactive(input$select_price),
+                            select_group = reactive(input$select_group)
+                          ),
+                          filter_app = 1)
+      mod_area_zones_server("mod_zones", zones, 
+                            filename_download = filename(), 
+                            filter_area = reactive(input$select_area), 
+                            filter_price = reactive(input$select_price), 
+                            filter_group = reactive(input$select_group))
+    } else if(choice_app == 2){
+      # Call Modules for App 2
+      mod_download_server(id = "download_2",
+                          filter_function = filter_area_download,
+                          static_parameters = list("zones" = zones),
+                          reactive_parameters = list(
+                            select_area = reactive(input$select_area),
+                            select_price = reactive(input$select_price),
+                            select_group = reactive(input$select_group)
+                          ),
+                          filter_app = 2)
+      mod_area_types_server("mod_types", zones, 
+                            filename_download = filename(), 
+                            filter_area = reactive(input$select_area), 
+                            filter_price = reactive(input$select_price), 
+                            filter_group = reactive(input$select_group))
+    }
   
     
     ### Change Action Query Button when first selected

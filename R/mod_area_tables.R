@@ -38,13 +38,12 @@ mod_area_tables_ui <- function(id, target_value){
 #' @param filter_group filter value (group) selected from input widget
 #'
 #' @noRd 
-mod_area_tables_server <- function(id, target_app, zones, target_value, trigger, filter_area, filter_price, filter_group, title, BZO = NULL){
+mod_area_tables_server <- function(id, target_app, zones, target_value, filter_area, filter_price, filter_group, title, BZO = NULL){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
     stopifnot(!is.reactive(target_app))
     stopifnot(!is.reactive(zones))
-    stopifnot(is.reactive(trigger))
     stopifnot(is.reactive(filter_area))
     stopifnot(is.reactive(filter_price))
     stopifnot(is.reactive(filter_group))
@@ -64,7 +63,7 @@ mod_area_tables_server <- function(id, target_app, zones, target_value, trigger,
       out <- reactable_area(filtered_data, 25)
       out
     }) %>%
-      bindEvent(trigger(), filter_area(), filter_price(), filter_group())
+      bindEvent(filter_area(), filter_price(), filter_group())
     
   })
 }
