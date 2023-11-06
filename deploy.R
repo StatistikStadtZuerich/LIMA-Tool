@@ -7,6 +7,6 @@ rsconnect::deployApp(forceUpdate = TRUE,
                      appName = Sys.getenv("APP_NAME"),
                      appFiles = c(
                        "R",
-                       "www",
+                       "inst/app/www",
                        "app.R"
                      ))
