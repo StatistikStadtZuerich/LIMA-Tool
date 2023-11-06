@@ -13,7 +13,7 @@
 #' @return The return value is the data for the table that is displayed in the area app
 #'
 #' @noRd
-filter_area_zone <- function(target_app, zones, target_value, filter_area, filter_price, filter_group, BZO_year= NULL){
+filter_area_zone <- function(target_app, zones, target_value, filter_area, filter_price, filter_group, BZO_year){
   
   if (target_app == "Zones"){
     filtered <- zones %>%
@@ -62,7 +62,7 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
         PreisreiheLang == filter_price,
         ArtLang == filter_group,
       ) %>% 
-      select(Jahr, EFH, MFH, WHG, UWH, NB, IGZ, UG)
+      select(Jahr, EFH, MFH, WHG, UWH, NB, UNB, IGZ, UG)
     if (target_value == "Preis") {
       filtered <- filtered %>%
         mutate(across(c(everything(), -Jahr), as.numeric))
