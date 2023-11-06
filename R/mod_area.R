@@ -127,39 +127,25 @@ mod_area_server <- function(id, zones){
     }) %>%
       bindEvent(input$start_query)
     
-    # Inputs for download names
-    inputs <- reactive({
-      price <- gsub(" ", "-", input$select_price, fixed = TRUE)
-      group <- gsub(" ", "-", input$select_group, fixed = TRUE)
-      area <- gsub(" ", "-", input$select_area, fixed = TRUE)
-      name <- list(paste0(price, "_", group, "_", area))
-    })
-    filename_zones <- reactive({
-      req(inputs())
-      name <- list(paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", inputs()))
-    }) %>%
-      bindEvent(input$start_query)
-    filename_types <- reactive({
-      req(inputs())
-      name <- list(paste0("Liegenschaftenhandel_nach_Bebauungsart_", inputs()))
-    }) %>%
-      bindEvent(input$start_query)
-    
     # Call Download Module for App 1 & 2
     mod_download_server(id = "download_1",
-                        function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
-                        filename_download = filename_zones(), 
-                        filter_app = "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete", 
-                        filter_1 = input$select_area, 
-                        filter_2 = input$select_price, 
-                        filter_3 = input$select_group)
+                        filter_function = filter_area_download, 
+                        static_parameters = list("zones" = zones),
+                        reactive_parameters = list(
+                          select_area = reactive(input$select_area),
+                          select_price = reactive(input$select_price),
+                          select_group = reactive(input$select_group)
+                        ),
+                        filter_app = 1)
     mod_download_server(id = "download_2",
-                        function_filter = filter_area_download(zones, input$select_area, input$select_price, input$select_group),
-                        filename_download = filename_types(),
-                        filter_app = "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
-                        filter_1 = input$select_area,
-                        filter_2 = input$select_price,
-                        filter_3 = input$select_group)
+                        filter_function = filter_area_download,
+                        static_parameters = list("zones" = zones),
+                        reactive_parameters = list(
+                          select_area = reactive(input$select_area),
+                          select_price = reactive(input$select_price),
+                          select_group = reactive(input$select_group)
+                        ),
+                        filter_app = 2)
     
     
     # Call Modules for App 1 & 2 (Module specifics code)

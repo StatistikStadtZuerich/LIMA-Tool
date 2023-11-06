@@ -25,7 +25,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
                   format(Sys.Date(), "%d.%m.%Y")))
   
   # Manipulate Data for the two queries
-  if (queryinput == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete") {
+  if (queryinput == 1) {
     data <- data %>%
       mutate(
         Titel = ifelse(is.na(Titel), 
@@ -47,7 +47,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
     
     definitions <- read_excel(hauptPfad, sheet = 2)
     
-  } else if (queryinput == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete"){
+  } else if (queryinput == 2){
     data <- data %>%
       mutate(
         Titel = ifelse(is.na(Titel), 
@@ -68,7 +68,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
       as.data.frame()
     
     definitions <- read_excel(hauptPfad, sheet = 3)
-  }else {
+  } else if (queryinput ==  3) {
     data <- data %>%
       mutate(
         Titel = ifelse(is.na(Titel), 
@@ -87,7 +87,7 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
       as.data.frame()
     
     definitions <- read_excel(hauptPfad, sheet = 4)
-  }
+  } else {warning("no appropriate app selected, excel download will not work")}
   
   # Styling
   sty <- createStyle(fgFill = "#ffffff")
