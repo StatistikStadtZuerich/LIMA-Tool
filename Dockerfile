@@ -1,6 +1,8 @@
 # use the same R version as in our development
 FROM rocker/tidyverse:4.2.1
 
+COPY renv.lock ./renv.lock
+
 # install latest version of rsconnect, and also of its dependency, renv
 # latest version of rsconnect needed for shinyapps.io (version going with R 4.2.1 is too old)
 # i.e. rsconnect could probably be installed normally with a later R version
