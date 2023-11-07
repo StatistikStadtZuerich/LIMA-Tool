@@ -28,6 +28,7 @@ deploy-job-test:
   script:
     - Rscript -e "renv::deactivate()"
     - Rscript -e "packageVersion('rsconnect')"
+    - Rscript -e "installed.packages()"
     - Rscript -e "source('deploy.R')"
  
 deploy-job-prod:
