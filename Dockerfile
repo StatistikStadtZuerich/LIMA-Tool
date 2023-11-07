@@ -4,6 +4,7 @@ FROM rocker/tidyverse:4.2.1
 # install latest version of rsconnect, and also of its dependency, renv
 # latest version of rsconnect needed for shinyapps.io (version going with R 4.2.1 is too old)
 # i.e. rsconnect could probably be installed normally with a later R version
+RUN Rscript -e "install.packages('pak')"
 RUN Rscript -e "pak::pkg_install('rstudio/renv')"
 RUN Rscript -e "pak::pkg_install('rstudio/rsconnect')"
 
