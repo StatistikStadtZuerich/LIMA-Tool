@@ -35,10 +35,11 @@ stages:          # List of stages for jobs, and their order of execution
 .template-deploy-job:
   image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
   script:
-  - Rscript -e "renv::deactivate()"
+  - #Rscript -e "renv::deactivate()"
+  - echo $DOCKER_DIR
   - Rscript -e "packageVersion('rsconnect')"
   - Rscript -e "installed.packages()"
-  - Rscript -e "source('deploy.R')"
+  - Rscript -e "source('dev/deploy.R')"
   
 deploy-job-test:
   # ausgeführt wenn push in merge request
