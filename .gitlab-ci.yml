@@ -48,8 +48,8 @@ deploy-job-test:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   environment:
-    - name: test
-    - url: "https://${SHINY_ACC_NAME}.shinyapps.io/${APP_NAME}"
+    name: test
+    url: https://${SHINY_ACC_NAME}.shinyapps.io/${APP_NAME}
 
  
 deploy-job-prod:
@@ -61,5 +61,5 @@ deploy-job-prod:
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   environment:
-    - name: prod
-    - url: "https://${SHINY_ACC_NAME}.shinyapps.io/${APP_NAME}"
+    name: prod
+    url: https://${SHINY_ACC_NAME}.shinyapps.io/${APP_NAME}
