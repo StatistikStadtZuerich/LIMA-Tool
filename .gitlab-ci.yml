@@ -19,18 +19,18 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy_test
   - deploy_prod
 
-image-build:
-  extends: ".image-build"
-  stage: package
-  variables:
-    CONTEXT_PATH: $CI_PROJECT_DIR/$DOCKER_DIR
-    DOCKERFILE: $CI_PROJECT_DIR/$DOCKER_DIR/Dockerfile
-    IMAGE_NAME: $CI_PROJECT_NAME
-    IMAGE_VERSION: 0.0.0.9001
-  rules:
-    - if:
-      changes: 
-        - renv.lock
+# image-build:
+#   extends: ".image-build"
+#   stage: package
+#   variables:
+#     CONTEXT_PATH: $CI_PROJECT_DIR/$DOCKER_DIR
+#     DOCKERFILE: $CI_PROJECT_DIR/$DOCKER_DIR/Dockerfile
+#     IMAGE_NAME: $CI_PROJECT_NAME
+#     IMAGE_VERSION: 0.0.0.9001
+#   rules:
+#     - if:
+#       changes: 
+#         - renv.lock
 
 .template-deploy-job:
   image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
