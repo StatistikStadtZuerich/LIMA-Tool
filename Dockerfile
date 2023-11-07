@@ -1,6 +1,10 @@
 # use the same R version as in our development
 FROM rocker/tidyverse:4.2.1
 
+# install curl
+RUN apt-get update
+RUN apt-get install -y curl
+
 COPY renv.lock ./renv.lock
 
 # install latest version of rsconnect, and also of its dependency, renv
