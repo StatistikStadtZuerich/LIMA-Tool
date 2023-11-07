@@ -31,7 +31,7 @@ image-build:
 deploy-job-test:
   # ausgeführt wenn push in merge request
   stage: deploy_test
-  image: image: $CI_REGISTRY/ssz-da/lima_golem:0.0.0.9001
+  image: $CI_REGISTRY/ssz-da/lima_golem:0.0.0.9001
   variables:
     APP_NAME: $TEST_NAME
   rules:
