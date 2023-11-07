@@ -5,7 +5,9 @@ FROM rocker/tidyverse:4.2.1
 RUN apt-get update
 RUN apt-get install -y curl
 
-COPY renv.lock ./renv.lock
+WORKDIR /home/lima
+
+COPY renv.lock renv.lock
 
 # install latest version of rsconnect, and also of its dependency, renv
 # latest version of rsconnect needed for shinyapps.io (version going with R 4.2.1 is too old)

@@ -19,27 +19,30 @@ stages:          # List of stages for jobs, and their order of execution
   - deploy_test
   - deploy_prod
 
-# image-build:
-#   extends: ".image-build"
-#   stage: package
-#   variables:
-#     CONTEXT_PATH: $CI_PROJECT_DIR/$DOCKER_DIR
-#     DOCKERFILE: $CI_PROJECT_DIR/$DOCKER_DIR/Dockerfile
-#     IMAGE_NAME: $CI_PROJECT_NAME
-#     IMAGE_VERSION: 0.0.0.9001
-#   rules:
-#     - if:
-#       changes: 
-#         - renv.lock
+image-build:
+  extends: ".image-build"
+  stage: package
+  variables:
+    CONTEXT_PATH: $CI_PROJECT_DIR/$DOCKER_DIR
+    DOCKERFILE: $CI_PROJECT_DIR/$DOCKER_DIR/Dockerfile
+    IMAGE_NAME: $CI_PROJECT_NAME
+    IMAGE_VERSION: 0.0.0.9001
+  rules:
+    - if:
+      changes: 
+        - renv.lock
+        - Dockerfile
 
 .template-deploy-job:
   image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
   script:
+  - cd /home/lima
   - Rscript -e "renv::status()"
   - Rscript -e "installed.packages()"
   - echo $CI_PROJECT_DIR/$DOCKER_DIR
   - Rscript -e "packageVersion('rsconnect')"
   - Rscript -e "installed.packages()"
+  - cd $CI_PROJECT_DIR
   - Rscript -e "source('dev/deploy.R')"
   
 deploy-job-test:
