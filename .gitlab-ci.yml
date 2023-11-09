@@ -44,7 +44,7 @@ stages:          # List of stages for jobs, and their order of execution
 #         - Dockerfile
 
 restore-renv-job:
-  stage: resvore_renv
+  stage: restore_renv
   script:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
