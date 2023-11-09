@@ -7,6 +7,7 @@ RUN apt-get install -y curl
 
 # need to define the arg that is passed as a build arg, otherwise it does not work
 ARG DIR_TO_USE
+ARG RENV_PATHS_LIBRARY
 
 WORKDIR $DIR_TO_USE
 
@@ -14,7 +15,6 @@ COPY renv.lock renv.lock
 
 RUN pwd
 RUN ls
-RUN ls .cache/R/renv
 
 # install latest version of rsconnect, and also of its dependency, renv
 # latest version of rsconnect needed for shinyapps.io (version going with R 4.2.1 is too old)
