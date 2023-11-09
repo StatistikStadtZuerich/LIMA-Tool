@@ -24,6 +24,7 @@ include:
     file: 'gitlab-ci-template.yaml'
   
 stages:          # List of stages for jobs, and their order of execution
+  - package
   - restore_renv
   - deploy_test
   - deploy_prod
@@ -55,7 +56,7 @@ image-build:
 
 
 .template-deploy-job:
-  #image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
+  image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
   script:
   - ls
   - Rscript -e "renv::activate()"
