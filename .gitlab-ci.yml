@@ -37,6 +37,8 @@ stages:          # List of stages for jobs, and their order of execution
 .template-deploy-job:
   image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
   script:
+  - ls
+  - Rscript -e "renv::activate()"
   - Rscript -e "renv::status()"
   - Rscript -e "installed.packages()"
   - echo $CI_PROJECT_DIR
