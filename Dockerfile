@@ -5,7 +5,10 @@ FROM rocker/tidyverse:4.2.1
 RUN apt-get update
 RUN apt-get install -y curl
 
-WORKDIR /home/lima
+# need to define the arg that is passed as a build arg, otherwise it does not work
+ARG DIR_TO_USE
+
+WORKDIR $DIR_TO_USE
 
 COPY renv.lock renv.lock
 
