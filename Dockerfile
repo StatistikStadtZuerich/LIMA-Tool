@@ -12,6 +12,9 @@ WORKDIR $DIR_TO_USE
 
 COPY renv.lock renv.lock
 
+RUN pwd
+RUN ls
+
 # install latest version of rsconnect, and also of its dependency, renv
 # latest version of rsconnect needed for shinyapps.io (version going with R 4.2.1 is too old)
 # i.e. rsconnect could probably be installed normally with a later R version
@@ -28,4 +31,3 @@ RUN Rscript -e "renv::status()"
 #RUN Rscript -e "pak::pkg_install('mitchelloharawild/icons')"
 #RUN Rscript -e "pak::pkg_install('StatistikStadtZuerich/zuericssstyle')"
 #RUN Rscript -e "pak::pkg_install('StatistikStadtZuerich/zuericolors')"
-
