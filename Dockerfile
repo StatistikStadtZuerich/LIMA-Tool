@@ -27,8 +27,8 @@ RUN Rscript -e "renv::status()"
 
 RUN Rscript -e "renv::restore()"
 
-RUN Rscript -e ".rs.restartR() "
-
+#RUN Rscript -e ".rs.restartR() "
+RUN Rscript -e ".libPaths"
 RUN Rscript -e "renv::status()"
 
 RUN Rscript -e "Sys.getenv()"
