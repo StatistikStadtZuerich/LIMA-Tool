@@ -38,7 +38,7 @@ image-build:
   image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
   script:
   - ls
-  - ls ~/.cache/R/renv
+  - ls /.cache/R/renv
   - Rscript -e "renv::activate()"
   - Rscript -e "renv::status()"
   - Rscript -e "installed.packages()"
