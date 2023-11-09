@@ -31,6 +31,8 @@ RUN Rscript -e ".rs.restartR() "
 
 RUN Rscript -e "renv::status()"
 
+RUN Rscript -e "Sys.getenv()"
+
 #RUN Rscript -e "pak::pkg_install('mitchelloharawild/icons')"
 #RUN Rscript -e "pak::pkg_install('StatistikStadtZuerich/zuericssstyle')"
 #RUN Rscript -e "pak::pkg_install('StatistikStadtZuerich/zuericolors')"
