@@ -27,6 +27,8 @@ RUN Rscript -e "renv::status()"
 
 RUN Rscript -e "renv::restore()"
 
+RUN Rscript -e ".rs.restartR() "
+
 RUN Rscript -e "renv::status()"
 
 #RUN Rscript -e "pak::pkg_install('mitchelloharawild/icons')"
