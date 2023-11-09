@@ -1,4 +1,5 @@
-
+default:
+  image: $CI_REGISTRY/docker-hub-proxy/rocker/tidyverse:4.2.1
   
 variables:
   CONTAINER_REGISTRY: $CI_REGISTRY
@@ -23,7 +24,7 @@ include:
     file: 'gitlab-ci-template.yaml'
   
 stages:          # List of stages for jobs, and their order of execution
-  - package
+  - restore_renv
   - deploy_test
   - deploy_prod
 
@@ -42,15 +43,21 @@ stages:          # List of stages for jobs, and their order of execution
 #         - renv.lock
 #         - Dockerfile
 
-.template-deploy-job:
-  #image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
-  image: $CI_REGISTRY/docker-hub-proxy/rocker/tidyverse:4.2.1
-  before_script:
+restore-renv-job:
+  stage: resvore_renv
+  script:
   - Rscript -e "if (!requireNamespace('renv', quietly = TRUE)) install.packages('renv')"
   - Rscript -e "renv::restore()"
+  # rules:
+  #    - if:
+  #      changes: 
+  #        - renv.lock
+
+
+.template-deploy-job:
+  #image: $CI_REGISTRY/ssz-da/lima-golem:0.0.0.9001
   script:
   - ls
-  - ls .cache/R/renv
   - Rscript -e "renv::activate()"
   - Rscript -e "renv::status()"
   - Rscript -e "installed.packages()"
