@@ -9,7 +9,7 @@ RUN apt-get install -y curl
 ARG DIR_TO_USE
 ARG RENV_PATHS_LIBRARY
 
-WORKDIR $DIR_TO_USE
+#WORKDIR $DIR_TO_USE
 
 COPY renv.lock renv.lock
 
