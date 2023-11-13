@@ -43,6 +43,8 @@ image-build:
       changes: 
         - renv.lock
         - Dockerfile
+      when: always
+    - when: never
 
 # restore-renv-job:
 #   stage: restore_renv
