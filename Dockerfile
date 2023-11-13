@@ -8,6 +8,7 @@ RUN apt-get install -y curl
 # need to define the arg that is passed as a build arg, otherwise it does not work
 ARG DIR_TO_USE
 ARG RENV_PATHS_LIBRARY
+ARG RENV_PATHS_CACHE
 
 #WORKDIR $DIR_TO_USE
 
