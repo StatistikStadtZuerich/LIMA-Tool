@@ -29,6 +29,7 @@ explanationbox_app2 <- function(){
     p("WHG = Wohnhäuser mit Geschäftsräumen"),
     p("UWH = Übrige Wohnhäuser"),
     p("NB = Nutzbauten in Wohn- und Mischzonen"),
+    p("UNB = Unbebaut in Wohn- und Mischzonen"),
     p("IGZ = Bauten in Industrie- und Gewerbezone"),
     p("UG = Bauten in übrigen Zonen")
   )
