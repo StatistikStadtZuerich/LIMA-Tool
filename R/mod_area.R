@@ -110,6 +110,8 @@ mod_area_server <- function(id, zones, choice_app){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
+    stopifnot(!is.reactive(choice_app))
+    
     # Captions
     # Title
     # only updated when button is pressed
