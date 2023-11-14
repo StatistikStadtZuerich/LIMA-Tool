@@ -29,19 +29,25 @@ get_information_address <- function(addresses, series, filter_street, filter_num
   zoneBZO99 <- filtered_addresses %>%
     pull(ZoneBZO99Lang)
   
-  filtered_series <- series %>%
+  priceSerieBZO16  <- series %>%
     filter(
       QuarLang == district,
       if (!is.null(target_value)) Typ == target_value else Typ != "",
       Jahr >= 2019
     ) 
+  priceSerieBZO99  <- series %>%
+    filter(
+      QuarLang == district,
+      if (!is.null(target_value)) Typ == target_value else Typ != "",
+      Jahr < 2019
+    )
   
   # Price serie BZO16
-  SerieBZO16 <- filtered_series %>%
+  SerieBZO16 <- priceSerieBZO16 %>%
     filter(ZoneLang == zoneBZO16) 
   
   # Price serie BZO99
-  SerieBZO99 <- filtered_series %>%
+  SerieBZO99 <- priceSerieBZO99 %>%
     filter(ZoneLang == zoneBZO99) 
   
   return(list(
@@ -53,7 +59,7 @@ get_information_address <- function(addresses, series, filter_street, filter_num
   ))
 }
 # test <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24", target_value = "Preis")
-# test <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24")
+# data_address <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24")
 
 
 
