@@ -17,11 +17,11 @@ get_data <- function() {
       
       ## URLS
       URLs <- c(
-        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_od5141/download/BAU514OD5141.csv",
-        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142/download/BAU514OD5142.csv",
-        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143/download/BAU514OD5143.csv",
-        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144/download/BAU514OD5144.csv",
-        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145/download/BAU514OD5145.csv"
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_od5141/download/BAU514OD5141.csv",
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142/download/BAU514OD5142.csv",
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143/download/BAU514OD5143.csv",
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144/download/BAU514OD5144.csv",
+        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145/download/BAU514OD5145.csv"
       )
       
       ## Download
@@ -107,6 +107,13 @@ get_data <- function() {
       mutate(Zones = case_when(
         ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
         TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
+      )) %>% 
+      mutate(ZoneBZO99Lang = case_when(
+        ZoneBZO99Lang == "Wohnzone 2" ~ "Wohnzonen 2",
+        ZoneBZO99Lang == "Wohnzone 3" ~ "Wohnzonen 3",
+        ZoneBZO99Lang == "Wohnzone 4" ~ "Wohnzonen 4",
+        ZoneBZO99Lang == "Wohnzone 5" ~ "Wohnzonen 5",
+        TRUE ~ ZoneBZO99Lang
       ))
     
     
