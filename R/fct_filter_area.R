@@ -73,7 +73,7 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
     return(filtered)
   }
 }
-# data_zones <- data_vector[["zones"]]
+# data_types <- data_vector[["types"]]
 # test <- filter_area_zone("Zones", data_vector[["zones"]], "Zahl", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")
 # test2 <- filter_area_zone("Types", data_vector[["types"]], "Zahl", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften")
 

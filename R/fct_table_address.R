@@ -19,8 +19,7 @@ reactable_address <- function(target_data){
               FrQmBodenAlleHA = colDef(name = "Alle Verkäufe"),
               FrQmBodenNettoGanzeLieg = colDef(name = "Ganze Liegen-\nschaften"),
               FrQmBodenNettoStwE = colDef(name = "StwE"),
-              FrQmBodenNettoAlleHA = colDef(name = "Alle Verkäufe"),
-              FrQmWohnflStwE = colDef(name = "")
+              FrQmBodenNettoAlleHA = colDef(name = "Alle Verkäufe")
             ),
             columnGroups = list(
               colGroup(
@@ -32,12 +31,6 @@ reactable_address <- function(target_data){
               colGroup(
                 name = "Preise pro m² Boden abzgl. VersW",
                 columns = c("FrQmBodenNettoGanzeLieg", "FrQmBodenNettoStwE", "FrQmBodenNettoAlleHA"),
-                align = "right",
-                headerVAlign = "bottom"
-              ),
-              colGroup(
-                name = "StwE pro m² Wohnungsfläche (alle Zonen)",
-                columns = "FrQmWohnflStwE",
                 align = "right",
                 headerVAlign = "bottom"
               )

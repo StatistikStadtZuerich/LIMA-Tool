@@ -88,7 +88,7 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
       mutate(across(everything(), \(x) replace(x, x == "–", ""))) %>%
       mutate(across(c(
         "FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA", "FrQmBodenNettoGanzeLieg",
-        "FrQmBodenNettoStwE", "FrQmBodenNettoAlleHA", "FrQmWohnflStwE"
+        "FrQmBodenNettoStwE", "FrQmBodenNettoAlleHA"
       ), 
       as.numeric))
   } else {

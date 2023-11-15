@@ -1,5 +1,5 @@
 default:
-  image: $CI_REGISTRY/ssz-da/shiny_container:0.0.0.9003
+  image: $CI_REGISTRY/ssz-da/shiny_container:0.0.0.9004
  
 variables:
   CONTAINER_REGISTRY: $CI_REGISTRY
@@ -26,6 +26,7 @@ deploy-job-test:
     - Rscript -e "packageVersion('rsconnect')"
     - Rscript -e "source('dev/deploy.R')"
     - Rscript -e "installed.packages()"
+    - Rscript -e "packageVersion('golem')"
 
 deploy-job-prod:
   # ausgeführt wenn Push auf Main branch

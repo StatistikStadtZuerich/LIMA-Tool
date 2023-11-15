@@ -17,11 +17,11 @@ get_data <- function() {
       
       ## URLS
       URLs <- c(
-        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_od5141/download/BAU514OD5141.csv",
-        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142/download/BAU514OD5142.csv",
-        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143/download/BAU514OD5143.csv",
-        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144/download/BAU514OD5144.csv",
-        "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145/download/BAU514OD5145.csv"
+        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_od5141/download/BAU514OD5141.csv",
+        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_grpd_od5142/download/BAU514OD5142.csv",
+        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_zuordnung_adr_quartier_bzo16_bzo99_od5143/download/BAU514OD5143.csv",
+        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144/download/BAU514OD5144.csv",
+        "https://data.integ.stadt-zuerich.ch/dataset/int_dwh_bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145/download/BAU514OD5145.csv"
       )
       
       ## Download
@@ -53,7 +53,10 @@ get_data <- function() {
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
       mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
-      mutate(across(everything(), \(x) replace(x, x == "", "–")))
+      mutate(across(everything(), \(x) replace(x, x == "", "–"))) %>% 
+      mutate(ArtLang = case_when(
+        ArtLang == "Ganze Liegenschaft" ~ "Ganze Liegenschaften",
+        TRUE ~ ArtLang))
 
     ## BZO16
     zonesBZO16 <- zones %>%
@@ -113,8 +116,8 @@ get_data <- function() {
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
       mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
-                                 ArtSort == 32 ~ "Stockwerkeigentum",
-                                 ArtSort == 39 ~ "Alle Verkäufe")) %>%
+                                 ArtSort == 32 ~ "Nur Stockwerkeigentum",
+                                 ArtSort == 39 ~ "Alle Handänderungen")) %>%
       mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
       mutate(across(everything(), \(x) replace(x, x == "", "–")))
     
