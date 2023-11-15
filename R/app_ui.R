@@ -7,10 +7,9 @@ app_ui <- function(request) {
   
   shinyjs::useShinyjs(debug = TRUE)
   
-  # get data with function
-  data_vector <- get_data()
+  # data is loaded upon loading of the package of this app in utils_load_data
   
-  if(is.null(data_vector)){
+  if(!exists("data_vector") || is.null(data_vector)){
     tagList(
       fluidPage(
         # Include CSS
