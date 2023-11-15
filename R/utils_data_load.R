@@ -53,7 +53,10 @@ get_data <- function() {
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
       mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
-      mutate(across(everything(), \(x) replace(x, x == "", "–")))
+      mutate(across(everything(), \(x) replace(x, x == "", "–"))) %>% 
+      mutate(ArtLang = case_when(
+        ArtLang == "Ganze Liegenschaft" ~ "Ganze Liegenschaften",
+        TRUE ~ ArtLang))
 
     ## BZO16
     zonesBZO16 <- zones %>%
@@ -113,8 +116,8 @@ get_data <- function() {
                                         PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                         PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
       mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
-                                 ArtSort == 32 ~ "Stockwerkeigentum",
-                                 ArtSort == 39 ~ "Alle Verkäufe")) %>%
+                                 ArtSort == 32 ~ "Nur Stockwerkeigentum",
+                                 ArtSort == 39 ~ "Alle Handänderungen")) %>%
       mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
       mutate(across(everything(), \(x) replace(x, x == "", "–")))
     
