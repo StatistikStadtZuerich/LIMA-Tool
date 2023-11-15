@@ -57,9 +57,9 @@ reactable_area_types <- function(target_data, pagesize){
               MFH = colDef(name = "MFH"),
               WHG = colDef(name = "WGR"),
               UWH = colDef(name = "UWH"),
-              NB = colDef(name = "NB"),
+              NB = colDef(name = "NUB"),
               UNB = colDef(name = "UNB"),
-              IGZ = colDef(name = ""),
+              IGZ = colDef(name = "",  minWidth = 53),
               UG = colDef(name = "")
             ),
             columnGroups = list(
@@ -70,7 +70,7 @@ reactable_area_types <- function(target_data, pagesize){
                 headerVAlign = "bottom"
               ),
               colGroup(
-                name = "Indu-\nstrie und Ge-\nwerbe Zone",
+                name = "Indu-\nstrie- und Gewer-\nbezone",
                 columns = "IGZ",
                 align = "left",
                 headerVAlign = "bottom"

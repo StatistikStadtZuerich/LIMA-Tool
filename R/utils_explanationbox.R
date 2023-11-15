@@ -28,7 +28,7 @@ explanationbox_app2 <- function(){
     p("MFH = Mehrfamilienhäuser"),
     p("WGR = Wohnhäuser mit Geschäftsräumen"),
     p("UWH = Übrige Wohnhäuser"),
-    p("NB = Nutzbauten in Wohn- und Mischzonen"),
+    p("NUB = Nutzbauten in Wohn- und Mischzonen"),
     p("UNB = Unbebaut in Wohn- und Mischzonen")
   )
 }
