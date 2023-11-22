@@ -76,7 +76,7 @@ reactable_area_types <- function(target_data, pagesize){
                 headerVAlign = "bottom"
               ),
               colGroup(
-                name = "Übrige Zonen",
+                name = "Übri-\nges Gebiet",
                 columns = "UG",
                 align = "left",
                 headerVAlign = "bottom"
