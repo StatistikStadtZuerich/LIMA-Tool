@@ -23,10 +23,8 @@ deploy-job-test:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
   script:
     - Rscript -e "renv::deactivate()"
-    - Rscript -e "packageVersion('rsconnect')"
-    - Rscript -e "source('dev/deploy.R')"
     - Rscript -e "installed.packages()"
-    - Rscript -e "packageVersion('golem')"
+    - Rscript -e "source('dev/deploy.R')"
 
 deploy-job-prod:
   # ausgeführt wenn Push auf Main branch
