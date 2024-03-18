@@ -52,7 +52,7 @@ reactable_address <- function(target_data){
             ),
             outlined = TRUE,
             highlight = TRUE,
-            defaultPageSize = 15,
+            defaultPageSize = 20,
             rowClass = JS("function(rowInfo) {return rowInfo.selected ? 'selected' : ''}"),
             rowStyle = JS("function(rowInfo) {if (rowInfo.selected) { return { backgroundColor: '#F2F2F2'}}}")
   )
