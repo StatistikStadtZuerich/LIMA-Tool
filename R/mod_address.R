@@ -28,7 +28,7 @@ mod_address_ui <- function(id, choicesapp){
       sszSelectInput(
         ns("select_number"),
         "Wählen Sie eine Hausnummer aus",
-        choices = choicesapp[["choices_streetnr"]],
+        choices = NULL,
         selected = 1
       ),
       
@@ -108,7 +108,8 @@ mod_address_server <- function(id, addresses, series){
           pull(Hnr) %>%
           mixedsort()
       )
-    })
+    }) %>% 
+      bindEvent(input$select_street)
     
     mod_address_info_server(id = "address_info", 
                             addresses = addresses, 
