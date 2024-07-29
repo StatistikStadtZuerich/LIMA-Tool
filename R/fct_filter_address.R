@@ -137,14 +137,14 @@ filter_address_download <- function(addresses, series, filter_street, filter_num
 }
 # test <- filter_address_download(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24")
 
+
 #' filter_address_info 
 #'
 #' @param addresses address dataset
-#' @param series series dataset
 #' @param filter_street filters the street with the given input in the app 
 #' @param filter_number filters the number with the given input in the app
 #'
-#' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the download output
+#' @description A function that filter the address, quarter and zone for the given address
 #'
 #' @return The return value is the data for the download table that is displayed in the addresses app
 #'
@@ -167,4 +167,29 @@ filter_address_info <- function(addresses, filter_street, filter_number){
     kable_styling(bootstrap_options = c("condensed"))
   
   return(filtered_data)
+}
+
+
+#' display_info 
+#'
+#' @param data_available indicates if there is available data
+#' @param addresses address dataset
+#' @param series series dataset
+#' @param filter_street filters the street with the given input in the app 
+#' @param filter_number filters the number with the given input in the app
+#'
+#' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the title of the table in the app output
+#'
+#' @return The return value is the data for the download table that is displayed in the addresses app
+#'
+#' @noRd
+display_info <- function(data_available, addresses, series, filter_street, filter_number){
+  if (data_available > 0) {
+    filtered_addresses <- get_information_address(addresses, series, filter_street, filter_number, "Preis")
+    
+    zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
+    infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)
+  } else {
+    infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
+  }
 }

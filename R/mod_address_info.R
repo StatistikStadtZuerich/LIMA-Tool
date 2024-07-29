@@ -44,7 +44,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
       bindEvent(filter_street(), filter_number())
     
     # Get Information if Data Frame is empty
-    dataAvailable <- reactive({
+    data_availability <- reactive({
       req(filter_street(), filter_number())
       
       data_available(addresses, series, filter_street(), filter_number())
@@ -52,18 +52,12 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
       bindEvent(filter_street(), filter_number())
 
     # Reactive Info
-    infoReactive <- reactive({
-      req(dataAvailable())
+    info_reactive <- reactive({
+      req(data_availability())
       
-      availability <- dataAvailable()
-      if (availability > 0) {
-        filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
-
-        zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
-        infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)
-      } else {
-        infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
-      }
+      availability <- data_availability()
+      display_info(availability, addresses, series, filter_street(), filter_number())
+        
     }) %>%
       bindEvent(filter_street(), filter_number())
 
@@ -72,11 +66,11 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
       ### Set up directory for icons
       ssz_icons <- icon_set("inst/app/www/icons/")
       
-      availability <- dataAvailable()
+      availability <- data_availability()
       if (availability > 0) {
         tags$div(
           class = "info_div",
-          infoReactive()
+          info_reactive()
         )
       } else {
         tags$div(
@@ -88,7 +82,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
           tags$div(
             class = "info_na_text",
             h6("Achtung"),
-            infoReactive()
+            info_reactive()
           )
         )
       }
