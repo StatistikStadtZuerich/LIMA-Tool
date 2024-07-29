@@ -39,21 +39,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
     # Show Output Information Address
     output$results_info <- renderText({
       req(filter_street(), filter_number())
-      filtered_data <- addresses %>%
-        filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-        mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
-        select(Adresse, QuarLang, Zones) %>%
-        pivot_longer(everything()) %>%
-        mutate(name = case_when(
-          name == "Adresse" ~ "Die Adresse",
-          name == "QuarLang" ~ "liegt im Quartier",
-          name == "Zones" ~ "in folgender Zone"
-        )) %>%
-        kable("html",
-              align = "lr",
-              col.names = NULL
-        ) %>%
-        kable_styling(bootstrap_options = c("condensed"))
+      filter_address_info(addresses, filter_street(), filter_number())
     }) %>%
       bindEvent(filter_street(), filter_number())
     
@@ -61,24 +47,14 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
     dataAvailable <- reactive({
       req(filter_street(), filter_number())
       
-      filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
-      
-      # Total series
-      priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
-        select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
-      
-      if (nrow(priceSerieTotal) > 0) {
-        available <- 1
-      } else {
-        avaiable <- 0
-      }
+      data_available(addresses, series, filter_street(), filter_number())
     }) %>%
       bindEvent(filter_street(), filter_number())
 
     # Reactive Info
     infoReactive <- reactive({
-      req(filter_street(), filter_number())
-
+      req(dataAvailable())
+      
       availability <- dataAvailable()
       if (availability > 0) {
         filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")

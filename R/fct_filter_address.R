@@ -136,3 +136,35 @@ filter_address_download <- function(addresses, series, filter_street, filter_num
   return(seriesPriceCount)
 }
 # test <- filter_address_download(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24")
+
+#' filter_address_info 
+#'
+#' @param addresses address dataset
+#' @param series series dataset
+#' @param filter_street filters the street with the given input in the app 
+#' @param filter_number filters the number with the given input in the app
+#'
+#' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the download output
+#'
+#' @return The return value is the data for the download table that is displayed in the addresses app
+#'
+#' @noRd
+filter_address_info <- function(addresses, filter_street, filter_number){
+  filtered_data <- addresses %>%
+    filter(StrasseLang == filter_street & Hnr == filter_number) %>%
+    mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
+    select(Adresse, QuarLang, Zones) %>%
+    pivot_longer(everything()) %>%
+    mutate(name = case_when(
+      name == "Adresse" ~ "Die Adresse",
+      name == "QuarLang" ~ "liegt im Quartier",
+      name == "Zones" ~ "in folgender Zone"
+    )) %>%
+    kable("html",
+          align = "lr",
+          col.names = NULL
+    ) %>%
+    kable_styling(bootstrap_options = c("condensed"))
+  
+  return(filtered_data)
+}
