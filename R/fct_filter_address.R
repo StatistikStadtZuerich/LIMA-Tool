@@ -159,14 +159,16 @@ filter_address_info <- function(addresses, filter_street, filter_number){
       name == "Adresse" ~ "Die Adresse",
       name == "QuarLang" ~ "liegt im Quartier",
       name == "Zones" ~ "in folgender Zone"
-    )) %>%
-    kable("html",
-          align = "lr",
-          col.names = NULL
-    ) %>%
-    kable_styling(bootstrap_options = c("condensed"))
+    )) 
   
-  return(filtered_data)
+  reactable(filtered_data,
+            theme = reactableTheme(
+              borderColor = "#DEDEDE"
+            ),
+            columns = list(
+              name = colDef(name = "", align = "left"),
+              value = colDef(name = "", align = "right")
+            ))
 }
 
 

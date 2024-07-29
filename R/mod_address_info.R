@@ -10,7 +10,7 @@ mod_address_info_ui <- function(id){
   tagList(
  
     # Information about selection
-    htmlOutput(ns("results_info")),
+    reactableOutput(ns("results_info")),
     
     uiOutput(ns("more_info"))
     
@@ -37,7 +37,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
 
     
     # Show Output Information Address
-    output$results_info <- renderText({
+    output$results_info <- renderReactable({
       req(filter_street(), filter_number())
       filter_address_info(addresses, filter_street(), filter_number())
     }) %>%
