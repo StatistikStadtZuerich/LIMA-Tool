@@ -38,7 +38,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
     
     # Show Output Information Address
     output$results_info <- renderReactable({
-      req(filter_street(), filter_number())
+      req(data_availability())
       filter_address_info(addresses, filter_street(), filter_number())
     }) %>%
       bindEvent(filter_street(), filter_number())
