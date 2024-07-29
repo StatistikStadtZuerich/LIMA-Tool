@@ -54,8 +54,7 @@ mod_area_tables_server <- function(id, target_app, zones, target_value, table_fu
     
     # title for table
     output$tableTitle <- renderText({
-      tableTitle <- title
-      tableTitle
+      title
     })
     
     # render table but only when trigger input is updated

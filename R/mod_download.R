@@ -71,39 +71,16 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
     })
     
     # create appropriate filename based on app choice
-    
-    if (filter_app == 1) {
-      fn_for_download <- reactive({
-        req(reactive_parameters$select_price, reactive_parameters$select_group, reactive_parameters$select_area)
-        price <- gsub(" ", "-", reactive_parameters$select_price(), fixed = TRUE)
-        group <- gsub(" ", "-", reactive_parameters$select_group(), fixed = TRUE)
-        area <- gsub(" ", "-", reactive_parameters$select_area(), fixed = TRUE)
-        name <- list(paste0(price, "_", group, "_", area))
-        
-        paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Zonenart_", name)
-      })
-    } else if (filter_app == 2) {
-      fn_for_download <- reactive({
-        req(reactive_parameters$select_price, reactive_parameters$select_group, reactive_parameters$select_area)
-        price <- gsub(" ", "-", reactive_parameters$select_price(), fixed = TRUE)
-        group <- gsub(" ", "-", reactive_parameters$select_group(), fixed = TRUE)
-        area <- gsub(" ", "-", reactive_parameters$select_area(), fixed = TRUE)
-        name <- list(paste0(price, "_", group, "_", area))
-        
-        paste0("Liegenschaftenhandel_nach_Bebauungsart_", name)
-      })
-    } else if (filter_app == 3) {
-      
-      fn_for_download <- reactive({
-        req(reactive_parameters$select_street, reactive_parameters$select_number)
-        district <- static_parameters$addresses %>%
-          filter(StrasseLang == reactive_parameters$select_street() & Hnr == reactive_parameters$select_number()) %>%
-          pull(QuarLang)
-        
-        paste0("Liegenschaftenhandel_nach_Bauzonenordnung_und_Quartier_", district)
-      })
-      
-    } else warning("no appropriate app chosen")
+    fn_for_download <- reactive({
+      switch(
+        filter_app,
+        "1" = create_fn_for_download("Bauzonenordnung_und_Zonenart", static_parameters, reactive_parameters),
+        "2" = create_fn_for_download("Bebauungsart",  static_parameters, reactive_parameters),
+        "3" = create_fn_for_download("Bauzonenordnung_und_Quartier",  static_parameters, reactive_parameters),
+        # Default
+        "No appropriate app chosen"
+      )
+    })
     
     ### Write Download Table
     ## App 1
