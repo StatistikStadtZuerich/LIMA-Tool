@@ -118,21 +118,21 @@ mod_area_server <- function(id, zones, choice_app){
     output$title <- renderText({
       input$select_price
     }) %>%
-      bindEvent(input$select_area, input$select_price, input$select_group)
+      bindEvent(input$select_price)
     
     # Subtitle
     # only updated when button is pressed
     output$subtitle <- renderText({
       input$select_group
     }) %>%
-      bindEvent(input$select_area, input$select_price, input$select_group)
+      bindEvent(input$select_group)
     
     # Sub-Subtitle
     # only updated when button is pressed
     output$subSubtitle <- renderText({
       paste0(input$select_area, ", Medianpreise in CHF")
     }) %>%
-      bindEvent(input$select_area, input$select_price, input$select_group)
+      bindEvent(input$select_area)
     
     # Call Modules for App 1
     if(choice_app == 1){
