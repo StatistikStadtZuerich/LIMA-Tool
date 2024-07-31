@@ -30,12 +30,6 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(!is.reactive(addresses))
-    stopifnot(!is.reactive(series))
-    stopifnot(is.reactive(filter_street))
-    stopifnot(is.reactive(filter_number))
-
-    
     # Show Output Information Address
     output$results_info <- renderReactable({
       req(data_availability())

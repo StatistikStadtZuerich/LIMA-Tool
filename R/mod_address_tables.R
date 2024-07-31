@@ -33,12 +33,6 @@ mod_address_tables_ui <- function(id){
 mod_address_tables_server <- function(id, addresses, series, target_value, filter_street, filter_number){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
-    
-    stopifnot(!is.reactive(addresses))
-    stopifnot(!is.reactive(series))
-    stopifnot(is.reactive(filter_street))
-    stopifnot(is.reactive(filter_number))
-    stopifnot(!is.reactive(target_value))
   
     # Check if data is available for the zone
     data_availability <- reactive({
