@@ -39,7 +39,7 @@ mod_address_tables_server <- function(id, addresses, series, target_value, filte
       req(filter_street(), filter_number())
       
       data_available(addresses, series, filter_street(), filter_number())
-    }) %>%
+    }) |> 
       bindEvent(filter_street(), filter_number())
     
     # Table if data is available for zone
@@ -54,7 +54,7 @@ mod_address_tables_server <- function(id, addresses, series, target_value, filte
       } else {
         NULL
       }
-    }) %>%
+    }) |> 
       bindEvent(filter_street(), filter_number())
   })
 }

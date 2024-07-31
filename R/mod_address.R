@@ -103,12 +103,12 @@ mod_address_server <- function(id, addresses, series){
       freezeReactiveValue(input, "select_number")
       updateSelectInput(
         session, "select_number",
-        choices = addresses %>%
-          filter(StrasseLang == input$select_street) %>%
-          pull(Hnr) %>%
+        choices = addresses |> 
+          filter(StrasseLang == input$select_street) |> 
+          pull(Hnr) |> 
           mixedsort()
       )
-    }) %>% 
+    }) |>  
       bindEvent(input$select_street)
     
     mod_address_info_server(id = "address_info", 

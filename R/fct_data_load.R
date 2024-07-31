@@ -54,17 +54,17 @@ import_data_from_ogd <- function() {
 #' @noRd
 prepare_zones <- function(dat) {
   ## Zones
-  zones <- dat[[1]] %>%
+  zones <- dat[[1]] |> 
     mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
                                       PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
-                                      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
+                                      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) |> 
     mutate(ArtLang = case_when(
       ArtLang == "Ganze Liegenschaft" ~ "Ganze Liegenschaften",
       TRUE ~ ArtLang))
   
   ## BZO16
-  zonesBZO16 <- zones %>%
-    filter(BZO == "BZO16") %>%
+  zonesBZO16 <- zones |> 
+    filter(BZO == "BZO16") |> 
     rename(
       Total = ALLE,
       Z = ZE,
@@ -78,8 +78,8 @@ prepare_zones <- function(dat) {
     ) 
   
   ## BZO99
-  zonesBZO99 <- zones %>%
-    filter(BZO == "BZO99") %>%
+  zonesBZO99 <- zones |> 
+    filter(BZO == "BZO99") |> 
     rename(
       Total = ALLE,
       Z = ZE,
@@ -125,11 +125,11 @@ prepare_series <- function(dat) {
 #'
 #' @noRd
 prepare_data <- function(dat) {
-  dat[[3]] %>%
+  dat[[3]] |> 
     mutate(Zones = case_when(
       ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
       TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
-    )) %>% 
+    )) |>  
     mutate(ZoneBZO99Lang = case_when(
       ZoneBZO99Lang == "Wohnzone 2" ~ "Wohnzonen 2",
       ZoneBZO99Lang == "Wohnzone 3" ~ "Wohnzonen 3",
@@ -149,10 +149,10 @@ prepare_data <- function(dat) {
 #' @noRd
 prepare_types <- function(dat) {
   ## Building Type
-  dat[[4]] %>%
+  dat[[4]] |> 
     mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
                                       PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
-                                      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
+                                      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) |> 
     mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
                                ArtSort == 32 ~ "Nur Stockwerkeigentum",
                                ArtSort == 39 ~ "Alle Handänderungen")) 
@@ -167,6 +167,6 @@ prepare_types <- function(dat) {
 #' @noRd
 mutate_nas <- function(dat, mutate_where) {
   dat |> 
-    mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
+    mutate(across(everything(), \(x) replace(x, x == ".", "–")))  |> 
     mutate(across(mutate_where, \(x) replace(x, x == "", "–")))
 }

@@ -16,8 +16,8 @@ create_fn_for_download <- function(label, static_parameters, reactive_parameters
       reactive_parameters$select_street, 
       reactive_parameters$select_number
       )
-    district <- static_parameters$addresses %>%
-      filter(StrasseLang == reactive_parameters$select_street() & Hnr == reactive_parameters$select_number()) %>%
+    district <- static_parameters$addresses |> 
+      filter(StrasseLang == reactive_parameters$select_street() & Hnr == reactive_parameters$select_number()) |> 
       pull(QuarLang)
     name <- list(paste0(district))
   } else {

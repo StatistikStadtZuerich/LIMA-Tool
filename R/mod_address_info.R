@@ -34,7 +34,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
     output$results_info <- renderReactable({
       req(data_availability())
       filter_address_info(addresses, filter_street(), filter_number())
-    }) %>%
+    }) |> 
       bindEvent(filter_street(), filter_number())
     
     # Get Information if Data Frame is empty
@@ -42,7 +42,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
       req(filter_street(), filter_number())
       
       data_available(addresses, series, filter_street(), filter_number())
-    }) %>%
+    }) |> 
       bindEvent(filter_street(), filter_number())
 
     # Reactive Info
@@ -52,7 +52,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
       availability <- data_availability()
       display_info(availability, addresses, series, filter_street(), filter_number())
         
-    }) %>%
+    }) |> 
       bindEvent(filter_street(), filter_number())
 
     # Show Info (App 2)

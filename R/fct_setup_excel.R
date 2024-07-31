@@ -29,12 +29,12 @@ setup_excel <- function(query_input, hauptPfad, input1, input2, input3 = NULL) {
   )
   
   # Read Data
-  data <- read_excel(hauptPfad, sheet = 1) %>%
+  data <- read_excel(hauptPfad, sheet = 1) |> 
     mutate(Date = ifelse(is.na(Date), 
                          NA,
                          format(Sys.Date(), "%d.%m.%Y")))
   
-  data <-  data %>%
+  data <-  data |> 
     mutate(Titel = ifelse(is.na(Titel), 
                           NA, 
                           paste0(title_num, inputs_num)))
@@ -47,7 +47,7 @@ setup_excel <- function(query_input, hauptPfad, input1, input2, input3 = NULL) {
       " ",
       "Quelle: Statistik Stadt Zürich, GWZ"
     )
-  ) %>%
+  ) |> 
     as.data.frame()
   
   definitions <- read_excel(hauptPfad, sheet = sheet_num)

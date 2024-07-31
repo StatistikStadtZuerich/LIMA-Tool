@@ -10,7 +10,7 @@ data_available <- function(addresses, series, filter_street, filter_number){
   filtered_addresses <- get_information_address(addresses, series, filter_street, filter_number, "Preis")
   
   # Total series
-  priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
+  priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) |> 
     select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
   
   if (nrow(priceSerieTotal) > 0) {

@@ -52,7 +52,7 @@ mod_area_tables_server <- function(id, target_app, zones, target_value, table_fu
       filtered_data <- filter_area_zone(target_app, zones, target_value, filter_area(), filter_price(), filter_group(), BZO)
       out <- table_function(filtered_data, 25)
       out
-    }) %>%
+    }) |> 
       bindEvent(filter_area(), filter_price(), filter_group())
     
   })
