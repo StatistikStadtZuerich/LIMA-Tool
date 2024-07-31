@@ -9,7 +9,7 @@ app_ui <- function(request) {
   
   # data is loaded upon loading of the package of this app in utils_load_data
   
-  if(!exists("data_vector") || is.null(data_vector)){
+  if (!exists("data_vector") || is.null(data_vector)) {
     tagList(
       fluidPage(
         # Include CSS
@@ -49,9 +49,9 @@ app_ui <- function(request) {
             inputId = "choose_app", # these choices are also used in the module mod_area.R
             label = NULL,
             choices = c(
-              "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete",
-              "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete",
-              "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe"
+              "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete" = "Abfrage 1",
+              "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" = "Abfrage 2",
+              "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" = "Abfrage 3"
             ),
             selected = character(0)
           )
@@ -60,21 +60,21 @@ app_ui <- function(request) {
         # Conditional Panel which App to choose
         # App 1
         conditionalPanel(
-          condition = 'input.choose_app == "Abfrage 1: Zeitreihen nach Bauzonen für ganze Stadt und Teilgebiete"',
+          condition = 'input.choose_app == "Abfrage 1"',
           # Show App 1 Code
           mod_area_ui(id = "area_zones",
                       choicesapp = choices_app12)
         ),
         # App 2
         conditionalPanel(
-          condition = 'input.choose_app == "Abfrage 2: Zeitreihen nach Bebauungsart für ganze Stadt und Teilgebiete" ',
+          condition = 'input.choose_app == "Abfrage 2" ',
           # Show App 2 Code
           mod_area_ui(id = "area_types",
                       choicesapp = choices_app12)
         ),
         # App 3
         conditionalPanel(
-          condition = 'input.choose_app == "Abfrage 3: Zeitreihen für Quartiere und Bauzonen über Adresseingabe" ',
+          condition = 'input.choose_app == "Abfrage 3" ',
           # Show App 3 Code
           mod_address_ui(id = "addresses",
                          choicesapp = choices_app3)
