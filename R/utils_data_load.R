@@ -14,15 +14,10 @@ data_load <- function() {
   if (!is.null(data)) {
     ### Data Transformation
     
-    zone <- prepare_zones(data)
-    zones <- mutate_nas(zone[[1]], everything())
-    zonesBZO16 <- mutate_nas(zone[[2]], everything())
-    zonesBZO99 <- mutate_nas(zone[[3]], everything())
+    zone_list <- map(prepare_zones(data), \(x) mutate_nas(x, everything()))
 
-    serie <- prepare_series(data) 
     vars <- c("FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA")
-    series <- mutate_nas(serie[[1]], vars)
-    seriestypes <- mutate_nas(serie[[2]], vars)
+    serie_list <- map(prepare_series(data), \(x) mutate_nas(x, vars))
 
     addresses <- prepare_data(data)
     
@@ -30,13 +25,13 @@ data_load <- function() {
     
 
     return(list(
-      zones = zones,
-      zonesBZO16 = zonesBZO16,
-      zonesBZO99 = zonesBZO99,
-      series = series,
+      zones = zone_list[[1]],
+      zonesBZO16 = zone_list[[2]],
+      zonesBZO99 = zone_list[[3]],
+      series = serie_list[[1]],
       addresses = addresses,
       types = types,
-      seriestypes = seriestypes
+      seriestypes = serie_list[[2]]
       ))
 
   }
