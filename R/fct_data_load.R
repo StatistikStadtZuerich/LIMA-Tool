@@ -1,11 +1,11 @@
-#' data_load 
+#' import_data_from_ogd 
 #'
 #' @description A fct function
 #'
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-get_data <- function() {
+import_data_from_ogd <- function() {
   
   ## URLS
   URLs <- c(
