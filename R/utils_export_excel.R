@@ -18,17 +18,12 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
   hauptPfad <- "inst/app/www/Titelblatt.xlsx"
   imagePfad <- "inst/app/www/logo_stzh_stat_sw_pos_1.png"
   
-  # Read Data
-  data <- read_excel(hauptPfad, sheet = 1) %>%
-    mutate(Date = ifelse(is.na(Date), 
-                  NA,
-                  format(Sys.Date(), "%d.%m.%Y")))
   
   # Manipulate Data for the two queries
   res <- setup_excel(queryinput, hauptPfad, input1, input2, input3)
-  data <- res$data
-  selected <- res$selected
-  definitions <- res$definitions
+  data <- res[[1]]
+  selected <- res[[2]]
+  definitions <- res[[3]]
   
   # Styling
   sty <- createStyle(fgFill = "#ffffff")

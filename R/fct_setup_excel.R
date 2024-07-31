@@ -27,19 +27,23 @@ setup_excel <- function(query_input, hauptPfad, input1, input2, input3 = NULL) {
     "2" = paste0(input1, ", ", input2, ", ", input3),
     "3" = paste0(input1, " ", input2)
   )
-  print(inputs_num)
   
-  data <-  paste0(title_num, inputs_num)
-      # Titel = ifelse(is.na(Titel), NA, paste0(title_num, inputs_num))
-    #   Titel = "ABC"
-    # )
-  print(data)
+  # Read Data
+  data <- read_excel(hauptPfad, sheet = 1) %>%
+    mutate(Date = ifelse(is.na(Date), 
+                         NA,
+                         format(Sys.Date(), "%d.%m.%Y")))
+  
+  data <-  data %>%
+    mutate(Titel = ifelse(is.na(Titel), 
+                          NA, 
+                          paste0(title_num, inputs_num)))
   
   selected <- list(
     c(
       "T_1",
       title_num,
-      paste0(title_num, inputs_num),
+      inputs_num,
       " ",
       "Quelle: Statistik Stadt Zürich, GWZ"
     )
