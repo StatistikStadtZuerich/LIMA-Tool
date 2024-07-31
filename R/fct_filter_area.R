@@ -53,7 +53,6 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
       filtered <- filtered %>% 
         mutate_all(., ~ replace(., is.na(.), " "))
     }
-    return(filtered)
   } else {
     filtered <- zones %>%
       filter(
@@ -70,7 +69,6 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
       filtered <- filtered %>% 
         mutate_all(., ~ replace(., is.na(.), " "))
     }
-    return(filtered)
   }
 }
 # data_types <- data_vector[["types"]]
@@ -91,13 +89,12 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
 #'
 #' @noRd
 filter_area_download <- function(zones, filter_area, filter_price, filter_group){
-  filtered <- zones %>%
+  zones %>%
     filter(
       GebietLang == filter_area,
       PreisreiheLang == filter_price,
       ArtLang == filter_group
     ) %>%
     select(-PreisreiheSort, -ArtSort, -GebietSort)
-  return(filtered)
 }
 

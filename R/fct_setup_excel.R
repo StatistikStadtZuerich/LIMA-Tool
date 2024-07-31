@@ -52,7 +52,7 @@ setup_excel <- function(query_input, hauptPfad, input1, input2, input3 = NULL) {
   
   definitions <- read_excel(hauptPfad, sheet = sheet_num)
   
-  return(list(data, selected, definitions))
+  list(data, selected, definitions)
   
 }
 # test <- setup_excel("1", "inst/app/www/Titelblatt.xlsx", "Ganze Stadt", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften")

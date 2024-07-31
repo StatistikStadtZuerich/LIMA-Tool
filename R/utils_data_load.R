@@ -23,8 +23,7 @@ data_load <- function() {
     
     types <- mutate_nas(prepare_types(data), everything())
     
-
-    return(list(
+    list(
       zones = zones_list[[1]],
       zonesBZO16 = zones_list[[2]],
       zonesBZO99 = zones_list[[3]],
@@ -32,8 +31,7 @@ data_load <- function() {
       addresses = addresses,
       types = types,
       seriestypes = series_list[[2]]
-      ))
-
+      )
   }
 }
 

@@ -111,10 +111,10 @@ prepare_series <- function(dat) {
   
   seriestypes <- dat[[5]]
   
-  return(list(
+  list(
     series = series,
     seriestypes = seriestypes
-  ))
+  )
 }
 
 #' prepare_addresses 
@@ -125,7 +125,7 @@ prepare_series <- function(dat) {
 #'
 #' @noRd
 prepare_data <- function(dat) {
-  addresses <- dat[[3]] %>%
+  dat[[3]] %>%
     mutate(Zones = case_when(
       ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
       TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
@@ -137,7 +137,6 @@ prepare_data <- function(dat) {
       ZoneBZO99Lang == "Wohnzone 5" ~ "Wohnzonen 5",
       TRUE ~ ZoneBZO99Lang
     ))
-  return(addresses)
 }
 
 
@@ -150,17 +149,13 @@ prepare_data <- function(dat) {
 #' @noRd
 prepare_types <- function(dat) {
   ## Building Type
-  types <- dat[[4]] %>%
+  dat[[4]] %>%
     mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
                                       PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
                                       PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) %>%
     mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
                                ArtSort == 32 ~ "Nur Stockwerkeigentum",
                                ArtSort == 39 ~ "Alle Handänderungen")) 
-  
-  
-  return(types)
-  
 }
 
 #' mutate_nas 
@@ -171,8 +166,7 @@ prepare_types <- function(dat) {
 #'
 #' @noRd
 mutate_nas <- function(dat, mutate_where) {
-  data <- dat |> 
+  dat |> 
     mutate(across(everything(), \(x) replace(x, x == ".", "–")))  %>%
     mutate(across(mutate_where, \(x) replace(x, x == "", "–")))
-  return(data)
 }
