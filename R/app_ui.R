@@ -5,16 +5,11 @@
 #' @noRd
 app_ui <- function(request) {
   
-  shinyjs::useShinyjs(debug = TRUE)
-  
   # data is loaded upon loading of the package of this app in utils_load_data
   
   if (!exists("data_vector") || is.null(data_vector)) {
     tagList(
       fluidPage(
-        # Include CSS
-        includeCSS("inst/app/www/sszThemeShiny.css"),
-        includeCSS("inst/app/www/LimaTheme.css"),
         h1("Fehler"),
         p("Aufgrund momentaner Wartungsarbeiten ist die Applikation zur Zeit nicht verfügbar.")
       )
@@ -36,9 +31,6 @@ app_ui <- function(request) {
       golem_add_external_resources(),
       # Your application UI logic
       fluidPage(
-        # CSS
-        includeCSS("inst/app/www/sszThemeShiny.css"),
-        includeCSS("inst/app/www/LimaTheme.css"),
         
         # App Selection
         tags$div(
@@ -92,6 +84,9 @@ app_ui <- function(request) {
 #'
 #' @noRd
 golem_add_external_resources <- function() {
+  
+  shinyjs::useShinyjs(debug = TRUE)
+  
   add_resource_path(
     "www",
     app_sys("app/www")
