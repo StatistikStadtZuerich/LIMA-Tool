@@ -76,7 +76,7 @@ mod_address_ui <- function(id, choicesapp){
           conditionalPanel(
             condition = "input.linkCount % 2 == 1",
             ns = ns,
-            mod_area_tables_ui(ns("Zahl_submodul"))
+            mod_address_tables_ui(ns("Zahl_submodul"))
           ),
           
           explanationbox_app3()

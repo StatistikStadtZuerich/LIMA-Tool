@@ -49,9 +49,6 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
     if (target_value == "Preis") {
       filtered <- filtered |> 
         mutate(across(c(everything(), -Jahr), as.numeric))
-    } else {
-      filtered <- filtered |>  
-        mutate_all(., ~ replace(., is.na(.), " "))
     }
   } else {
     filtered <- zones |> 
@@ -65,11 +62,9 @@ filter_area_zone <- function(target_app, zones, target_value, filter_area, filte
     if (target_value == "Preis") {
       filtered <- filtered |> 
         mutate(across(c(everything(), -Jahr), as.numeric))
-    } else {
-      filtered <- filtered |>  
-        mutate_all(., ~ replace(., is.na(.), " "))
     }
   }
+  return(filtered)
 }
 # data_types <- data_vector[["types"]]
 # test <- filter_area_zone("Zones", data_vector[["zones"]], "Zahl", "Rathaus", "Preis pro m² Grundstücksfläche", "Ganze Liegenschaften", "BZO16")

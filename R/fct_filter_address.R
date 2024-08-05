@@ -93,7 +93,8 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
       as.numeric))
   } else {
     SerieTotal <- bind_rows(data_address[["SerieBZO16"]], data_address[["SerieBZO99"]]) |> 
-      select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
+      select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang) |> 
+      mutate(across(everything(), \(x) replace(x, x == "", "–")))
   }
   
   
