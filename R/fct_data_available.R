@@ -1,8 +1,13 @@
 #' data_available 
 #'
-#' @description A fct function
+#' @param addresses address dataset
+#' @param series series dataset
+#' @param filter_street filters the street with the given input in the app 
+#' @param filter_number filters the number with the given input in the app 
 #'
-#' @return The return value, if any, from executing the function.
+#' @description A fct function which checks if the data is available
+#'
+#' @return The return value is a dummy variable if the data is available
 #'
 #' @noRd
 data_available <- function(addresses, series, filter_street, filter_number){

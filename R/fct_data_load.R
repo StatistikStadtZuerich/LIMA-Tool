@@ -1,8 +1,8 @@
 #' import_data_from_ogd 
 #'
-#' @description A fct function
+#' @description Function to read the five open government datasets on which the app is based
 #'
-#' @return The return value, if any, from executing the function.
+#' @return  a named list of tibbles with zones, series, and addresses.
 #'
 #' @noRd
 import_data_from_ogd <- function() {
@@ -47,9 +47,11 @@ import_data_from_ogd <- function() {
 
 #' prepare_zones 
 #'
-#' @description A fct function
+#' @param dat dataset to be prepared
 #'
-#' @return The return value, if any, from executing the function.
+#' @description A function that prepares and filters the data sources by OGD
+#'
+#' @return a named list of tibbles with zones, zonesBZO16, and zonesBZO99
 #'
 #' @noRd
 prepare_zones <- function(dat) {
@@ -101,9 +103,11 @@ prepare_zones <- function(dat) {
 
 #' prepare_series 
 #'
-#' @description A fct function
+#' @param dat dataset to be prepared
 #'
-#' @return The return value, if any, from executing the function.
+#' @description A function that prepares and filters the data sources by OGD
+#'
+#' @return a named list of tibbles with series, and seriestypes
 #'
 #' @noRd
 prepare_series <- function(dat) {
@@ -119,9 +123,11 @@ prepare_series <- function(dat) {
 
 #' prepare_addresses 
 #'
-#' @description A fct function
+#' @param dat dataset to be prepared
 #'
-#' @return The return value, if any, from executing the function.
+#' @description A function that prepares and filters the data sources by OGD
+#'
+#' @return a named list of tibbles with series, and seriestypes
 #'
 #' @noRd
 prepare_data <- function(dat) {
@@ -142,9 +148,9 @@ prepare_data <- function(dat) {
 
 #' prepare_types 
 #'
-#' @description A fct function
+#' @description A function that prepares and filters the data sources by OGD
 #'
-#' @return The return value, if any, from executing the function.
+#' @return return the prepared types data
 #'
 #' @noRd
 prepare_types <- function(dat) {
@@ -160,9 +166,9 @@ prepare_types <- function(dat) {
 
 #' mutate_nas 
 #'
-#' @description A fct function
+#' @description A function to mutate NAs  to "-"
 #'
-#' @return The return value, if any, from executing the function.
+#' @return dataset with mutated NAs
 #'
 #' @noRd
 mutate_nas <- function(dat, mutate_where) {
