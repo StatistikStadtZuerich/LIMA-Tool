@@ -1,4 +1,4 @@
-#' download_name 
+#' create_fn_for_download 
 #'
 #' @description A function to generate the name for the download file
 #' 
