@@ -34,7 +34,6 @@ data_load <- function() {
     )
   }
 }
-data_vector <- data_load()
 
 
 #' mutate_nas 
