@@ -1,10 +1,10 @@
 # lima-golem
 
-Shiny app for [LIMA](https://www.stadt-zuerich.ch/prd/de/index/statistik/publikationen-angebote/datenbanken-anwendungen/liegenschaftenpreise.html) tool (Abfragetool Liegenschaftenmarkt).
+Shiny app for [LIMA](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bauen-wohnen/liegenschaftenhandel/preise-liegenschaften.html) tool (Abfragetool Liegenschaftenmarkt).
 
 The data from the LIMA (LIegenschaftenMArkt) tool on the Website of [Statistik Stadt Zürich](https://www.stadt-zuerich.ch/prd/de/index/statistik.html) are based on notification changes of ownership from the land registry offices. All sales of developed land in the territory of the city of Zurich are taken into account. The data is obtained from the Open Data portal of the city of Zurich and is available [here](https://data.stadt-zuerich.ch/dataset?tags=lima).
 
-By using the this application you agree to the [disclaimer](https://www.stadt-zuerich.ch/prd/de/index/statistik/publikationen-angebote/datenbanken-anwendungen/liegenschaftenpreise/disclaimer.html). 
+By using the this application you agree to the [disclaimer](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bauen-wohnen/liegenschaftenhandel/preise-liegenschaften/disclaimer.html). 
 
 ## Price series and grouping
 
@@ -25,7 +25,7 @@ Since there is hardly any undeveloped land left in Zurich, the pure land price c
 
 The purpose of substracting the building insurance value from the purchase price is to determine the theoretical land value, as the residual of the total price minus the building value, effectively the market value of the land. However, it must be remembered that the insurance value does not correspond to the current structural value of the building, but to the cost of reconstruction (new value of an identical building and not the current value reduced by age depreciation).
 
-Since the new value is higher than the current value and thus the deduction for the building value tends to be too high when calculating the residual value, the residual values shown are likely to tend to be lower than the effective land price. They are therefore only an approximation of the land price and should be interpreted with caution. Further information in the [disclaimer](https://www.stadt-zuerich.ch/prd/de/index/statistik/publikationen-angebote/datenbanken-anwendungen/liegenschaftenpreise/disclaimer.html).
+Since the new value is higher than the current value and thus the deduction for the building value tends to be too high when calculating the residual value, the residual values shown are likely to tend to be lower than the effective land price. They are therefore only an approximation of the land price and should be interpreted with caution. Further information in the [disclaimer](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bauen-wohnen/liegenschaftenhandel/preise-liegenschaften/disclaimer.html).
 
 ## New building and zoning regulations (BZO) as of 2019
 

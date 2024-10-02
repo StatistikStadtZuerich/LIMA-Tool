@@ -1440,7 +1440,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.9.1",
+      "Version": "1.8.1.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1469,7 +1469,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "6a293995a66e12c48d13aa1f957d09c7"
+      "Hash": "54b26646816af9960a4c64d8ceec75d6"
     },
     "shinyWidgets": {
       "Package": "shinyWidgets",
@@ -1860,7 +1860,6 @@
       "RemoteRepo": "zuericssstyle",
       "RemoteRef": "main",
       "RemoteSha": "e83492a3f7cf701b1586ad12ab6e077244bbc0e1",
-      "RemoteHost": "api.github.com",
       "Remotes": "github::daqana/dqshiny",
       "Requirements": [
         "dqshiny",
