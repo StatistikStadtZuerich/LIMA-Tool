@@ -36,4 +36,5 @@ deploy-job-prod:
   script:
     - Rscript -e "renv::deactivate()"
     - Rscript -e "packageVersion('rsconnect')"
+    - Rscript -e "renv::restore()"
     - Rscript -e "source('dev/deploy.R')"
