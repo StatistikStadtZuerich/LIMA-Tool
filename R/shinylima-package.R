@@ -15,7 +15,7 @@
 #' @import reactable
 #' @importFrom readxl read_excel
 #' @import shiny
-#' @import shinycssloaders withSpinner
+#' @importFrom shinycssloaders withSpinner
 #' @import shinyjs
 #' @importFrom tidyr pivot_longer
 #' @import zuericssstyle

@@ -28,7 +28,7 @@ mod_address_ui <- function(id, choicesapp){
       sszSelectInput(
         ns("select_number"),
         "Wählen Sie eine Hausnummer aus",
-        choices = choicesapp[["choices_streetnr"]],
+        choices = NULL,
         selected = 1
       ),
       
@@ -76,7 +76,7 @@ mod_address_ui <- function(id, choicesapp){
           conditionalPanel(
             condition = "input.linkCount % 2 == 1",
             ns = ns,
-            mod_area_tables_ui(ns("Zahl_submodul"))
+            mod_address_tables_ui(ns("Zahl_submodul"))
           ),
           
           explanationbox_app3()
@@ -103,12 +103,13 @@ mod_address_server <- function(id, addresses, series){
       freezeReactiveValue(input, "select_number")
       updateSelectInput(
         session, "select_number",
-        choices = addresses %>%
-          filter(StrasseLang == input$select_street) %>%
-          pull(Hnr) %>%
+        choices = addresses |> 
+          filter(StrasseLang == input$select_street) |> 
+          pull(Hnr) |> 
           mixedsort()
       )
-    })
+    }) |>  
+      bindEvent(input$select_street)
     
     mod_address_info_server(id = "address_info", 
                             addresses = addresses, 

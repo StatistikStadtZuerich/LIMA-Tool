@@ -52,10 +52,6 @@ mod_area_zones_server <- function(id, zones, filename_download, filter_area, fil
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(is.reactive(filter_area))
-    stopifnot(is.reactive(filter_price))
-    stopifnot(is.reactive(filter_group))
-    
     # Call Table Modules for Prices in App 1
     mod_area_tables_server(id = "Preis_submodul16", 
                            target_app = "Zones",

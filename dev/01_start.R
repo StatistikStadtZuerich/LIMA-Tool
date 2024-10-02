@@ -62,7 +62,6 @@ golem::use_utils_ui(with_test = TRUE)
 golem::use_utils_server(with_test = TRUE)
 
 usethis::use_package("dplyr")
-usethis::use_pipe()
 
 # You're now set! ----
 
