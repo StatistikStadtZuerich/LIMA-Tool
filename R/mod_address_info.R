@@ -10,7 +10,7 @@ mod_address_info_ui <- function(id){
   tagList(
  
     # Information about selection
-    htmlOutput(ns("results_info")),
+    reactableOutput(ns("results_info")),
     
     uiOutput(ns("more_info"))
     
@@ -30,65 +30,29 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(!is.reactive(addresses))
-    stopifnot(!is.reactive(series))
-    stopifnot(is.reactive(filter_street))
-    stopifnot(is.reactive(filter_number))
-
-    
     # Show Output Information Address
-    output$results_info <- renderText({
-      req(filter_street(), filter_number())
-      filtered_data <- addresses %>%
-        filter(StrasseLang == filter_street() & Hnr == filter_number()) %>%
-        mutate(Adresse = paste0(StrasseLang, " ", Hnr)) %>%
-        select(Adresse, QuarLang, Zones) %>%
-        pivot_longer(everything()) %>%
-        mutate(name = case_when(
-          name == "Adresse" ~ "Die Adresse",
-          name == "QuarLang" ~ "liegt im Quartier",
-          name == "Zones" ~ "in folgender Zone"
-        )) %>%
-        kable("html",
-              align = "lr",
-              col.names = NULL
-        ) %>%
-        kable_styling(bootstrap_options = c("condensed"))
-    }) %>%
+    output$results_info <- renderReactable({
+      req(data_availability())
+      filter_address_info(addresses, filter_street(), filter_number())
+    }) |> 
       bindEvent(filter_street(), filter_number())
     
     # Get Information if Data Frame is empty
-    dataAvailable <- reactive({
+    data_availability <- reactive({
       req(filter_street(), filter_number())
       
-      filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
-      
-      # Total series
-      priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) %>%
-        select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
-      
-      if (nrow(priceSerieTotal) > 0) {
-        available <- 1
-      } else {
-        avaiable <- 0
-      }
-    }) %>%
+      data_available(addresses, series, filter_street(), filter_number())
+    }) |> 
       bindEvent(filter_street(), filter_number())
 
     # Reactive Info
-    infoReactive <- reactive({
-      req(filter_street(), filter_number())
-
-      availability <- dataAvailable()
-      if (availability > 0) {
-        filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
-
-        zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
-        infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)
-      } else {
-        infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
-      }
-    }) %>%
+    info_reactive <- reactive({
+      req(data_availability())
+      
+      availability <- data_availability()
+      display_info(availability, addresses, series, filter_street(), filter_number())
+        
+    }) |> 
       bindEvent(filter_street(), filter_number())
 
     # Show Info (App 2)
@@ -96,11 +60,11 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
       ### Set up directory for icons
       ssz_icons <- icon_set("inst/app/www/icons/")
       
-      availability <- dataAvailable()
+      availability <- data_availability()
       if (availability > 0) {
         tags$div(
           class = "info_div",
-          infoReactive()
+          info_reactive()
         )
       } else {
         tags$div(
@@ -112,7 +76,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
           tags$div(
             class = "info_na_text",
             h6("Achtung"),
-            infoReactive()
+            info_reactive()
           )
         )
       }

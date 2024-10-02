@@ -18,76 +18,12 @@ sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, inp
   hauptPfad <- "inst/app/www/Titelblatt.xlsx"
   imagePfad <- "inst/app/www/logo_stzh_stat_sw_pos_1.png"
   
-  # Read Data
-  data <- read_excel(hauptPfad, sheet = 1) %>%
-    mutate(Date = ifelse(is.na(Date), 
-                  NA,
-                  format(Sys.Date(), "%d.%m.%Y")))
   
   # Manipulate Data for the two queries
-  if (queryinput == 1) {
-    data <- data %>%
-      mutate(
-        Titel = ifelse(is.na(Titel), 
-                       NA, 
-                       paste0("Grundstückspreise (Median) nach Zonenart für Ihre Auswahl: ", 
-                              input1, 
-                              ", ", 
-                              input2, 
-                              ", ", 
-                              input3))
-      )
-    
-    selected <- list(c("T_1", 
-                       "Grundstückspreise (Median) nach Zonenart für Ihre Auswahl:", 
-                       paste0(input1, ", ", input2, ", ", input3), 
-                       "  ", 
-                       "Quelle: Statistik Stadt Zürich, GWZ")) %>%
-      as.data.frame()
-    
-    definitions <- read_excel(hauptPfad, sheet = 2)
-    
-  } else if (queryinput == 2){
-    data <- data %>%
-      mutate(
-        Titel = ifelse(is.na(Titel), 
-                       NA, 
-                       paste0("Grundstückspreise (Median) nach Bebauungsart für Ihre Auswahl: ", 
-                              input1, 
-                              ", ", 
-                              input2, 
-                              ", ", 
-                              input3))
-      )
-    
-    selected <- list(c("T_1", 
-                       "Grundstückspreise (Median) nach Bebauungsart für Ihre Auswahl:", 
-                       paste0(input1, ", ", input2, ", ", input3), 
-                       "  ", 
-                       "Quelle: Statistik Stadt Zürich, GWZ")) %>%
-      as.data.frame()
-    
-    definitions <- read_excel(hauptPfad, sheet = 3)
-  } else if (queryinput ==  3) {
-    data <- data %>%
-      mutate(
-        Titel = ifelse(is.na(Titel), 
-                       NA, 
-                       paste0("Grundstückspreise (Median) für Ihre Adresseingabe: ", 
-                              input1, 
-                              " ", 
-                              input2))
-      )
-    
-    selected <- list(c("T_1", 
-                       "Grundstückspreise (Median) für Ihre Adresseingabe:", 
-                       paste0(input1, " ", input2), 
-                       "  ", 
-                       "Quelle: Statistik Stadt Zürich, GWZ")) %>%
-      as.data.frame()
-    
-    definitions <- read_excel(hauptPfad, sheet = 4)
-  } else {warning("no appropriate app selected, excel download will not work")}
+  res <- setup_excel(queryinput, hauptPfad, input1, input2, input3)
+  data <- res[[1]]
+  selected <- res[[2]]
+  definitions <- res[[3]]
   
   # Styling
   sty <- createStyle(fgFill = "#ffffff")

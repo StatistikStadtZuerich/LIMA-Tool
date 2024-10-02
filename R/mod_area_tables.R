@@ -42,20 +42,9 @@ mod_area_tables_server <- function(id, target_app, zones, target_value, table_fu
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
-    stopifnot(!is.reactive(target_app))
-    stopifnot(!is.reactive(zones))
-    stopifnot(!is.reactive(table_function))
-    stopifnot(is.reactive(filter_area))
-    stopifnot(is.reactive(filter_price))
-    stopifnot(is.reactive(filter_group))
-    stopifnot(!is.reactive(target_value))
-    stopifnot(!is.reactive(title))
-    stopifnot(!is.reactive(BZO))
-    
     # title for table
     output$tableTitle <- renderText({
-      tableTitle <- title
-      tableTitle
+      title
     })
     
     # render table but only when trigger input is updated
@@ -63,7 +52,7 @@ mod_area_tables_server <- function(id, target_app, zones, target_value, table_fu
       filtered_data <- filter_area_zone(target_app, zones, target_value, filter_area(), filter_price(), filter_group(), BZO)
       out <- table_function(filtered_data, 25)
       out
-    }) %>%
+    }) |> 
       bindEvent(filter_area(), filter_price(), filter_group())
     
   })
