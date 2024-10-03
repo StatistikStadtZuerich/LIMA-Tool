@@ -1,19 +1,21 @@
 test_that("utils to load data", {
   data_vector <- data_load()
-  
-  # there should be 7 dfs in data_vector
-  expect_true(length(data_vector) == 7)
+
+  # there names of the dfs in data_vector should be as following:
+  expect_named(data_vector, 
+               c("zones",
+                 "zonesBZO16",
+                 "zonesBZO99",
+                 "series",
+                 "addresses",
+                 "types",
+                 "seriestypes"))
   
   # there should be no NAs in data_vector
-  expect_true(sum(is.na(data_vector[[1]]$Typ)) == 0)
-  expect_true(sum(is.na(data_vector[[2]]$Typ)) == 0)
-  expect_true(sum(is.na(data_vector[[3]]$Typ)) == 0)
-  expect_true(sum(is.na(data_vector[[4]]$Typ)) == 0)
-  expect_true(sum(is.na(data_vector[[5]]$StrasseLang)) == 0)
-  expect_true(sum(is.na(data_vector[[6]]$Typ)) == 0)
-  expect_true(sum(is.na(data_vector[[7]]$Typ)) == 0)
+  purrr::map(data_vector, \(x) expect_equal(sum(is.na(x)), 0))
   
-  expect_snapshot_value(data_vector[[1]], style = "json2")
+  # snapshot of dfs
+  purrr::map(data_vector, \(x) expect_snapshot_value(x, style = "json2"))
   
   # check column names
   expect_named(data_vector[[1]], 
@@ -36,6 +38,46 @@ test_that("utils to load data", {
                  "W45",
                  "W56"))
   
+  expect_named(data_vector[[2]], 
+               c("Typ",
+                 "PreisreiheSort",
+                 "PreisreiheLang",
+                 "ArtSort",
+                 "ArtLang",
+                 "GebietSort",
+                 "GebietLang",
+                 "Jahr",
+                 "BZO",
+                 "Total",
+                 "Z",
+                 "K",
+                 "Q",
+                 "W2",
+                 "W3",
+                 "W4",
+                 "W5",
+                 "W6"))
+  
+  expect_named(data_vector[[3]], 
+               c("Typ",
+                 "PreisreiheSort",
+                 "PreisreiheLang",
+                 "ArtSort",
+                 "ArtLang",
+                 "GebietSort",
+                 "GebietLang",
+                 "Jahr",
+                 "BZO",
+                 "Total",
+                 "Z",
+                 "K",
+                 "Q",
+                 " ",
+                 "W2",
+                 "W3",
+                 "W4",
+                 "W5"))
+  
   expect_named(data_vector[[4]], 
                c("Typ",
                  "QuarCd",
@@ -49,6 +91,15 @@ test_that("utils to load data", {
                  "FrQmBodenNettoGanzeLieg",
                  "FrQmBodenNettoStwE",
                  "FrQmBodenNettoAlleHA"))
+  
+  expect_named(data_vector[[5]], 
+               c("StrasseLang",
+                 "Hnr",
+                 "QuarCd",
+                 "QuarLang",
+                 "ZoneBZO16Lang",
+                 "ZoneBZO99Lang",
+                 "Zones"))
   
   expect_named(data_vector[[6]], 
                c("Typ",
@@ -68,12 +119,25 @@ test_that("utils to load data", {
                  "IGZ",
                  "UG"))
   
+  expect_named(data_vector[[7]], 
+               c("Typ",
+                 "QuarCd",
+                 "QuarLang",
+                 "ZoneSort",
+                 "ZoneLang",
+                 "BebauungSort",
+                 "BebauungLang",
+                 "Jahr",
+                 "FrQmBodenGanzeLieg",
+                 "FrQmBodenStwE",
+                 "FrQmBodenAlleHA",
+                 "FrQmBodenNettoGanzeLieg",
+                 "FrQmBodenNettoStwE",
+                 "FrQmBodenNettoAlleHA"))
+  
   
   # check data type
-  expect_s3_class(
-    data_vector[[1]],
-    "data.frame"
-  )
+  purrr::map(data_vector, \(x) expect_s3_class(x, "data.frame"))
   
   
 })
