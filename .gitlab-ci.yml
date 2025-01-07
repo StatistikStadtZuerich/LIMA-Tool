@@ -26,6 +26,6 @@ publish-main-to-github:
     - .publish-main-to-github
   script:
     - !reference [.git-setup, script]
-    - git push -u github main
+    - git push github main
 
     
