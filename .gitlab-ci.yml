@@ -1,7 +1,7 @@
 # muss man hier definieren, sonst klappt das nicht für beide includes
 stages:
-  - deploy_test
-  - deploy_prod
+  - deploy-test
+  - deploy-prod
 
 include:
   # use template for gitlab pipeline to deploy to shinyapps.io
