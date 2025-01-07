@@ -24,5 +24,8 @@ deploy-job-prod:
 publish-main-to-github:
   extends:
     - .publish-main-to-github
+  script:
+    - !reference [.git-setup, script]
+    - git push -u github main
 
     
