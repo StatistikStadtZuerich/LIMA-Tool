@@ -24,9 +24,6 @@ deploy-job-prod:
 publish-main-to-github:
   extends:
     - .publish-main-to-github
-  script:
-    - !reference [.git-setup, script]
-    - git push github main
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
