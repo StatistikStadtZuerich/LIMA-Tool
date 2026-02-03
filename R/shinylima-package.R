@@ -3,7 +3,6 @@
 #' 
 #' @importFrom data.table fread
 #' @import dplyr
-#' @importFrom furrr future_map
 #' @import ggplot2
 #' @importFrom golem add_resource_path activate_js favicon bundle_resources
 #' @importFrom gtools mixedsort
@@ -21,5 +20,6 @@
 #' @import zuericssstyle
 #' 
 ## usethis namespace: start
+#' @importFrom purrr map
 ## usethis namespace: end
 NULL
