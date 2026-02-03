@@ -94,6 +94,9 @@ usethis::use_gitlab_ci()
 # Add shinyapps.io fil
 add_shinyappsio_file(pkg = golem::get_golem_wd(), open = TRUE)
 
+# dummy: to make sure we have devtools in the renv
+devtools::document()
+
 # You're now set! ----
 # go to dev/03_deploy.R
 rstudioapi::navigateToFile("dev/03_deploy.R")
