@@ -31,7 +31,7 @@ import_data_from_ogd <- function() {
       }
       
       # Parallelisation
-      data <- future_map(URLs, dataDownload)
+      data <- map(URLs, dataDownload)
       
       return(data)
     },
