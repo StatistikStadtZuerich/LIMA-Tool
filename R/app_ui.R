@@ -9,7 +9,7 @@ app_ui <- function(request) {
   
   if (!exists("data_vector") || is.null(data_vector)) {
     tagList(
-      fluidPage(
+      ssz_page(
         h1("Fehler"),
         p("Aufgrund momentaner Wartungsarbeiten ist die Applikation zur Zeit nicht verfügbar.")
       )
@@ -30,7 +30,7 @@ app_ui <- function(request) {
       # Leave this function for adding external resources
       golem_add_external_resources(),
       # Your application UI logic
-      fluidPage(
+      ssz_page(
         
         # App Selection
         tags$div(
@@ -93,7 +93,6 @@ golem_add_external_resources <- function() {
   )
   
   tags$head(
-    favicon(),
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "lima-golem"

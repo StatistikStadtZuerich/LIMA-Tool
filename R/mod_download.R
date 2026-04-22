@@ -6,29 +6,25 @@
 #'
 #' @noRd 
 mod_download_ui <- function(id){
-  ### Set up directory for icons
-  ssz_icons <- icon_set("inst/app/www/icons/")
-  
   ns <- NS(id)
   tagList(
     
-    h3("Daten herunterladen"),
     tags$div(
       id = "downloadWrapperId",
       class = "downloadWrapperDiv",
       sszDownloadButton(ns("csvDownload"),
-                        label = "csv",
-                        image = img(ssz_icons$download)
+                        label = "CSV",
+                        image = icons_stzh()("download")
       ),
       sszDownloadButton(ns("excelDownload"),
-                        label = "xlsx",
-                        image = img(ssz_icons$download)
+                        label = "XLSX",
+                        image = icons_stzh()("download")
       ),
       sszOgdDownload(
         outputId = ns("ogdDown"),
         label = "OGD",
         href = "https://data.stadt-zuerich.ch/dataset?tags=lima",
-        image = img(ssz_icons$link)
+        image = icons_stzh()("external-link")
       )
       
     )

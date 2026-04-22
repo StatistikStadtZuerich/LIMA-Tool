@@ -11,7 +11,6 @@ mod_area_ui <- function(id, choicesapp){
   ns <- NS(id)
   
   tagList(
-    sidebarPanel(
       # Area
       sszSelectInput(ns("select_area"),
                      "Gebietsauswahl",
@@ -56,10 +55,8 @@ mod_area_ui <- function(id, choicesapp){
            condition = "input.choose_app == 'Abfrage 2'",
            mod_download_ui(ns("download_2"))
          )
-      )
     ),
     # Main Panel (Results)
-    mainPanel(
     conditionalPanel(
       condition = "input.start_query",
       ns = ns,
@@ -96,7 +93,7 @@ mod_area_ui <- function(id, choicesapp){
         condition = "input.choose_app == 'Abfrage 2'",
         mod_area_types_ui(ns("mod_types"))
       )
-    )
+    
   )
 )}
 

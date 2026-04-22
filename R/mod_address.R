@@ -7,14 +7,10 @@
 #'
 #' @noRd 
 mod_address_ui <- function(id, choicesapp){
-  ### Set up directory for icons
-  ssz_icons <- icon_set("inst/app/www/icons/")
-  
+
   ns <- NS(id)
   tagList(
     
-    sidebarPanel(
-      
       # Street input
       sszAutocompleteInput(
         ns("select_street"),
@@ -49,11 +45,9 @@ mod_address_ui <- function(id, choicesapp){
         condition = "input.start_query",
         ns = ns,
         mod_download_ui(ns("download_3"))
-      )
-    ),
+      ),
     
     # Main Panel (results)
-    mainPanel(
       br(),
       
       # Info Table
@@ -81,7 +75,7 @@ mod_address_ui <- function(id, choicesapp){
           
           explanationbox_app3()
         )
-      )
+      
     )
   )
 }
