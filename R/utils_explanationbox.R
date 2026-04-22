@@ -1,11 +1,11 @@
-#' explanationbox 
+#' explanationbox
 #'
 #' @description A utils function to display the explanation box of the according app
 #'
 #' @return The return value is a div that is called and rendered in the according app
 #'
 #' @noRd
-explanationbox_app1 <- function(){
+explanationbox_app1 <- function() {
   tags$div(
     class = "infoDiv",
     h5("Erklärung Zonenarten"),
@@ -19,7 +19,7 @@ explanationbox_app1 <- function(){
     p("W5 = Wohnzone 5")
   )
 }
-explanationbox_app2 <- function(){
+explanationbox_app2 <- function() {
   tags$div(
     class = "infoDiv",
     h5("Erklärung Bebauungsarten"),
@@ -32,7 +32,7 @@ explanationbox_app2 <- function(){
     p("UNB = Unbebaut in Wohn- und Mischzonen")
   )
 }
-explanationbox_app3 <- function(){
+explanationbox_app3 <- function() {
   tags$div(
     id = "defs",
     class = "infoDiv",

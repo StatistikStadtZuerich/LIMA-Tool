@@ -4,21 +4,20 @@
 #'
 #' @description A shiny Module to call and render the three download options (Excel, CSV, OGD) that are available in every app
 #'
-#' @noRd 
-mod_download_ui <- function(id){
+#' @noRd
+mod_download_ui <- function(id) {
   ns <- NS(id)
   tagList(
-    
     tags$div(
       id = "downloadWrapperId",
       class = "downloadWrapperDiv",
       sszDownloadButton(ns("csvDownload"),
-                        label = "CSV",
-                        image = icons_stzh()("download")
+        label = "CSV",
+        image = icons_stzh()("download")
       ),
       sszDownloadButton(ns("excelDownload"),
-                        label = "XLSX",
-                        image = icons_stzh()("download")
+        label = "XLSX",
+        image = icons_stzh()("download")
       ),
       sszOgdDownload(
         outputId = ns("ogdDown"),
@@ -26,7 +25,6 @@ mod_download_ui <- function(id){
         href = "https://data.stadt-zuerich.ch/dataset?tags=lima",
         image = icons_stzh()("external-link")
       )
-      
     )
   )
 }
@@ -35,49 +33,51 @@ mod_download_ui <- function(id){
 #'
 #' @param id of the module called in the app
 #' @param filter_function function to be used for filtering the data for the download
-#' @param static_parameters list of static parameters to be passed to the filter_function; 
+#' @param static_parameters list of static parameters to be passed to the filter_function;
 #' name has to conform to the parameter name of the filter_function
-#' @param reactive_parameters list of reactive parameters used for filtering, order of 
-#' parameters has to conform to order of parameters in filter_function, and name 
+#' @param reactive_parameters list of reactive parameters used for filtering, order of
+#' parameters has to conform to order of parameters in filter_function, and name
 #' has to be the same as the name as the input id it represents
 #' @param filter_app app that is selected, c(1,2,3)
 #'
-#' @noRd 
-mod_download_server <- function(id, filter_function, static_parameters, reactive_parameters, filter_app){
-  moduleServer( id, function(input, output, session){
+#' @noRd
+mod_download_server <- function(id, filter_function, static_parameters, reactive_parameters, filter_app) {
+  moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    
+
     # check input types
     stopifnot(is.function(filter_function))
     purrr::map(static_parameters, \(x) stopifnot(!is.reactive(x)))
     purrr::map(reactive_parameters, \(x) stopifnot(is.reactive(x)))
-    
+
     # filter data appropriately (according to function and parameters given)
     data_for_download <- reactive({
       purrr::map(reactive_parameters, req)
-      
+
       seriesPriceCount <- rlang::inject(
-        filter_function(!!!static_parameters,
-                        !!!(purrr::map(reactive_parameters,
-                                       \(x) x()) |> 
-                              unname())
+        filter_function(
+          !!!static_parameters,
+          !!!(purrr::map(
+            reactive_parameters,
+            \(x) x()
+          ) |>
+            unname())
         )
       )
       seriesPriceCount
     })
-    
+
     # create appropriate filename based on app choice
     fn_for_download <- reactive({
-      switch(
-        filter_app,
+      switch(filter_app,
         "1" = create_fn_for_download("Bauzonenordnung_und_Zonenart", static_parameters, reactive_parameters),
-        "2" = create_fn_for_download("Bebauungsart",  static_parameters, reactive_parameters),
-        "3" = create_fn_for_download("Bauzonenordnung_und_Quartier",  static_parameters, reactive_parameters),
+        "2" = create_fn_for_download("Bebauungsart", static_parameters, reactive_parameters),
+        "3" = create_fn_for_download("Bauzonenordnung_und_Quartier", static_parameters, reactive_parameters),
         # Default
         "No appropriate app chosen"
       )
     })
-    
+
     ### Write Download Table
     ## App 1
     # CSV
@@ -87,11 +87,13 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
         paste0(name, ".csv")
       },
       content = function(file) {
-        write.csv(data_for_download(), 
-                  file, row.names = FALSE, na = " ", fileEncoding = "UTF-8")
+        write.csv(data_for_download(),
+          file,
+          row.names = FALSE, na = " ", fileEncoding = "UTF-8"
+        )
       }
     )
-    
+
     # Excel
     output$excelDownload <- downloadHandler(
       filename = function() {
@@ -99,16 +101,17 @@ mod_download_server <- function(id, filter_function, static_parameters, reactive
         paste0(name, ".xlsx")
       },
       content = function(file) {
-        
-        rlang::inject(sszDownloadExcel(data_for_download(), 
-                                       file, filter_app, 
-                                       !!!(purrr::map(reactive_parameters,
-                                                      \(x) x()) |> 
-                                             unname())
+        rlang::inject(sszDownloadExcel(
+          data_for_download(),
+          file, filter_app,
+          !!!(purrr::map(
+            reactive_parameters,
+            \(x) x()
+          ) |>
+            unname())
         ))
       }
     )
-    
   })
 }
 

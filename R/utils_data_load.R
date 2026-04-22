@@ -1,4 +1,4 @@
-#' import_data_from_ogd 
+#' import_data_from_ogd
 #'
 #' @description Function to read the five open government datasets on which the app is based
 #'
@@ -6,7 +6,6 @@
 #'
 #' @noRd
 import_data_from_ogd <- function() {
-  
   ## URLS
   URLs <- c(
     "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_gebiet_bzo_jahr_od5141/download/BAU514OD5141.csv",
@@ -15,24 +14,23 @@ import_data_from_ogd <- function() {
     "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_od5144/download/BAU514OD5144.csv",
     "https://data.stadt-zuerich.ch/dataset/bau_hae_lima_preise_anzahl_hae_art_bebauung_jahr_grpd_od5145/download/BAU514OD5145.csv"
   )
-  
+
   # Applying tryCatch
   tryCatch(
     expr = { # Specifying expression
       # By default the data frame is empty
       data <- NULL
-      
+
       ## Download
       dataDownload <- function(link) {
-        data <- fread(link, encoding = "UTF-8"
-        )
-        
+        data <- fread(link, encoding = "UTF-8")
+
         return(data)
       }
-      
+
       # Parallelisation
       data <- map(URLs, dataDownload)
-      
+
       return(data)
     },
     error = function(e) { # Specifying error message
@@ -45,7 +43,7 @@ import_data_from_ogd <- function() {
   )
 }
 
-#' prepare_zones 
+#' prepare_zones
 #'
 #' @param dat dataset to be prepared
 #'
@@ -56,17 +54,20 @@ import_data_from_ogd <- function() {
 #' @noRd
 prepare_zones <- function(dat) {
   ## Zones
-  zones <- dat[[1]] |> 
-    mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
-                                      PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
-                                      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) |> 
+  zones <- dat[[1]] |>
+    mutate(PreisreiheLang = case_when(
+      PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
+      PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
+      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche"
+    )) |>
     mutate(ArtLang = case_when(
       ArtLang == "Ganze Liegenschaft" ~ "Ganze Liegenschaften",
-      TRUE ~ ArtLang))
-  
+      TRUE ~ ArtLang
+    ))
+
   ## BZO16
-  zonesBZO16 <- zones |> 
-    filter(BZO == "BZO16") |> 
+  zonesBZO16 <- zones |>
+    filter(BZO == "BZO16") |>
     rename(
       Total = ALLE,
       Z = ZE,
@@ -77,11 +78,11 @@ prepare_zones <- function(dat) {
       W4 = W34,
       W5 = W45,
       W6 = W56
-    ) 
-  
+    )
+
   ## BZO99
-  zonesBZO99 <- zones |> 
-    filter(BZO == "BZO99") |> 
+  zonesBZO99 <- zones |>
+    filter(BZO == "BZO99") |>
     rename(
       Total = ALLE,
       Z = ZE,
@@ -92,8 +93,8 @@ prepare_zones <- function(dat) {
       W3 = W34,
       W4 = W45,
       W5 = W56
-    ) 
-  
+    )
+
   return(list(
     zones = zones,
     zonesBZO16 = zonesBZO16,
@@ -101,7 +102,7 @@ prepare_zones <- function(dat) {
   ))
 }
 
-#' prepare_series 
+#' prepare_series
 #'
 #' @param dat dataset to be prepared
 #'
@@ -111,17 +112,17 @@ prepare_zones <- function(dat) {
 #'
 #' @noRd
 prepare_series <- function(dat) {
-  series <- dat[[2]] 
-  
+  series <- dat[[2]]
+
   seriestypes <- dat[[5]]
-  
+
   list(
     series = series,
     seriestypes = seriestypes
   )
 }
 
-#' prepare_addresses 
+#' prepare_addresses
 #'
 #' @param dat dataset to be prepared
 #'
@@ -131,11 +132,11 @@ prepare_series <- function(dat) {
 #'
 #' @noRd
 prepare_data <- function(dat) {
-  dat[[3]] |> 
+  dat[[3]] |>
     mutate(Zones = case_when(
       ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
       TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
-    )) |>  
+    )) |>
     mutate(ZoneBZO99Lang = case_when(
       ZoneBZO99Lang == "Wohnzone 2" ~ "Wohnzonen 2",
       ZoneBZO99Lang == "Wohnzone 3" ~ "Wohnzonen 3",
@@ -146,7 +147,7 @@ prepare_data <- function(dat) {
 }
 
 
-#' prepare_types 
+#' prepare_types
 #'
 #' @description A function that prepares and filters the data sources by OGD
 #'
@@ -155,12 +156,15 @@ prepare_data <- function(dat) {
 #' @noRd
 prepare_types <- function(dat) {
   ## Building Type
-  dat[[4]] |> 
-    mutate(PreisreiheLang = case_when(PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
-                                      PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
-                                      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche")) |> 
-    mutate(ArtLang = case_when(ArtSort == 31 ~ "Ganze Liegenschaften",
-                               ArtSort == 32 ~ "Nur Stockwerkeigentum",
-                               ArtSort == 39 ~ "Alle Handänderungen")) 
+  dat[[4]] |>
+    mutate(PreisreiheLang = case_when(
+      PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
+      PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
+      PreisreiheSort == 49 ~ "Stockwerkeigentum pro m\u00B2 Wohnungsfläche"
+    )) |>
+    mutate(ArtLang = case_when(
+      ArtSort == 31 ~ "Ganze Liegenschaften",
+      ArtSort == 32 ~ "Nur Stockwerkeigentum",
+      ArtSort == 39 ~ "Alle Handänderungen"
+    ))
 }
-

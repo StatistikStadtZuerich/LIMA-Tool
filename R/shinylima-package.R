@@ -1,6 +1,6 @@
 #' @keywords internal
 "_PACKAGE"
-#' 
+#'
 #' @importFrom data.table fread
 #' @import dplyr
 #' @import ggplot2
@@ -18,7 +18,7 @@
 #' @import shinyjs
 #' @importFrom tidyr pivot_longer
 #' @import zuericssstyle
-#' 
+#'
 ## usethis namespace: start
 #' @importFrom purrr map
 ## usethis namespace: end

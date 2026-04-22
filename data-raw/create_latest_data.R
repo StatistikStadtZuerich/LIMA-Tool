@@ -7,6 +7,6 @@ pkgload::load_all(helpers = FALSE, attach_testthat = FALSE)
 # get and prepare data
 data_vector <- data_load()
 usethis::use_data(data_vector,
-                  overwrite = TRUE,
-                  internal = TRUE
+  overwrite = TRUE,
+  internal = TRUE
 )

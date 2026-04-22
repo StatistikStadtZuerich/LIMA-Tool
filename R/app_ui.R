@@ -4,9 +4,8 @@
 #'     DO NOT REMOVE.
 #' @noRd
 app_ui <- function(request) {
-  
   # data is loaded upon loading of the package of this app in utils_load_data
-  
+
   if (!exists("data_vector") || is.null(data_vector)) {
     tagList(
       ssz_page(
@@ -25,18 +24,17 @@ app_ui <- function(request) {
       choices_street = unique(data_vector[["addresses"]]$StrasseLang),
       choices_streetnr = c("", sort(unique(data_vector[["addresses"]]$Hnr)))
     )
-    
+
     tagList(
       # Leave this function for adding external resources
       golem_add_external_resources(),
       # Your application UI logic
       ssz_page(
-        
         # App Selection
         tags$div(
           class = "queryDiv",
           h1("Wählen Sie eine Abfrage"),
-          hr(),
+          br(),
           sszRadioButtons(
             inputId = "choose_app", # these choices are also used in the module mod_area.R
             label = NULL,
@@ -48,33 +46,38 @@ app_ui <- function(request) {
             selected = character(0)
           )
         ),
-        
+
         # Conditional Panel which App to choose
         # App 1
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 1"',
           # Show App 1 Code
-          mod_area_ui(id = "area_zones",
-                      choicesapp = choices_app12)
+          mod_area_ui(
+            id = "area_zones",
+            choicesapp = choices_app12
+          )
         ),
         # App 2
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 2" ',
           # Show App 2 Code
-          mod_area_ui(id = "area_types",
-                      choicesapp = choices_app12)
+          mod_area_ui(
+            id = "area_types",
+            choicesapp = choices_app12
+          )
         ),
         # App 3
         conditionalPanel(
           condition = 'input.choose_app == "Abfrage 3" ',
           # Show App 3 Code
-          mod_address_ui(id = "addresses",
-                         choicesapp = choices_app3)
+          mod_address_ui(
+            id = "addresses",
+            choicesapp = choices_app3
+          )
         )
       )
     )
   }
-  
 }
 
 #' Add external Resources to the Application
@@ -84,14 +87,13 @@ app_ui <- function(request) {
 #'
 #' @noRd
 golem_add_external_resources <- function() {
-  
   shinyjs::useShinyjs(debug = TRUE)
-  
+
   add_resource_path(
     "www",
     app_sys("app/www")
   )
-  
+
   tags$head(
     bundle_resources(
       path = app_sys("app/www"),
