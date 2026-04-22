@@ -10,6 +10,7 @@
 #' @noRd
 reactable_area <- function(target_data, pagesize) {
   reactable(target_data,
+    class = "table-striped",
     theme = reactableTheme(
       borderColor = "#DEDEDE"
     ),
@@ -31,7 +32,6 @@ reactable_area <- function(target_data, pagesize) {
       }
     ),
     outlined = TRUE,
-    highlight = TRUE,
     defaultPageSize = pagesize,
     rowClass = JS("function(rowInfo) {return rowInfo.selected ? 'selected' : ''}"),
     rowStyle = JS("function(rowInfo) {if (rowInfo.selected) { return { backgroundColor: '#F2F2F2'}}}")
@@ -49,6 +49,7 @@ reactable_area <- function(target_data, pagesize) {
 #' @noRd
 reactable_area_types <- function(target_data, pagesize) {
   reactable(target_data,
+    class = "table-striped",
     theme = reactableTheme(
       borderColor = "#DEDEDE"
     ),
@@ -98,7 +99,6 @@ reactable_area_types <- function(target_data, pagesize) {
       }
     ),
     outlined = TRUE,
-    highlight = TRUE,
     defaultPageSize = pagesize,
     rowClass = JS("function(rowInfo) {return rowInfo.selected ? 'selected' : ''}"),
     rowStyle = JS("function(rowInfo) {if (rowInfo.selected) { return { backgroundColor: '#F2F2F2'}}}")
