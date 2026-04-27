@@ -8,6 +8,8 @@
 mod_address_tables_ui <- function(id) {
   ns <- NS(id)
   tagList(
+    # title for table
+    h2(textOutput(ns("title_table"))),
     # Table for prices
     shinycssloaders::withSpinner(
       reactableOutput(ns("results")),
@@ -38,6 +40,22 @@ mod_address_tables_server <- function(id, addresses, series, target_value, filte
       data_available(addresses, series, filter_street(), filter_number())
     }) |>
       bindEvent(filter_street(), filter_number())
+
+    # render title if data is available
+    output$title_table <- renderText({
+      availability <- data_availability()
+      if (availability > 0) {
+        filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
+
+        paste0(
+          "Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]],
+          ", in der ", filtered_addresses[["zoneBZO16"]], " (bis 2018: ",
+          filtered_addresses[["zoneBZO99"]], ")"
+        )
+      } else {
+        NULL
+      }
+    })
 
     # Table if data is available for zone
     output$results <- renderReactable({

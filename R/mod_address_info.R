@@ -27,7 +27,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # Show Output Information Address
+    # Show Output Information Address - todo turn into card
     output$results_info <- renderReactable({
       req(data_availability())
       filter_address_info(addresses, filter_street(), filter_number())
@@ -42,35 +42,19 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
     }) |>
       bindEvent(filter_street(), filter_number())
 
-    # Reactive Info
-    info_reactive <- reactive({
-      req(data_availability())
-
-      availability <- data_availability()
-      display_info(availability, addresses, series, filter_street(), filter_number())
-    }) |>
-      bindEvent(filter_street(), filter_number())
-
     # Show Info (App 2)
     output$more_info <- renderUI({
       availability <- data_availability()
       if (availability > 0) {
-        tags$div(
-          class = "info_div",
-          info_reactive()
-        )
+        NULL
       } else {
-        tags$div(
-          class = "info_na_div",
-          tags$div(
-            class = "info_na_icon",
-            icons_stzh()("important-warning-filled")
+        sszInfoBox(
+          title = "Hinweis",
+          text = paste0(
+            "Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).",
+            "\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage."
           ),
-          tags$div(
-            class = "info_na_text",
-            h6("Achtung"),
-            info_reactive()
-          )
+          icon = icons_stzh()("info-help-filled")
         )
       }
     })
