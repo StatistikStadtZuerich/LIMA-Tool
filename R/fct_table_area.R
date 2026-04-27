@@ -1,6 +1,6 @@
 #' reactable_area
 #'
-#' @description A fct function that renders the correct setting for the reactable() table for the area app
+#' @description A function that renders the correct setting for the reactable() table for the area app
 #'
 #' @param target_data the filtered dataset that is displayed in the table
 #' @param pagesize is 5 for BZO16 and 15 for BZO99
@@ -39,7 +39,7 @@ reactable_area <- function(target_data, pagesize) {
 }
 #' reactable_area_types
 #'
-#' @description A fct function that renders the correct setting for the reactable() table for the area types app
+#' @description A function that renders the correct setting for the reactable() table for the area types app
 #'
 #' @param target_data the filtered dataset that is displayed in the table
 #' @param pagesize is 5 for BZO16 and 15 for BZO99
