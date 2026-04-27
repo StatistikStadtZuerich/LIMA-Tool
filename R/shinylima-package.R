@@ -1,6 +1,8 @@
 #' @keywords internal
 "_PACKAGE"
 #'
+## usethis namespace: start
+#' @import bslib
 #' @importFrom data.table fread
 #' @import dplyr
 #' @import ggplot2
@@ -11,6 +13,7 @@
 #' @importFrom kableExtra kable_styling
 #' @importFrom knitr kable
 #' @import openxlsx
+#' @importFrom purrr map
 #' @import reactable
 #' @importFrom readxl read_excel
 #' @import shiny
@@ -18,8 +21,5 @@
 #' @import shinyjs
 #' @importFrom tidyr pivot_longer
 #' @import zuericssstyle
-#'
-## usethis namespace: start
-#' @importFrom purrr map
 ## usethis namespace: end
 NULL
