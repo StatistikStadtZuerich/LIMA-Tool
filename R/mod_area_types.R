@@ -17,7 +17,7 @@ mod_area_types_ui <- function(id) {
       class = "linkCount",
       actionLink(ns("linkCount"),
         "Anzahl Handänderungen einblenden",
-        icon = icon("angle-down")
+        icon = icons_stzh()("angle-down")
       ),
 
       # Hidden Titles and Tables for Hand Changes
@@ -64,11 +64,11 @@ mod_area_types_server <- function(id, zones, filename_download, filter_area, fil
     observeEvent(input$linkCount, {
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+        updateActionLink(session, "linkCount", label = txt, icon = icons_stzh()("angle-up"))
         shinyjs::addClass("linkCount", "visitedLink")
       } else {
         txt <- "Anzahl Handänderungen einblenden"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
+        updateActionLink(session, "linkCount", label = txt, icon = icons_stzh()("angle-down"))
         shinyjs::removeClass("linkCount", "visitedLink")
       }
     })

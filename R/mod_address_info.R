@@ -53,9 +53,6 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
 
     # Show Info (App 2)
     output$more_info <- renderUI({
-      ### Set up directory for icons
-      ssz_icons <- icon_set("inst/app/www/icons/")
-
       availability <- data_availability()
       if (availability > 0) {
         tags$div(
@@ -67,7 +64,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
           class = "info_na_div",
           tags$div(
             class = "info_na_icon",
-            img(ssz_icons$`warning`)
+            icons_stzh()("important-warning-filled")
           ),
           tags$div(
             class = "info_na_text",

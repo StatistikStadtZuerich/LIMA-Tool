@@ -60,7 +60,7 @@ mod_address_ui <- function(id, choicesapp) {
         class = "linkCount",
         actionLink(ns("linkCount"),
           "Anzahl Handänderungen einblenden",
-          icon = icon("angle-down")
+          icon = icons_stzh()("angle-down")
         ),
 
         # Hidden Titles and Tables for Hand Changes
@@ -120,11 +120,11 @@ mod_address_server <- function(id, addresses, series) {
     observe({
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-up"))
+        updateActionLink(session, "linkCount", label = txt, icon = icons_stzh()("angle-up"))
         shinyjs::addClass("linkCount", "visitedLink")
       } else {
         txt <- "Anzahl Handänderungen einblenden"
-        updateActionLink(session, "linkCount", label = txt, icon = icon("angle-down"))
+        updateActionLink(session, "linkCount", label = txt, icon = icons_stzh()("angle-down"))
         shinyjs::removeClass("linkCount", "visitedLink")
       }
     }) |>
