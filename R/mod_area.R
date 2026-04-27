@@ -56,6 +56,8 @@ mod_area_ui <- function(id, choicesapp) {
         mod_download_ui(ns("download_2"))
       )
     ),
+    br(),
+    br(),
     # Results
     conditionalPanel(
       condition = "input.start_query",

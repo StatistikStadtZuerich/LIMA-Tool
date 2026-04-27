@@ -72,13 +72,13 @@ reactable_area_types <- function(target_data, pagesize) {
         headerVAlign = "bottom"
       ),
       colGroup(
-        name = "Indu-\nstrie- und Gewer-\nbezone",
+        name = "Industrie\u2011\nund Gewerbe\u2011\nzone",
         columns = "IGZ",
         align = "left",
         headerVAlign = "bottom"
       ),
       colGroup(
-        name = "Übri-\nges Gebiet",
+        name = "Übriges Gebiet",
         columns = "UG",
         align = "left",
         headerVAlign = "bottom"
