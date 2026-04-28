@@ -2,7 +2,7 @@
 #'
 #' @description Function to read the five open government datasets on which the app is based
 #'
-#' @return  a named list of tibbles with zones, series, and addresses.
+#' @return  a list of 5 dataframes, in the order of the BAU514 OGD outputs
 #'
 #' @noRd
 import_data_from_ogd <- function() {
@@ -45,16 +45,16 @@ import_data_from_ogd <- function() {
 
 #' prepare_zones
 #'
-#' @param dat dataset to be prepared
+#' @param df_od5141 data.frame, read from OD5141 OGD
 #'
 #' @description A function that prepares and filters the data sources by OGD
 #'
 #' @return a named list of tibbles with zones, zonesBZO16, and zonesBZO99
 #'
 #' @noRd
-prepare_zones <- function(dat) {
+prepare_zones <- function(df_od5141) {
   ## Zones
-  zones <- dat[[1]] |>
+  zones <- df_od5141 |>
     mutate(PreisreiheLang = case_when(
       PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
       PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",
@@ -104,17 +104,18 @@ prepare_zones <- function(dat) {
 
 #' prepare_series
 #'
-#' @param dat dataset to be prepared
+#' @param df_od5142 data.frame, read from OD5142 OGD
+#' @param df_od5145 data.frame, read from OD5145 OGD
 #'
-#' @description A function that prepares and filters the data sources by OGD
+#' @description A function that prepares and filters the data sources by series
 #'
 #' @return a named list of tibbles with series, and seriestypes
 #'
 #' @noRd
-prepare_series <- function(dat) {
-  series <- dat[[2]]
+prepare_series <- function(df_od5142, df_od5145) {
+  series <- df_od5142
 
-  seriestypes <- dat[[5]]
+  seriestypes <- df_od5145
 
   list(
     series = series,
@@ -124,15 +125,15 @@ prepare_series <- function(dat) {
 
 #' prepare_addresses
 #'
-#' @param dat dataset to be prepared
+#' @param df_address_ogd dataframe, csv read from BAU515 OD5143
 #'
-#' @description A function that prepares and filters the data sources by OGD
+#' @description A function to prepare the address dataset
 #'
-#' @return a named list of tibbles with series, and seriestypes
+#' @return a dataframe with some mutations
 #'
 #' @noRd
-prepare_data <- function(dat) {
-  dat[[3]] |>
+prepare_data <- function(df_address_ogd) {
+  df_address_ogd |>
     mutate(Zones = case_when(
       ZoneBZO16Lang == ZoneBZO99Lang ~ paste(ZoneBZO16Lang),
       TRUE ~ paste0(ZoneBZO16Lang, " (bis 2018: ", ZoneBZO99Lang, ")")
@@ -148,15 +149,16 @@ prepare_data <- function(dat) {
 
 
 #' prepare_types
+#' @param df_od5144 data.frame, read from OGD CSV OD5144
 #'
 #' @description A function that prepares and filters the data sources by OGD
 #'
 #' @return return the prepared types data
 #'
 #' @noRd
-prepare_types <- function(dat) {
+prepare_types <- function(df_od5144) {
   ## Building Type
-  dat[[4]] |>
+  df_od5144 |>
     mutate(PreisreiheLang = case_when(
       PreisreiheSort == 41 ~ "Preis pro m\u00B2 Grundstücksfläche",
       PreisreiheSort == 42 ~ "Preis pro m\u00B2 Grundstücksfläche, abzgl. Versicherungswert",

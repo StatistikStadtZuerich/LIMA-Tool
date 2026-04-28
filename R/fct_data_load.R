@@ -10,28 +10,30 @@
 data_load <- function() {
   data <- import_data_from_ogd()
 
-  if (!is.null(data)) {
-    ### Data Transformation
+  stopifnot(length(data) == 5)
 
-    zones_list <- map(prepare_zones(data), \(x) mutate_nas(x, everything()))
+  ### Data Transformation
+  zones_list <- prepare_zones(data[[1]]) |>
+    map(\(x) mutate_nas(x, everything()))
 
-    na_vars <- c("FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA")
-    series_list <- map(prepare_series(data), \(x) mutate_nas(x, na_vars))
+  na_vars <- c("FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA")
+  series_list <- prepare_series(data[[2]], data[[5]]) |>
+    map(\(x) mutate_nas(x, na_vars))
 
-    addresses <- prepare_data(data)
+  addresses <- prepare_data(data[[3]])
 
-    types <- mutate_nas(prepare_types(data), everything())
+  types <- prepare_types(data[[4]]) |>
+    mutate_nas(everything())
 
-    list(
-      zones = zones_list[[1]],
-      zonesBZO16 = zones_list[[2]],
-      zonesBZO99 = zones_list[[3]],
-      series = series_list[[1]],
-      addresses = addresses,
-      types = types,
-      seriestypes = series_list[[2]]
-    )
-  }
+  list(
+    zones = zones_list[[1]],
+    zonesBZO16 = zones_list[[2]],
+    zonesBZO99 = zones_list[[3]],
+    series = series_list[[1]],
+    addresses = addresses,
+    types = types,
+    seriestypes = series_list[[2]]
+  )
 }
 
 
