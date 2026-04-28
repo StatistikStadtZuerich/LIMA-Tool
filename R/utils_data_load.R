@@ -144,7 +144,13 @@ prepare_data <- function(df_address_ogd) {
       ZoneBZO99Lang == "Wohnzone 4" ~ "Wohnzonen 4",
       ZoneBZO99Lang == "Wohnzone 5" ~ "Wohnzonen 5",
       TRUE ~ ZoneBZO99Lang
-    ))
+    )) |>
+    # create combined column of Strasse and Nummer, order by numeric part of number
+    mutate(
+      Hnr_numeric = as.numeric(str_remove_all(Hnr, "\\D")),
+      Adresse = paste(StrasseLang, Hnr, sep = " ")
+    ) |>
+    arrange(StrasseLang, Hnr_numeric, Hnr)
 }
 
 

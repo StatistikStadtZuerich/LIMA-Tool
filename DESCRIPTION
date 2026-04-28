@@ -27,6 +27,7 @@ Imports:
     shiny (>= 1.6.0),
     shinycssloaders,
     shinyjs,
+    stringr,
     tidyr,
     zuericssstyle
 Suggests: 

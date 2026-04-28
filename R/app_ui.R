@@ -11,8 +11,7 @@ app_ui <- function(request) {
     choices_group = unique(data_vector[["zones"]]$ArtLang)
   )
   choices_app3 <- list(
-    choices_street = unique(data_vector[["addresses"]]$StrasseLang),
-    choices_streetnr = c("", sort(unique(data_vector[["addresses"]]$Hnr)))
+    choices_address = unique(data_vector[["addresses"]]$Adresse)
   )
 
   tagList(

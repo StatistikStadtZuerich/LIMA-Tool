@@ -3,23 +3,24 @@
 #'
 ## usethis namespace: start
 #' @import bslib
-#' @importFrom data.table fread
 #' @import dplyr
 #' @import ggplot2
-#' @importFrom golem add_resource_path activate_js favicon bundle_resources
-#' @importFrom gtools mixedsort
 #' @import icons
 #' @import jpeg
+#' @import openxlsx
+#' @import reactable
+#' @import shiny
+#' @import shinyjs
+#' @import zuericssstyle
+#' @importFrom data.table fread
+#' @importFrom golem add_resource_path activate_js favicon bundle_resources
+#' @importFrom gtools mixedsort
 #' @importFrom kableExtra kable_styling
 #' @importFrom knitr kable
-#' @import openxlsx
 #' @importFrom purrr map
-#' @import reactable
 #' @importFrom readxl read_excel
-#' @import shiny
 #' @importFrom shinycssloaders withSpinner
-#' @import shinyjs
+#' @importFrom stringr str_remove_all
 #' @importFrom tidyr pivot_longer
-#' @import zuericssstyle
 ## usethis namespace: end
 NULL
