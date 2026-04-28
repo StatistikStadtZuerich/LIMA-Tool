@@ -13,7 +13,7 @@
 circle {
   stroke: #DC030E;
 }
-*/
+
 
 .info_na_text {
   padding-left: 16px;
@@ -22,7 +22,7 @@ circle {
 .info_na_icon {
   display: flex;
   align-items: flex-start;
-}
+}*/
 
 /* Row */
 .row {
@@ -38,16 +38,16 @@ circle {
   margin-top: 10px;
 }
 
-/* h5 Font (for Infos) */
+/* h5 Font (for Infos) 
 h5 {
   font-family: HelveticaNeueLTW05_85Heavy;
   color: #0F05A0;
   font-size: 18px;
   line-height: 25px;
   font-weight: 750;
-}
+}*/
 
-/* h6 Font (for NA Infos) */
+/* h6 Font (for NA Infos) 
 h6 {
   font-family: HelveticaNeueLTW05_85Heavy;
   color: #4D4D4D;
@@ -56,7 +56,7 @@ h6 {
   fnt-weight: 750;
     margin-top: -1px;
   margin-bottom: -0.5px;
-}
+}*/
 
 /* Special Container for visited Link  */
 .linkCount {
@@ -90,7 +90,7 @@ a.visitedLink {
 * Titles
 *******************************/
 
-/* Title */
+/* Title Tabellentitel*/
 .title_div {
   font-family: HelveticaNeueLTW05_85Heavy;
   color: #0F05A0;
@@ -114,7 +114,7 @@ a.visitedLink {
   font-family: HelveticaNeueLTW01_55Roman;
   font-size: 14px;
   color: #646464;
-}
+}*/
 
 /* Table Title */
 .tableTitle_div {
@@ -126,7 +126,7 @@ a.visitedLink {
   margin-bottom: 15px;
 }
 
-/* Info for Table in second query */
+/* Info for Table in second query 
 .info_div {
   font-family: HelveticaNeueLTW05_85Heavy;
   color: #0F05A0;
@@ -144,7 +144,7 @@ a.visitedLink {
   padding: 16px;
   display: flex;
   box-shadow: 0px 0px 4px rgb(0 0 0 / 24%);
-}
+}*/
 
 
 /*******************************
