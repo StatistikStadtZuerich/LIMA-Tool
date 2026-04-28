@@ -12,12 +12,9 @@
 #' @noRd
 create_fn_for_download <- function(label, static_parameters, reactive_parameters) {
   if (label == "Bauzonenordnung_und_Quartier") {
-    req(
-      reactive_parameters$select_street,
-      reactive_parameters$select_number
-    )
+    req(reactive_parameters$filter_address)
     district <- static_parameters$addresses |>
-      filter(StrasseLang == reactive_parameters$select_street() & Hnr == reactive_parameters$select_number()) |>
+      filter(Adresse == reactive_parameters$filter_address()) |>
       pull(QuarLang)
     name <- list(paste0(district))
   } else {
@@ -32,5 +29,7 @@ create_fn_for_download <- function(label, static_parameters, reactive_parameters
     name <- list(paste0(price, "_", group, "_", area))
   }
 
-  sprintf("Liegenschaftenhandel_nach_%s_%s", label, name)
+  # paste and make sure we do not have spaces
+  str_glue("Liegenschaftenhandel_nach_{label}_{name}") |>
+    str_replace_all(" ", "-")
 }

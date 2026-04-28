@@ -25,27 +25,26 @@ mod_address_tables_ui <- function(id) {
 #' @param addresses dataset addresses
 #' @param series dataset series
 #' @param target_value target value of the app ("Preis" or "Zahl")
-#' @param filter_street filter value (street) selected from input widget
-#' @param filter_number filter value (number) selected from input widget
+#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @noRd
-mod_address_tables_server <- function(id, addresses, series, target_value, filter_street, filter_number) {
+mod_address_tables_server <- function(id, addresses, series, target_value, filter_address) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # Check if data is available for the zone
     data_availability <- reactive({
-      req(filter_street(), filter_number())
+      req(filter_address())
 
-      data_available(addresses, series, filter_street(), filter_number())
+      data_available(addresses, series, filter_address())
     }) |>
-      bindEvent(filter_street(), filter_number())
+      bindEvent(filter_address())
 
     # render title if data is available
     output$title_table <- renderText({
       availability <- data_availability()
       if (availability > 0) {
-        filtered_addresses <- get_information_address(addresses, series, filter_street(), filter_number(), "Preis")
+        filtered_addresses <- get_information_address(addresses, series, filter_address(), "Preis")
 
         paste0(
           "Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]],
@@ -61,7 +60,7 @@ mod_address_tables_server <- function(id, addresses, series, target_value, filte
     output$results <- renderReactable({
       availability <- data_availability()
       if (availability > 0) {
-        filtered_data <- filter_address(addresses, series, target_value, filter_street(), filter_number())
+        filtered_data <- filter_address_data(addresses, series, target_value, filter_address())
 
         out <- reactable_address(filtered_data)
         out
@@ -69,7 +68,7 @@ mod_address_tables_server <- function(id, addresses, series, target_value, filte
         NULL
       }
     }) |>
-      bindEvent(filter_street(), filter_number())
+      bindEvent(filter_address())
   })
 }
 

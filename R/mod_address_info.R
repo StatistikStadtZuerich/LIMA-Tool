@@ -32,30 +32,29 @@ mod_address_info_ui <- function(id) {
 #' @param id id of the module called in the app
 #' @param addresses dataset addresses
 #' @param series dataset series
-#' @param filter_street filter value (street) selected from input widget
-#' @param filter_number filter value (number) selected from input widget
+#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @noRd
-mod_address_info_server <- function(id, addresses, series, filter_street, filter_number) {
+mod_address_info_server <- function(id, addresses, series, filter_address) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # Get Information if Data Frame is available or empty
     data_availability <- reactive({
-      req(filter_street(), filter_number())
+      req(filter_address())
 
-      data_available(addresses, series, filter_street(), filter_number())
+      data_available(addresses, series, filter_address())
     }) |>
-      bindEvent(filter_street(), filter_number())
+      bindEvent(filter_address())
 
     # Show Output Information Address
     address_info <- reactive({
       req(data_availability())
       addresses |>
-        filter(StrasseLang == filter_street() & Hnr == filter_number()) |>
-        mutate(Adresse = paste0(StrasseLang, " ", Hnr)) |>
+        filter(Adresse == filter_address()) |>
         select(Adresse, QuarLang, Zones)
     })
+
     output$title <- renderText({
       req(data_availability())
       address_info()$Adresse
@@ -79,7 +78,7 @@ mod_address_info_server <- function(id, addresses, series, filter_street, filter
         sszInfoBox(
           title = "Hinweis",
           text = paste0(
-            "Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).",
+            "Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone) oder existiert nicht.",
             "\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage."
           ),
           icon = icons_stzh()("info-help-filled")

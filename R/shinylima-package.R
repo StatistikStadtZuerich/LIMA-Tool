@@ -20,7 +20,7 @@
 #' @importFrom purrr map
 #' @importFrom readxl read_excel
 #' @importFrom shinycssloaders withSpinner
-#' @importFrom stringr str_remove_all
+#' @importFrom stringr str_glue str_remove_all str_replace_all
 #' @importFrom tidyr pivot_longer
 ## usethis namespace: end
 NULL

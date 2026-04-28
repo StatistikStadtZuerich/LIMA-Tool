@@ -2,20 +2,18 @@
 #'
 #' @param addresses address dataset
 #' @param series series dataset
-#' @param filter_street filters the street with the given input in the app
-#' @param filter_number filters the number with the given input in the app
+#' @param filter_address filter value (street + nr) selected from input widget
 #'
-#' @description A fct function which checks if the data is available
+#' @description A function which checks if the data is available
 #'
-#' @return The return value is a dummy variable if the data is available
+#' @return The return value is a dummy variable (0 or 1) to indicate whether the data is available
 #'
 #' @noRd
-data_available <- function(addresses, series, filter_street, filter_number) {
-  filtered_addresses <- get_information_address(addresses, series, filter_street, filter_number, "Preis")
+data_available <- function(addresses, series, filter_address) {
+  filtered_addresses <- get_information_address(addresses, series, filter_address, "Preis")
 
   # Total series
-  priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]]) |>
-    select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang)
+  priceSerieTotal <- bind_rows(filtered_addresses[["SerieBZO16"]], filtered_addresses[["SerieBZO99"]])
 
   if (nrow(priceSerieTotal) > 0) {
     available <- 1

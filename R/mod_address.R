@@ -9,21 +9,12 @@
 mod_address_ui <- function(id, choicesapp) {
   ns <- NS(id)
   tagList(
-    # Street input
+    # Select input for address
     sszAutocompleteInput(
-      ns("select_street"),
-      "Geben Sie eine Strasse ein",
-      choicesapp[["choices_street"]],
-      max_options = 500,
-      value = "Napfgasse"
-    ),
-
-    # Number input
-    sszSelectInput(
-      ns("select_number"),
-      "Wählen Sie eine Hausnummer aus",
-      choices = NULL,
-      selected = 1
+      ns("address"),
+      "Geben Sie eine Adresse ein",
+      choicesapp$choices_address,
+      create = TRUE
     ),
 
     # Action Button
@@ -86,26 +77,11 @@ mod_address_server <- function(id, addresses, series) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # Filter Hnr to the according address
-    # Sort for House Number in Drop Down
-    observe({
-      freezeReactiveValue(input, "select_number")
-      updateSelectInput(
-        session, "select_number",
-        choices = addresses |>
-          filter(StrasseLang == input$select_street) |>
-          pull(Hnr) |>
-          mixedsort()
-      )
-    }) |>
-      bindEvent(input$select_street)
-
     mod_address_info_server(
       id = "address_info",
       addresses = addresses,
       series = series,
-      filter_street = reactive(input$select_street),
-      filter_number = reactive(input$select_number)
+      filter_address = reactive(input$address)
     )
 
     mod_address_tables_server(
@@ -113,8 +89,7 @@ mod_address_server <- function(id, addresses, series) {
       addresses = addresses,
       series = series,
       target_value = "Preis",
-      filter_street = reactive(input$select_street),
-      filter_number = reactive(input$select_number)
+      filter_address = reactive(input$address)
     )
 
     observe({
@@ -135,8 +110,7 @@ mod_address_server <- function(id, addresses, series) {
       addresses = addresses,
       series = series,
       target_value = "Zahl",
-      filter_street = reactive(input$select_street),
-      filter_number = reactive(input$select_number)
+      filter_address = reactive(input$address)
     )
 
     mod_download_server(
@@ -147,8 +121,7 @@ mod_address_server <- function(id, addresses, series) {
         "series" = series
       ),
       reactive_parameters = list(
-        select_street = reactive(input$select_street),
-        select_number = reactive(input$select_number)
+        filter_address = reactive(input$address)
       ),
       filter_app = 3
     )

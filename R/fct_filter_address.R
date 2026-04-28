@@ -2,8 +2,7 @@
 #'
 #' @param addresses address dataset
 #' @param series series dataset
-#' @param filter_street filters the street with the given input in the app
-#' @param filter_number filters the number with the given input in the app
+#' @param filter_address filter value (street + nr) selected from input widget
 #' @param target_value  the value has to be either "Preis" or "Zahl", if target_value is NULL then both "Preis" and "Zahl" are filtered
 #'
 #' @description A function that filters the datasets 'series' and 'zones' according to the given inputs of the street and house number
@@ -11,13 +10,10 @@
 #' @return The return value is a list containing the district, the zones16 & 99, and the price/count of the ownership transfers
 #'
 #' @noRd
-get_information_address <- function(addresses, series, filter_street, filter_number, target_value = NULL) {
+get_information_address <- function(addresses, series, filter_address, target_value = NULL) {
   # filter addresses so it is filtered only once
   filtered_addresses <- addresses |>
-    filter(
-      StrasseLang == filter_street,
-      Hnr == filter_number
-    )
+    filter(Adresse == filter_address)
 
   # Pull district
   district <- filtered_addresses |>
@@ -60,26 +56,25 @@ get_information_address <- function(addresses, series, filter_street, filter_num
     SerieBZO99 = SerieBZO99
   ))
 }
-# test <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24", target_value = "Preis")
-# data_address <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24")
+# test <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen 24", target_value = "Preis")
+# data_address <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen 24")
 
 
-#' filter_address
+#' filter_address_data
 #'
 #' @param addresses address dataset
 #' @param series series dataset
 #' @param target_value  the value has to be either "Preis" or "Zahl"
-#' @param filter_street filters the street with the given input in the app
-#' @param filter_number filters the number with the given input in the app
+#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the table output
 #'
 #' @return The return value is the data for the table that is displayed in the addresses app
 #'
 #' @noRd
-filter_address <- function(addresses, series, target_value, filter_street, filter_number) {
+filter_address_data <- function(addresses, series, target_value, filter_address) {
   # Filter data with function
-  data_address <- get_information_address(addresses, series, filter_street, filter_number, target_value)
+  data_address <- get_information_address(addresses, series, filter_address, target_value)
 
   # Total series
   if (target_value == "Preis") {
@@ -107,23 +102,22 @@ filter_address <- function(addresses, series, target_value, filter_street, filte
     DistZone <- NULL
   }
 }
-# test <- filter_address(data_vector[["addresses"]], data_vector[["series"]], "Preis", "Heerenwiesen", "24")
+# test <- filter_address(data_vector[["addresses"]], data_vector[["series"]], "Preis", "Heerenwiesen 24")
 
 
 #' filter_address_download
 #'
 #' @param addresses address dataset
 #' @param series series dataset
-#' @param filter_street filters the street with the given input in the app
-#' @param filter_number filters the number with the given input in the app
+#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the download output
 #'
 #' @return The return value is the data for the download table that is displayed in the addresses app
 #'
 #' @noRd
-filter_address_download <- function(addresses, series, filter_street, filter_number) {
-  filter_download <- get_information_address(addresses, series, filter_street, filter_number)
+filter_address_download <- function(addresses, series, filter_address) {
+  filter_download <- get_information_address(addresses, series, filter_address)
 
   # Total series
   seriesPriceCount <- bind_rows(filter_download[["SerieBZO16"]], filter_download[["SerieBZO99"]]) |>
@@ -137,64 +131,4 @@ filter_address_download <- function(addresses, series, filter_street, filter_num
     )
   return(seriesPriceCount)
 }
-# test <- filter_address_download(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen", "24")
-
-
-#' filter_address_info
-#'
-#' @param addresses address dataset
-#' @param filter_street filters the street with the given input in the app
-#' @param filter_number filters the number with the given input in the app
-#'
-#' @description A function that filter the address, quarter and zone for the given address
-#'
-#' @return The return value is the data for the download table that is displayed in the addresses app
-#'
-#' @noRd
-filter_address_info <- function(addresses, filter_street, filter_number) {
-  filtered_data <- addresses |>
-    filter(StrasseLang == filter_street & Hnr == filter_number) |>
-    mutate(Adresse = paste0(StrasseLang, " ", Hnr)) |>
-    select(Adresse, QuarLang, Zones) |>
-    pivot_longer(everything()) |>
-    mutate(name = case_when(
-      name == "Adresse" ~ "Die Adresse",
-      name == "QuarLang" ~ "liegt im Quartier",
-      name == "Zones" ~ "in folgender Zone"
-    ))
-
-  reactable(filtered_data,
-    theme = reactableTheme(
-      borderColor = "#DEDEDE"
-    ),
-    columns = list(
-      name = colDef(name = "", align = "left"),
-      value = colDef(name = "", align = "right")
-    )
-  )
-}
-
-
-#' display_info
-#'
-#' @param data_available indicates if there is available data
-#' @param addresses address dataset
-#' @param series series dataset
-#' @param filter_street filters the street with the given input in the app
-#' @param filter_number filters the number with the given input in the app
-#'
-#' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the title of the table in the app output
-#'
-#' @return The return value is the data for the download table that is displayed in the addresses app
-#'
-#' @noRd
-display_info <- function(data_available, addresses, series, filter_street, filter_number) {
-  if (data_available > 0) {
-    filtered_addresses <- get_information_address(addresses, series, filter_street, filter_number, "Preis")
-
-    zones <- paste0(filtered_addresses[["zoneBZO16"]], " (bis 2018: ", filtered_addresses[["zoneBZO99"]], ")")
-    infoTitle <- paste0("Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]], ", in der ", zones)
-  } else {
-    infoTitle <- paste0("Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone).\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.")
-  }
-}
+# test <- filter_address_download(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen 24")

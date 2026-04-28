@@ -5,7 +5,7 @@
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-setup_excel <- function(query_input, hauptPfad, input1, input2, input3 = NULL) {
+setup_excel <- function(query_input, hauptPfad, input1, input2 = NULL, input3 = NULL) {
   sheet_num <- switch(query_input,
     "1" = 2,
     "2" = 3,
@@ -21,7 +21,7 @@ setup_excel <- function(query_input, hauptPfad, input1, input2, input3 = NULL) {
   inputs_num <- switch(query_input,
     "1" = paste0(input1, ", ", input2, ", ", input3),
     "2" = paste0(input1, ", ", input2, ", ", input3),
-    "3" = paste0(input1, " ", input2)
+    "3" = paste0(input1)
   )
 
   # Read Data

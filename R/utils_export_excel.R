@@ -4,7 +4,7 @@
 #' @param file filename
 #' @param queryinput selected app (the layout differs slightly depending on the app)
 #' @param input1 selected input nr. 1 from app
-#' @param input2 selected input nr. 2 from app
+#' @param input2 selected input nr. 2 from app (optional)
 #' @param input3 selected input nr. 3 from app (optional)
 #'
 #' @description A utils function to prepare the Excel download file
@@ -12,7 +12,7 @@
 #' @return The return value is a function that is called in the module to render the Excel download
 #'
 #' @noRd
-sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2, input3 = NULL) {
+sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2 = NULL, input3 = NULL) {
   # Data Paths
   hauptPfad <- "inst/app/www/Titelblatt.xlsx"
   imagePfad <- "inst/app/www/logo_stzh_stat_sw_pos_1.png"
