@@ -87,8 +87,11 @@ golem_add_external_resources <- function() {
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "lima-golem"
-    )
+    ),
     # Add here other external resources
     # for example, you can add shinyalert::useShinyalert()
+
+    # Trigger action button on Enter key in autocomplete input
+    js_trigger_on_enter("addresses-address", "addresses-start_query")
   )
 }
