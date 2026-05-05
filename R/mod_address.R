@@ -85,10 +85,7 @@ mod_address_server <- function(id, addresses, series) {
       if (!isTruthy(input$start_query) | (nrow(addresses_filtered()) == 0)) {
         return(FALSE)
       }
-      asdf <- zone_available(addresses_filtered(), series)
-      print("within assignment")
-      print(asdf)
-      asdf
+      zone_available(addresses_filtered(), series)
     })
 
     # Expose to conditionalPanel
