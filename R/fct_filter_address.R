@@ -1,8 +1,7 @@
 #' get_information_address
 #'
-#' @param addresses address dataset
+#' @param selected_address dataset addresses filtered according to input
 #' @param series series dataset
-#' @param filter_address filter value (street + nr) selected from input widget
 #' @param target_value  the value has to be either "Preis" or "Zahl", if target_value is NULL then both "Preis" and "Zahl" are filtered
 #'
 #' @description A function that filters the datasets 'series' and 'zones' according to the given inputs of the street and house number
@@ -10,43 +9,33 @@
 #' @return The return value is a list containing the district, the zones16 & 99, and the price/count of the ownership transfers
 #'
 #' @noRd
-get_information_address <- function(addresses, series, filter_address, target_value = NULL) {
-  # filter addresses so it is filtered only once
-  filtered_addresses <- addresses |>
-    filter(Adresse == filter_address)
-
+get_information_address <- function(selected_address, series, target_value = NULL) {
   # Pull district
-  district <- filtered_addresses |>
+  district <- selected_address |>
     pull(QuarLang)
 
   # Pull zone BZO16
-  zoneBZO16 <- filtered_addresses |>
+  zoneBZO16 <- selected_address |>
     pull(ZoneBZO16Lang)
 
   # Pull zone BZO99
-  zoneBZO99 <- filtered_addresses |>
+  zoneBZO99 <- selected_address |>
     pull(ZoneBZO99Lang)
 
-  priceSerieBZO16 <- series |>
+  SerieBZO16 <- series |>
     filter(
-      QuarLang == district,
+      if (length(district) > 0) QuarLang == district else TRUE,
       if (!is.null(target_value)) Typ == target_value else Typ != "",
-      Jahr >= 2019
+      Jahr >= 2019,
+      if (length(zoneBZO16) > 0) ZoneLang == zoneBZO16 else TRUE
     )
-  priceSerieBZO99 <- series |>
+  SerieBZO99 <- series |>
     filter(
-      QuarLang == district,
+      if (length(district) > 0) QuarLang == district else TRUE,
       if (!is.null(target_value)) Typ == target_value else Typ != "",
-      Jahr < 2019
+      Jahr < 2019,
+      if (length(zoneBZO99) > 0) ZoneLang == zoneBZO99 else TRUE
     )
-
-  # Price serie BZO16
-  SerieBZO16 <- priceSerieBZO16 |>
-    filter(ZoneLang == zoneBZO16)
-
-  # Price serie BZO99
-  SerieBZO99 <- priceSerieBZO99 |>
-    filter(ZoneLang == zoneBZO99)
 
   return(list(
     district = district,
@@ -62,19 +51,18 @@ get_information_address <- function(addresses, series, filter_address, target_va
 
 #' filter_address_data
 #'
-#' @param addresses address dataset
+#' @param selected_address dataset addresses filtered according to input
 #' @param series series dataset
 #' @param target_value  the value has to be either "Preis" or "Zahl"
-#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @description A function that uses the function get_information_address() to filter the data and then prepares the data for the table output
 #'
 #' @return The return value is the data for the table that is displayed in the addresses app
 #'
 #' @noRd
-filter_address_data <- function(addresses, series, target_value, filter_address) {
+filter_address_data <- function(selected_address, series, target_value) {
   # Filter data with function
-  data_address <- get_information_address(addresses, series, filter_address, target_value)
+  data_address <- get_information_address(selected_address, series, target_value)
 
   # Total series
   if (target_value == "Preis") {
@@ -93,7 +81,6 @@ filter_address_data <- function(addresses, series, target_value, filter_address)
       select(-Typ, -QuarCd, -QuarLang, -ZoneSort, -ZoneLang) |>
       mutate(across(everything(), \(x) replace(x, x == "", "–")))
   }
-
 
   if (nrow(SerieTotal) > 0) {
     DistZone <- SerieTotal

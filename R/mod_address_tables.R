@@ -22,53 +22,36 @@ mod_address_tables_ui <- function(id) {
 #' address_tables Server Functions
 #'
 #' @param id id of the module called in the app
-#' @param addresses dataset addresses
+#' @param selected_address dataset addresses filtered according to input
 #' @param series dataset series
 #' @param target_value target value of the app ("Preis" or "Zahl")
-#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @noRd
-mod_address_tables_server <- function(id, addresses, series, target_value, filter_address) {
+mod_address_tables_server <- function(id, selected_address, series, target_value, data_available) {
   moduleServer(id, function(input, output, session) {
+    stopifnot(is.reactive(selected_address), is.reactive(data_available))
+    stopifnot(!is.reactive(series), !is.reactive(target_value))
     ns <- session$ns
-
-    # Check if data is available for the zone
-    data_availability <- reactive({
-      req(filter_address())
-
-      data_available(addresses, series, filter_address())
-    }) |>
-      bindEvent(filter_address())
 
     # render title if data is available
     output$title_table <- renderText({
-      availability <- data_availability()
-      if (availability > 0) {
-        filtered_addresses <- get_information_address(addresses, series, filter_address(), "Preis")
+      req(nrow(selected_address()) > 0, data_available())
+      filtered_addresses <- get_information_address(selected_address(), series, "Preis")
 
-        paste0(
-          "Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]],
-          ", in der ", filtered_addresses[["zoneBZO16"]], " (bis 2018: ",
-          filtered_addresses[["zoneBZO99"]], ")"
-        )
-      } else {
-        NULL
-      }
+      paste0(
+        "Medianpreise und Handänderungen im Quartier ", filtered_addresses[["district"]],
+        ", in der ", filtered_addresses[["zoneBZO16"]], " (bis 2018: ",
+        filtered_addresses[["zoneBZO99"]], ")"
+      )
     })
 
     # Table if data is available for zone
     output$results <- renderReactable({
-      availability <- data_availability()
-      if (availability > 0) {
-        filtered_data <- filter_address_data(addresses, series, target_value, filter_address())
+      req(nrow(selected_address()) > 0, data_available())
+      filtered_data <- filter_address_data(selected_address(), series, target_value)
 
-        out <- reactable_address(filtered_data)
-        out
-      } else {
-        NULL
-      }
-    }) |>
-      bindEvent(filter_address())
+      reactable_address(filtered_data)
+    })
   })
 }
 

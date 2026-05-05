@@ -22,68 +22,30 @@ mod_address_info_ui <- function(id) {
           HTML(paste("Zone:", "<span class='bold-text'>", textOutput(ns("zone")), "</span>")),
         )
       )
-    ),
-    uiOutput(ns("more_info"))
+    )
   )
 }
 
 #' address_info Server Functions
 #'
 #' @param id id of the module called in the app
-#' @param addresses dataset addresses
+#' @param selected_address dataset addresses, already filtered according to selection
 #' @param series dataset series
-#' @param filter_address filter value (street + nr) selected from input widget
 #'
 #' @noRd
-mod_address_info_server <- function(id, addresses, series, filter_address) {
+mod_address_info_server <- function(id, selected_address, series) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
-    # Get Information if Data Frame is available or empty
-    data_availability <- reactive({
-      req(filter_address())
-
-      data_available(addresses, series, filter_address())
-    }) |>
-      bindEvent(filter_address())
-
-    # Show Output Information Address
-    address_info <- reactive({
-      req(data_availability())
-      addresses |>
-        filter(Adresse == filter_address()) |>
-        select(Adresse, QuarLang, Zones)
-    })
-
     output$title <- renderText({
-      req(data_availability())
-      address_info()$Adresse
+      selected_address()$Adresse
     })
 
     output$quar <- renderText({
-      req(data_availability())
-      address_info()$QuarLang
+      selected_address()$QuarLang
     })
     output$zone <- renderText({
-      req(data_availability())
-      address_info()$Zones
-    })
-
-    # Show Infobox if data not available
-    output$more_info <- renderUI({
-      availability <- data_availability()
-      if (availability > 0) {
-        NULL
-      } else {
-        sszInfoBox(
-          title = "Hinweis",
-          text = paste0(
-            "Die gewünschte Adresse liegt nicht in einer Wohn- oder Mischzone (Kernzone, Zentrumszone, Quartiererhaltungszone) oder existiert nicht.",
-            "\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage."
-          ),
-          icon = icons_stzh()("info-help-filled")
-        )
-      }
+      selected_address()$Zones
     })
   })
 }

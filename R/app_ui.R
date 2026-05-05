@@ -19,6 +19,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     ssz_page(
+      # add this to use up-to-date bootstrap required for bslib::card
       theme = bs_theme(),
       # App Selection
       tags$div(
@@ -36,6 +37,7 @@ app_ui <- function(request) {
           selected = character(0)
         )
       ),
+      br(),
 
       # Conditional Panel which App to choose
       # App 1
@@ -76,8 +78,6 @@ app_ui <- function(request) {
 #'
 #' @noRd
 golem_add_external_resources <- function() {
-  shinyjs::useShinyjs(debug = TRUE)
-
   add_resource_path(
     "www",
     app_sys("app/www")
@@ -92,6 +92,7 @@ golem_add_external_resources <- function() {
     # for example, you can add shinyalert::useShinyalert()
 
     # Trigger action button on Enter key in autocomplete input
-    js_trigger_on_enter("addresses-address", "addresses-start_query")
+    js_trigger_on_enter("addresses-address", "addresses-start_query"),
+    useShinyjs() # Include shinyjs
   )
 }
