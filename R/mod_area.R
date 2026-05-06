@@ -44,16 +44,19 @@ mod_area_ui <- function(id, choicesapp) {
     br(),
 
     # Downloads
-    conditionalPanel(
-      condition = "input.start_query",
-      ns = ns,
+    tags$div(
+      class = "button-div",
       conditionalPanel(
-        condition = "input.choose_app == 'Abfrage 1'",
-        mod_download_ui(ns("download_1"))
-      ),
-      conditionalPanel(
-        condition = "input.choose_app == 'Abfrage 2'",
-        mod_download_ui(ns("download_2"))
+        condition = "input.start_query",
+        ns = ns,
+        conditionalPanel(
+          condition = "input.choose_app == 'Abfrage 1'",
+          mod_download_ui(ns("download_1"))
+        ),
+        conditionalPanel(
+          condition = "input.choose_app == 'Abfrage 2'",
+          mod_download_ui(ns("download_2"))
+        )
       )
     ),
     br(),

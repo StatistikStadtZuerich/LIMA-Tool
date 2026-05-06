@@ -33,7 +33,10 @@ mod_address_ui <- function(id, choicesapp) {
     conditionalPanel(
       condition = "input.start_query && output.show_panel",
       ns = ns,
-      mod_download_ui(ns("download_3")),
+      tags$div(
+        class = "button-div",
+        mod_download_ui(ns("download_3"))
+      ),
       mod_address_info_ui(ns("address_info")),
       br(),
       mod_address_tables_ui(ns("Preis_submodul")),
