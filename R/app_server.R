@@ -1,8 +1,8 @@
 #' The application server-side
 #'
-#' @param input
-#' @param output
-#' @param session
+#' @param input shiny input values
+#' @param output shiny output values
+#' @param session shiny session
 #'
 #' @noRd
 app_server <- function(input, output, session) {

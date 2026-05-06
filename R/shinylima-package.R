@@ -10,7 +10,6 @@
 #' @import openxlsx
 #' @import reactable
 #' @import shiny
-#' @import shinyjs
 #' @import zuericssstyle
 #' @importFrom data.table fread
 #' @importFrom golem add_resource_path activate_js favicon bundle_resources

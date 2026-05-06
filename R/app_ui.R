@@ -90,7 +90,6 @@ golem_add_external_resources <- function() {
     # for example, you can add shinyalert::useShinyalert()
 
     # Trigger action button on Enter key in autocomplete input
-    js_trigger_on_enter("addresses-address", "addresses-start_query"),
-    useShinyjs() # Include shinyjs
+    js_trigger_on_enter("addresses-address", "addresses-start_query")
   )
 }

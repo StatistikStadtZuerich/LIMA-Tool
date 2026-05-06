@@ -11,5 +11,10 @@ Die Revision des Grundangebot zum Thema Handänderungen führt auch zu Veränder
 \author{
 \strong{Maintainer}: Aline Metzler \email{aline.metzler@zuerich.ch}
 
+Authors:
+\itemize{
+  \item Aline Metzler \email{aline.metzler@zuerich.ch}
+}
+
 }
 \keyword{internal}
