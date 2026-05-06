@@ -27,7 +27,6 @@ mod_address_ui <- function(id, choicesapp) {
       )
     ),
     br(),
-    br(),
 
     # Results (only show if available)
     conditionalPanel(
@@ -37,6 +36,7 @@ mod_address_ui <- function(id, choicesapp) {
         class = "button-div",
         mod_download_ui(ns("download_3"))
       ),
+      br(),
       mod_address_info_ui(ns("address_info")),
       br(),
       mod_address_tables_ui(ns("Preis_submodul")),
