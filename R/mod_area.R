@@ -60,32 +60,19 @@ mod_area_ui <- function(id, choicesapp) {
       )
     ),
     br(),
-    br(),
     # Results
     conditionalPanel(
       condition = "input.start_query",
       ns = ns,
 
       # Table Title (prices)
-      tags$div(
-        id = ns("title_id"),
-        class = "title_div",
-        textOutput(ns("title"))
-      ),
+      h2(textOutput(ns("title"))),
 
       # Table Subtitle (prices)
-      tags$div(
-        id = ns("subtitle_id"),
-        class = "subtitle_div",
-        textOutput(ns("subtitle"))
-      ),
+      h3(textOutput(ns("subtitle"))),
 
       # Table Subsubtitle (prices)
-      tags$div(
-        id = ns("subSubtitle_id"),
-        class = "subSubtitle_div",
-        textOutput(ns("subSubtitle"))
-      ),
+      h4(textOutput(ns("subSubtitle"))),
 
       # Modules for App1 & App2
       conditionalPanel(
