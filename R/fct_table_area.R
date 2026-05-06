@@ -11,15 +11,12 @@
 reactable_area <- function(target_data, pagesize) {
   reactable(target_data,
     class = "table-striped",
-    theme = reactableTheme(
-      borderColor = "#DEDEDE"
-    ),
     columns = list(
       Jahr = colDef(name = "Jahr", align = "left")
     ),
     defaultColDef = colDef(
       align = "right",
-      minWidth = 50,
+      minWidth = 75,
       cell = function(value) {
         # Format only numeric columns with thousands separators
         if (!is.numeric(value)) {
@@ -31,10 +28,7 @@ reactable_area <- function(target_data, pagesize) {
         }
       }
     ),
-    outlined = TRUE,
-    defaultPageSize = pagesize,
-    rowClass = JS("function(rowInfo) {return rowInfo.selected ? 'selected' : ''}"),
-    rowStyle = JS("function(rowInfo) {if (rowInfo.selected) { return { backgroundColor: '#F2F2F2'}}}")
+    defaultPageSize = pagesize
   )
 }
 #' reactable_area_types
@@ -86,7 +80,7 @@ reactable_area_types <- function(target_data, pagesize) {
     ),
     defaultColDef = colDef(
       align = "right",
-      minWidth = 50,
+      minWidth = 75,
       cell = function(value) {
         # Format only numeric columns with thousands separators
         if (!is.numeric(value)) {
@@ -98,9 +92,6 @@ reactable_area_types <- function(target_data, pagesize) {
         }
       }
     ),
-    outlined = TRUE,
-    defaultPageSize = pagesize,
-    rowClass = JS("function(rowInfo) {return rowInfo.selected ? 'selected' : ''}"),
-    rowStyle = JS("function(rowInfo) {if (rowInfo.selected) { return { backgroundColor: '#F2F2F2'}}}")
+    defaultPageSize = pagesize
   )
 }

@@ -10,9 +10,6 @@
 reactable_address <- function(target_data) {
   reactable(target_data,
     class = "table-striped",
-    theme = reactableTheme(
-      borderColor = "#DEDEDE"
-    ),
     columns = list(
       Jahr = colDef(name = "Jahr", align = "left"),
       FrQmBodenGanzeLieg = colDef(name = "Ganze Liegen-\nschaften"),
@@ -39,7 +36,7 @@ reactable_address <- function(target_data) {
     defaultColDef = colDef(
       align = "right",
       headerVAlign = "bottom",
-      minWidth = 50,
+      minWidth = 75,
       cell = function(value) {
         # Format only numeric columns with thousands separators
         if (!is.numeric(value)) {
@@ -51,9 +48,6 @@ reactable_address <- function(target_data) {
         }
       }
     ),
-    outlined = TRUE,
-    defaultPageSize = 20,
-    rowClass = JS("function(rowInfo) {return rowInfo.selected ? 'selected' : ''}"),
-    rowStyle = JS("function(rowInfo) {if (rowInfo.selected) { return { backgroundColor: '#F2F2F2'}}}")
+    defaultPageSize = 20
   )
 }
