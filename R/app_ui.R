@@ -19,8 +19,6 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     ssz_page(
-      # add this to use up-to-date bootstrap required for bslib::card
-      theme = bs_theme(),
       # App Selection
       tags$div(
         class = "queryDiv",
