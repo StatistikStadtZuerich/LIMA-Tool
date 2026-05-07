@@ -19,6 +19,7 @@ mod_area_types_ui <- function(id) {
         "Anzahl Handänderungen einblenden",
         icon = icons_stzh()("angle-down")
       ),
+      br(),
 
       # Hidden Titles and Tables for Hand Changes
       conditionalPanel(

@@ -11,6 +11,7 @@ mod_area_zones_ui <- function(id) {
   ns <- NS(id)
   tagList(
     mod_area_tables_ui(ns("Preis_submodul16"), "Preis"),
+    br(),
     mod_area_tables_ui(ns("Preis_submodul99"), "Preis"),
 
     # Action Link for Hand Changes (counts)
@@ -20,12 +21,14 @@ mod_area_zones_ui <- function(id) {
         "Anzahl Handänderungen einblenden",
         icon = icons_stzh()("angle-down")
       ),
+      br(),
 
       # Hidden Titles and Tables for Hand Changes
       conditionalPanel(
         condition = "input.linkCount % 2 == 1",
         ns = ns,
         mod_area_tables_ui(ns("Zahl_submodul16"), "Zahl"),
+        br(),
         mod_area_tables_ui(ns("Zahl_submodul99"), "Zahl")
       )
     ),

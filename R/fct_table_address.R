@@ -11,7 +11,7 @@ reactable_address <- function(target_data) {
   reactable(target_data,
     class = "table-striped",
     columns = list(
-      Jahr = colDef(name = "Jahr", align = "left"),
+      Jahr = colDef(name = "Jahr", align = "left", sticky = "left"),
       FrQmBodenGanzeLieg = colDef(name = "Ganze Liegen-\nschaften"),
       FrQmBodenStwE = colDef(name = "StwE"),
       FrQmBodenAlleHA = colDef(name = "Alle Verkäufe"),
@@ -36,7 +36,7 @@ reactable_address <- function(target_data) {
     defaultColDef = colDef(
       align = "right",
       headerVAlign = "bottom",
-      minWidth = 75,
+      minWidth = 100,
       cell = function(value) {
         # Format only numeric columns with thousands separators
         if (!is.numeric(value)) {

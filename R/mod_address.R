@@ -154,11 +154,11 @@ mod_address_server <- function(id, addresses, series) {
       if (input$linkCount %% 2 == 1) {
         txt <- "Anzahl Handänderungen verbergen"
         updateActionLink(session, "linkCount", label = txt, icon = icons_stzh()("angle-up"))
-        addClass("linkCount", "visitedLink")
+        shinyjs::addClass("linkCount", "visitedLink")
       } else {
         txt <- "Anzahl Handänderungen einblenden"
         updateActionLink(session, "linkCount", label = txt, icon = icons_stzh()("angle-down"))
-        removeClass("linkCount", "visitedLink")
+        shinyjs::removeClass("linkCount", "visitedLink")
       }
     }) |>
       bindEvent(input$linkCount)

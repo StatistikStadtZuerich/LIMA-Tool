@@ -12,11 +12,11 @@ reactable_area <- function(target_data, pagesize) {
   reactable(target_data,
     class = "table-striped",
     columns = list(
-      Jahr = colDef(name = "Jahr", align = "left")
+      Jahr = colDef(name = "Jahr", align = "left", sticky = "left")
     ),
     defaultColDef = colDef(
       align = "right",
-      minWidth = 75,
+      minWidth = 100,
       cell = function(value) {
         # Format only numeric columns with thousands separators
         if (!is.numeric(value)) {
@@ -48,14 +48,14 @@ reactable_area_types <- function(target_data, pagesize) {
       borderColor = "#DEDEDE"
     ),
     columns = list(
-      Jahr = colDef(name = "Jahr", align = "left"),
+      Jahr = colDef(name = "Jahr", align = "left", sticky = "left"),
       EFH = colDef(name = "EFH"),
       MFH = colDef(name = "MFH"),
       WHG = colDef(name = "WGR"),
       UWH = colDef(name = "UWH"),
       NB = colDef(name = "NUB"),
       UNB = colDef(name = "UNB"),
-      IGZ = colDef(name = "", minWidth = 53),
+      IGZ = colDef(name = ""),
       UG = colDef(name = "")
     ),
     columnGroups = list(
@@ -80,7 +80,7 @@ reactable_area_types <- function(target_data, pagesize) {
     ),
     defaultColDef = colDef(
       align = "right",
-      minWidth = 75,
+      minWidth = 100,
       cell = function(value) {
         # Format only numeric columns with thousands separators
         if (!is.numeric(value)) {
