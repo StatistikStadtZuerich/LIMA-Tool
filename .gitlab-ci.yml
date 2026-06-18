@@ -18,7 +18,7 @@ include:
 
 r-devtools-check:
   extends:
-    - .r-devtools-check:
+    - .r-devtools-check
 
 shiny-deploy-int:
   extends:
