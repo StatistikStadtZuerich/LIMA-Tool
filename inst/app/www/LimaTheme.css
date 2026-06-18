@@ -2,7 +2,7 @@
 * LIMA SSZ Styling
 *******************************/
 
-/* Special Container for visited Link */ 
+/* Special Container for visited Link */
 .linkCount {
   margin-bottom: 40px;
   margin-top: 40px;
@@ -11,12 +11,6 @@
 .linkCountTwoDiv {
   margin-bottom: 40px;
   margin-top: 40px;
-}
-
-/* Change color of visited Link */
-a.visitedLink {
-  color: #070250;
-  text-decoration: underline;
 }
 
 /*******************************
