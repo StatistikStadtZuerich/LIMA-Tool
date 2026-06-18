@@ -9,6 +9,7 @@ Description: Die Revision des Grundangebot zum Thema Handänderungen führt
     wird der Aufbau der App modularisiert.
 License: What license is it under?
 Imports: 
+    bslib,
     config (>= 0.3.1),
     data.table,
     dplyr,
@@ -26,6 +27,7 @@ Imports:
     shiny (>= 1.6.0),
     shinycssloaders,
     shinyjs,
+    stringr,
     tidyr,
     zuericssstyle
 Suggests: 
@@ -36,7 +38,7 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
+Config/roxygen2/version: 8.0.0

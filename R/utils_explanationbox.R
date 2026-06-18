@@ -1,44 +1,48 @@
-#' explanationbox 
+#' explanationbox
 #'
 #' @description A utils function to display the explanation box of the according app
 #'
 #' @return The return value is a div that is called and rendered in the according app
 #'
 #' @noRd
-explanationbox_app1 <- function(){
-  tags$div(
-    class = "infoDiv",
-    h5("Erklärung Zonenarten"),
-    hr(),
-    p("Z = Zentrumszone"),
-    p("K = Kernzone"),
-    p("Q = Quartiererhaltungszone"),
-    p("W2 = Wohnzone 2"),
-    p("W3 = Wohnzone 3"),
-    p("W4 = Wohnzone 4"),
-    p("W5 = Wohnzone 5")
+explanationbox_app1 <- function() {
+  items <- c(
+    paste0("<span class='bold-text'>Z</span>: Zentrumszone"),
+    paste0("<span class='bold-text'>K</span>: Kernzone"),
+    paste0("<span class='bold-text'>Q</span>: Quartiererhaltungszone"),
+    paste0("<span class='bold-text'>W2</span>: Wohnzone 2"),
+    paste0("<span class='bold-text'>W3</span>: Wohnzone 3"),
+    paste0("<span class='bold-text'>W4</span>: Wohnzone 4"),
+    paste0("<span class='bold-text'>W5</span>: Wohnzone 5")
+  )
+  sszContextBox(
+    title = "Erklärung Zonenarten",
+    text = HTML(paste(items, collapse = "<br>"))
   )
 }
-explanationbox_app2 <- function(){
-  tags$div(
-    class = "infoDiv",
-    h5("Erklärung Bebauungsarten"),
-    hr(),
-    p("EFH = Einfamilienhäuser"),
-    p("MFH = Mehrfamilienhäuser"),
-    p("WGR = Wohnhäuser mit Geschäftsräumen"),
-    p("UWH = Übrige Wohnhäuser"),
-    p("NUB = Nutzbauten in Wohn- und Mischzonen"),
-    p("UNB = Unbebaut in Wohn- und Mischzonen")
+explanationbox_app2 <- function() {
+  items <- c(
+    paste0("<span class='bold-text'>EFH</span>: Einfamilienhäuser"),
+    paste0("<span class='bold-text'>MFH</span>: Mehrfamilienhäuser"),
+    paste0("<span class='bold-text'>WGR</span>: Wohnhäuser mit Geschäftsräumen"),
+    paste0("<span class='bold-text'>UWH</span>: Übrige Wohnhäuser"),
+    paste0("<span class='bold-text'>NUB</span>: Nutzbauten in Wohn- und Mischzonen"),
+    paste0("<span class='bold-text'>UNB</span>: Unbebaut in Wohn- und Mischzonen")
+  )
+
+  sszContextBox(
+    title = "Erklärung Bebauungsarten",
+    text = HTML(paste(items, collapse = "<br>"))
   )
 }
-explanationbox_app3 <- function(){
-  tags$div(
-    id = "defs",
-    class = "infoDiv",
-    h5("Begriffserklärung"),
-    hr(),
-    p("StwE = Stockwerkeigentum"),
-    p("VersW = Versicherungswert des Gebäudes")
+explanationbox_app3 <- function() {
+  items <- c(
+    paste0("<span class='bold-text'>StwE</span>: Stockwerkeigentum"),
+    paste0("<span class='bold-text'>VersW</span>: Versicherungswert des Gebäudes")
+  )
+
+  sszContextBox(
+    title = "Begriffserklärung",
+    text = HTML(paste(items, collapse = "<br>"))
   )
 }
