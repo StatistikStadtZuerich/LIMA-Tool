@@ -7,7 +7,7 @@ Description: Die Revision des Grundangebot zum Thema Handänderungen führt
     auch zu Veränderungen in der LIMA-App: Neu werden Bodenpreise und
     Wohnflächenpreise in unterschiedlichen Apps ausgewiesen. Gleichzeitig
     wird der Aufbau der App modularisiert.
-License: What license is it under?
+License: MIT + file LICENSE
 Imports: 
     bslib,
     config (>= 0.3.1),
