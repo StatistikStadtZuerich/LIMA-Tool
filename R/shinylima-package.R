@@ -21,5 +21,6 @@
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom stringr str_glue str_remove_all str_replace_all
 #' @importFrom tidyr pivot_longer
+#' @importFrom utils write.csv
 ## usethis namespace: end
 NULL
