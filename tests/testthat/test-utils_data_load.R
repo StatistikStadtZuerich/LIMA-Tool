@@ -121,7 +121,9 @@ test_that("utils to load data", {
       "QuarLang",
       "ZoneBZO16Lang",
       "ZoneBZO99Lang",
-      "Zones"
+      "Zones",
+      "Hnr_numeric",
+      "Adresse"
     )
   )
 
