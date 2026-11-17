@@ -1,12 +1,9 @@
 Package: shinylima
-Title: LIMA-Tool
+Title: Shiny App for querying official housing prices
 Version: 0.0.0.9000
 Authors@R: 
     person("Aline", "Metzler", , "aline.metzler@zuerich.ch", role = c("cre", "aut"))
-Description: Die Revision des Grundangebot zum Thema Handänderungen führt
-    auch zu Veränderungen in der LIMA-App: Neu werden Bodenpreise und
-    Wohnflächenpreise in unterschiedlichen Apps ausgewiesen. Gleichzeitig
-    wird der Aufbau der App modularisiert.
+Description: Shiny App LIMA-Tool that shows official housing prices for all sold properties the city of Zurich.
 License: MIT + file LICENSE
 Imports: 
     bslib,
@@ -16,7 +13,6 @@ Imports:
     ggplot2,
     golem (>= 0.4.0),
     gtools,
-    icons,
     jpeg,
     kableExtra,
     knitr,
@@ -38,6 +34,8 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
+Remotes:
+    github::StatistikStadtZuerich/zuericssstyle
 VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
