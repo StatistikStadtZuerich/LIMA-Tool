@@ -1,24 +1,31 @@
 include:
   # use template for all stages 
   - project: "OE-7035/ssz-da/templates/pipeline-templates"
-    ref: v1.1.6
+    ref: v1.1.14
     file: "stages.yml"
   # use template for gitlab pipeline to deploy to shinyapps.io
   - project: "OE-7035/ssz-da/templates/pipeline-templates"
-    ref: v1.1.6
+    ref: v1.1.14
     file: "deploy-to-shinyapps.yml"
   # use template for gitlab pipeline to push main to github 
   - project: "OE-7035/ssz-da/templates/pipeline-templates"
-    ref: v1.1.6
+    ref: v1.1.14
     file: "publish-to-github.yml"
-  # use template for gitlab pipeline to test/check r package
+  # use template to build package
   - project: "OE-7035/ssz-da/templates/pipeline-templates"
-    ref: v1.1.6
+    ref: v1.1.14
     file: "r-check-and-build-packages.yml"
 
+# run tests with nice report (view output in GitLab Pipeline > Tests)
+r-testthat-test:
+  extends: .r-testthat-test
+  
+# run cmd check without tests (tests already exist in r-testthat-test)
 r-devtools-check:
-  extends:
-    - .r-devtools-check
+  extends: .r-devtools-check
+  script:
+    - Rscript -e "renv::status()"
+    - Rscript -e "devtools::check(args = '--no-tests', error_on = 'error')"
 
 shiny-deploy-int:
   extends:
