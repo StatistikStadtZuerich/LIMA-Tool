@@ -5,7 +5,6 @@
 #' @import bslib
 #' @import dplyr
 #' @import ggplot2
-#' @import icons
 #' @import jpeg
 #' @import openxlsx
 #' @import reactable
