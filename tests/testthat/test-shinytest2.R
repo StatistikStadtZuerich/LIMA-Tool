@@ -12,7 +12,7 @@ test_that("{shinytest2} Query 1: Default filter (Ganze Stadt) shows both BZO tab
     app$get_value(output = "area_zones-subSubtitle"),
     "Ganze Stadt, Medianpreise in CHF"
   )
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 1: Kreis 4, Preis abzgl. Versicherungswert, Stockwerkeigentum", {
@@ -32,7 +32,7 @@ test_that("{shinytest2} Query 1: Kreis 4, Preis abzgl. Versicherungswert, Stockw
     "Kreis 4, Medianpreise in CHF"
   )
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 # Query 2
@@ -43,7 +43,7 @@ test_that("{shinytest2} Query 2: Default filter (Ganze Stadt) shows table", {
   
   query_area(app, "Abfrage 2")
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 2: Quartier Wollishofen, alle Handänderungen, mit Anzahl", {
@@ -55,7 +55,7 @@ test_that("{shinytest2} Query 2: Quartier Wollishofen, alle Handänderungen, mit
   app$click("area_types-mod_types-linkCount")
   app$wait_for_idle()
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 # Query 3
@@ -71,7 +71,7 @@ test_that("{shinytest2} Query 3: Address in Wohnzone with BZO-Wechsel shows resu
   expect_equal(app$get_value(output = "addresses-address_info-title"), "Verenastrasse 16")
   expect_equal(app$get_value(output = "addresses-address_info-quar"), "Wollishofen")
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 3: Address in Quartiererhaltungszone shows results", {
@@ -86,7 +86,7 @@ test_that("{shinytest2} Query 3: Address in Quartiererhaltungszone shows results
   expect_equal(app$get_value(output = "addresses-address_info-title"), "Langstrasse 192")
   expect_equal(app$get_value(output = "addresses-address_info-quar"), "Gewerbeschule")
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 3: Address that is not in Wohn-/Mischzone shows Hinweis box", {
@@ -103,7 +103,7 @@ test_that("{shinytest2} Query 3: Address that is not in Wohn-/Mischzone shows Hi
     "nicht in einer Wohn- oder Mischzone"
   )
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 3: invalid address shows Hinweis", {
@@ -116,7 +116,7 @@ test_that("{shinytest2} Query 3: invalid address shows Hinweis", {
   expect_false(app$get_value(output = "addresses-show_panel"))
   expect_match(app$get_text("#addresses-more_info"), "existiert nicht")
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 3: 'Anzahl Handänderungen einblenden' shows table", {
@@ -130,7 +130,7 @@ test_that("{shinytest2} Query 3: 'Anzahl Handänderungen einblenden' shows table
   
   expect_match(app$get_text("#addresses-linkCount"), "verbergen")
   
-  app$expect_values()
+  app$expect_values(transform = fix_reactable_key)
 })
 
 test_that("{shinytest2} Query 3: filter_address_download returns prices and counts for one address", {

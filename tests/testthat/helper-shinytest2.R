@@ -1,5 +1,12 @@
 library(shinytest2)
 
+# reactable stores a hash ("dataKey") of its data and columns definitions.
+# the hash differs between devtools::test() (load_all()) and devtools::check() (installed package) although the table content is identical
+# replace has with fixec placeholder before comparing snapshots
+fix_reactable_key <- function(lines) {
+  sub('"dataKey": "[0-9a-f]+"', '"dataKey": "<hash>"', lines)
+}
+
 # Start app in a headless Chrome browser
 start_lima_app <- function(name) {
   AppDriver$new(
