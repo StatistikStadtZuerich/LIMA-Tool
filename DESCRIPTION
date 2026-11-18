@@ -1,42 +1,40 @@
 Package: shinylima
-Title: Shiny App for querying official housing prices
+Title: Shiny App for Querying Official Housing Prices
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person("Aline", "Metzler", , "aline.metzler@zuerich.ch", role = c("cre", "aut"))
-Description: Shiny App LIMA-Tool that shows official housing prices for all sold properties in the city of Zurich.
+Description: Shiny App LIMA-Tool that shows official housing prices for all
+    sold properties in the city of Zurich.
 License: MIT + file LICENSE
-Imports: 
+Depends:
+    R (>= 4.1.0)
+Imports:
     bslib,
     config (>= 0.3.1),
     data.table,
     dplyr,
-    ggplot2,
     golem (>= 0.4.0),
-    gtools,
-    jpeg,
-    kableExtra,
-    knitr,
     openxlsx,
     purrr,
     reactable,
     readxl,
+    rlang,
     shiny (>= 1.6.0),
     shinycssloaders,
     shinyjs,
     stringr,
-    tidyr,
     zuericssstyle
-Suggests: 
+Suggests:
+    knitr,
     rmarkdown,
+    shinytest2,
     spelling,
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
-Encoding: UTF-8
-Language: en-US
-LazyData: true
+    testthat (>= 3.0.0),
+    withr
 Remotes:
     github::StatistikStadtZuerich/zuericssstyle
 VignetteBuilder: knitr
-Depends: 
-    R (>= 3.5)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
 Config/roxygen2/version: 8.1.1
