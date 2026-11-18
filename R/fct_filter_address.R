@@ -45,8 +45,6 @@ get_information_address <- function(selected_address, series, target_value = NUL
     SerieBZO99 = SerieBZO99
   ))
 }
-# test <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen 24", target_value = "Preis")
-# data_address <- get_information_address(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen 24")
 
 
 #' filter_address_data
@@ -104,18 +102,18 @@ filter_address_data <- function(selected_address, series, target_value) {
 #'
 #' @noRd
 filter_address_download <- function(addresses, series, filter_address) {
-  filter_download <- get_information_address(addresses, series, filter_address)
+  # Filter the address dataset to the selected address first
+  selected_address <- addresses |> 
+    filter(Adresse == filter_address)
+  
+  # target_value = NULL returns both prices ("Preis") and counts ("Zahl")
+  filter_download <- get_information_address(selected_address, series)
 
   # Total series
-  seriesPriceCount <- bind_rows(filter_download[["SerieBZO16"]], filter_download[["SerieBZO99"]]) |>
+  bind_rows(filter_download[["SerieBZO16"]], filter_download[["SerieBZO99"]]) |>
     select(-QuarCd, -ZoneSort, -ZoneLang) |>
     arrange(
-      factor(Typ, levels = c(
-        "Preis",
-        "Zahl"
-      )),
+      factor(Typ, levels = c("Preis", "Zahl")),
       desc(Jahr)
     )
-  return(seriesPriceCount)
 }
-# test <- filter_address_download(data_vector[["addresses"]], data_vector[["series"]], "Heerenwiesen 24")
