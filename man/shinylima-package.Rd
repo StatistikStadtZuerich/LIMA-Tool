@@ -4,9 +4,9 @@
 \name{shinylima-package}
 \alias{shinylima}
 \alias{shinylima-package}
-\title{shinylima: Shiny App for querying official housing prices}
+\title{shinylima: Shiny App for Querying Official Housing Prices}
 \description{
-Shiny App LIMA-Tool that shows official housing prices for all sold properties the city of Zurich.
+Shiny App LIMA-Tool that shows official housing prices for all sold properties in the city of Zurich.
 }
 \author{
 \strong{Maintainer}: Aline Metzler \email{aline.metzler@zuerich.ch}
