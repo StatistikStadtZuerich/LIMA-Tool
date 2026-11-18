@@ -1,0 +1,690 @@
+{
+  "input": {
+    "addresses-address": "",
+    "addresses-linkCount": 0,
+    "addresses-start_query": 0,
+    "area_types-mod_types-linkCount": 0,
+    "area_types-mod_zones-linkCount": 0,
+    "area_types-select_area": "Ganze Stadt",
+    "area_types-select_group": "Ganze Liegenschaften",
+    "area_types-select_price": "Preis pro m² Grundstücksfläche",
+    "area_types-start_query": 0,
+    "area_zones-mod_types-linkCount": 0,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__page": 1,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__pageSize": 25,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__pages": 1,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__selected": null,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__sorted": null,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__page": 1,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__pageSize": 25,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__pages": 1,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__selected": null,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__sorted": null,
+    "area_zones-mod_zones-linkCount": 0,
+    "area_zones-select_area": "Ganze Stadt",
+    "area_zones-select_group": "Ganze Liegenschaften",
+    "area_zones-select_price": "Preis pro m² Grundstücksfläche",
+    "area_zones-start_query": 1,
+    "choose_app": "Abfrage 1"
+  },
+  "output": {
+    "addresses-show_panel": {
+      "message": "",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    },
+    "area_zones-mod_zones-Preis_submodul16-results": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Jahr": [
+                "2025",
+                "2024",
+                "2023",
+                "2022",
+                "2021",
+                "2020",
+                "2019"
+              ],
+              "Total": [
+                10180,
+                10576,
+                9780,
+                10724,
+                8743,
+                7771,
+                7786
+              ],
+              "Z": [
+                19946,
+                19675,
+                16801,
+                23795,
+                20536,
+                9343,
+                5184
+              ],
+              "K": [
+                24788,
+                30132,
+                50633,
+                45122,
+                42065,
+                30000,
+                63924
+              ],
+              "Q": [
+                25814,
+                23952,
+                27586,
+                35586,
+                23896,
+                20693,
+                22472
+              ],
+              "W2": [
+                7718,
+                6908,
+                7631,
+                7946,
+                6977,
+                5411,
+                6045
+              ],
+              "W3": [
+                7320,
+                6744,
+                6054,
+                6683,
+                6043,
+                4861,
+                4574
+              ],
+              "W4": [
+                8900,
+                9030,
+                8521,
+                9465,
+                7294,
+                6782,
+                7134
+              ],
+              "W5": [
+                15015,
+                12976,
+                16416,
+                14937,
+                12133,
+                12765,
+                12695
+              ],
+              "W6": [
+                17711,
+                25281,
+                18657,
+                25432,
+                27747,
+                32792,
+                26380
+              ]
+            },
+            "columns": [
+              {
+                "id": "Jahr",
+                "name": "Jahr",
+                "type": "character",
+                "cell": [
+                  "2025",
+                  "2024",
+                  "2023",
+                  "2022",
+                  "2021",
+                  "2020",
+                  "2019"
+                ],
+                "minWidth": 100,
+                "align": "left",
+                "sticky": "left"
+              },
+              {
+                "id": "Total",
+                "name": "Total",
+                "type": "numeric",
+                "cell": [
+                  "10 180",
+                  "10 576",
+                  "9 780",
+                  "10 724",
+                  "8 743",
+                  "7 771",
+                  "7 786"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Z",
+                "name": "Z",
+                "type": "numeric",
+                "cell": [
+                  "19 946",
+                  "19 675",
+                  "16 801",
+                  "23 795",
+                  "20 536",
+                  "9 343",
+                  "5 184"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "K",
+                "name": "K",
+                "type": "numeric",
+                "cell": [
+                  "24 788",
+                  "30 132",
+                  "50 633",
+                  "45 122",
+                  "42 065",
+                  "30 000",
+                  "63 924"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Q",
+                "name": "Q",
+                "type": "numeric",
+                "cell": [
+                  "25 814",
+                  "23 952",
+                  "27 586",
+                  "35 586",
+                  "23 896",
+                  "20 693",
+                  "22 472"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W2",
+                "name": "W2",
+                "type": "numeric",
+                "cell": [
+                  "7 718",
+                  "6 908",
+                  "7 631",
+                  "7 946",
+                  "6 977",
+                  "5 411",
+                  "6 045"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W3",
+                "name": "W3",
+                "type": "numeric",
+                "cell": [
+                  "7 320",
+                  "6 744",
+                  "6 054",
+                  "6 683",
+                  "6 043",
+                  "4 861",
+                  "4 574"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W4",
+                "name": "W4",
+                "type": "numeric",
+                "cell": [
+                  "8 900",
+                  "9 030",
+                  "8 521",
+                  "9 465",
+                  "7 294",
+                  "6 782",
+                  "7 134"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W5",
+                "name": "W5",
+                "type": "numeric",
+                "cell": [
+                  "15 015",
+                  "12 976",
+                  "16 416",
+                  "14 937",
+                  "12 133",
+                  "12 765",
+                  "12 695"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W6",
+                "name": "W6",
+                "type": "numeric",
+                "cell": [
+                  "17 711",
+                  "25 281",
+                  "18 657",
+                  "25 432",
+                  "27 747",
+                  "32 792",
+                  "26 380"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              }
+            ],
+            "defaultPageSize": 25,
+            "className": "table-striped",
+            "dataKey": "91735dc3bb82235d04e5d79e18533345",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "area_zones-mod_zones-Preis_submodul16-tableTitle": "Nach Zonenart gemäss BZO 2016",
+    "area_zones-mod_zones-Preis_submodul99-results": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Jahr": [
+                "2018",
+                "2017",
+                "2016",
+                "2015",
+                "2014",
+                "2013",
+                "2012",
+                "2011",
+                "2010",
+                "2009",
+                "2008"
+              ],
+              "Total": [
+                6817,
+                6334,
+                6208,
+                6173,
+                5287,
+                5608,
+                5227,
+                5501,
+                4131,
+                4354,
+                3945
+              ],
+              "Z": [
+                8930,
+                9591,
+                10495,
+                14023,
+                2815,
+                3626,
+                9362,
+                1856,
+                3520,
+                1958,
+                8438
+              ],
+              "K": [
+                33364,
+                38261,
+                22422,
+                25094,
+                17206,
+                35120,
+                39227,
+                35062,
+                12414,
+                29206,
+                15941
+              ],
+              "Q": [
+                17683,
+                19180,
+                16801,
+                13746,
+                15488,
+                13807,
+                14173,
+                14791,
+                14207,
+                11883,
+                9983
+              ],
+              " ": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W2": [
+                4808,
+                4651,
+                4492,
+                4600,
+                3993,
+                4127,
+                3653,
+                3884,
+                3003,
+                2817,
+                4040
+              ],
+              "W3": [
+                5327,
+                5298,
+                4709,
+                5222,
+                5039,
+                5000,
+                4502,
+                4084,
+                3368,
+                3661,
+                3240
+              ],
+              "W4": [
+                7776,
+                10564,
+                6994,
+                8225,
+                6583,
+                7006,
+                6475,
+                7000,
+                5773,
+                6113,
+                4871
+              ],
+              "W5": [
+                10602,
+                8581,
+                14254,
+                6612,
+                4988,
+                14110,
+                16388,
+                13485,
+                4569,
+                10544,
+                9419
+              ]
+            },
+            "columns": [
+              {
+                "id": "Jahr",
+                "name": "Jahr",
+                "type": "character",
+                "cell": [
+                  "2018",
+                  "2017",
+                  "2016",
+                  "2015",
+                  "2014",
+                  "2013",
+                  "2012",
+                  "2011",
+                  "2010",
+                  "2009",
+                  "2008"
+                ],
+                "minWidth": 100,
+                "align": "left",
+                "sticky": "left"
+              },
+              {
+                "id": "Total",
+                "name": "Total",
+                "type": "numeric",
+                "cell": [
+                  "6 817",
+                  "6 334",
+                  "6 208",
+                  "6 173",
+                  "5 287",
+                  "5 608",
+                  "5 227",
+                  "5 501",
+                  "4 131",
+                  "4 354",
+                  "3 945"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Z",
+                "name": "Z",
+                "type": "numeric",
+                "cell": [
+                  "8 930",
+                  "9 591",
+                  "10 495",
+                  "14 023",
+                  "2 815",
+                  "3 626",
+                  "9 362",
+                  "1 856",
+                  "3 520",
+                  "1 958",
+                  "8 438"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "K",
+                "name": "K",
+                "type": "numeric",
+                "cell": [
+                  "33 364",
+                  "38 261",
+                  "22 422",
+                  "25 094",
+                  "17 206",
+                  "35 120",
+                  "39 227",
+                  "35 062",
+                  "12 414",
+                  "29 206",
+                  "15 941"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Q",
+                "name": "Q",
+                "type": "numeric",
+                "cell": [
+                  "17 683",
+                  "19 180",
+                  "16 801",
+                  "13 746",
+                  "15 488",
+                  "13 807",
+                  "14 173",
+                  "14 791",
+                  "14 207",
+                  "11 883",
+                  "9 983"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": " ",
+                "name": " ",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W2",
+                "name": "W2",
+                "type": "numeric",
+                "cell": [
+                  "4 808",
+                  "4 651",
+                  "4 492",
+                  "4 600",
+                  "3 993",
+                  "4 127",
+                  "3 653",
+                  "3 884",
+                  "3 003",
+                  "2 817",
+                  "4 040"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W3",
+                "name": "W3",
+                "type": "numeric",
+                "cell": [
+                  "5 327",
+                  "5 298",
+                  "4 709",
+                  "5 222",
+                  "5 039",
+                  "5 000",
+                  "4 502",
+                  "4 084",
+                  "3 368",
+                  "3 661",
+                  "3 240"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W4",
+                "name": "W4",
+                "type": "numeric",
+                "cell": [
+                  "7 776",
+                  "10 564",
+                  "6 994",
+                  "8 225",
+                  "6 583",
+                  "7 006",
+                  "6 475",
+                  "7 000",
+                  "5 773",
+                  "6 113",
+                  "4 871"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W5",
+                "name": "W5",
+                "type": "numeric",
+                "cell": [
+                  "10 602",
+                  "8 581",
+                  "14 254",
+                  "6 612",
+                  "4 988",
+                  "14 110",
+                  "16 388",
+                  "13 485",
+                  "4 569",
+                  "10 544",
+                  "9 419"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              }
+            ],
+            "defaultPageSize": 25,
+            "className": "table-striped",
+            "dataKey": "d91c7aed02e4081503ef824750bebb44",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "area_zones-mod_zones-Preis_submodul99-tableTitle": "Nach Zonenart gemäss BZO 1999",
+    "area_zones-subSubtitle": "Ganze Stadt, Medianpreise in CHF",
+    "area_zones-subtitle": "Ganze Liegenschaften",
+    "area_zones-title": "Preis pro m² Grundstücksfläche"
+  },
+  "export": {
+
+  }
+}

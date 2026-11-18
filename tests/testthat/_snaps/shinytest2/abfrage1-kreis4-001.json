@@ -1,0 +1,690 @@
+{
+  "input": {
+    "addresses-address": "",
+    "addresses-linkCount": 0,
+    "addresses-start_query": 0,
+    "area_types-mod_types-linkCount": 0,
+    "area_types-mod_zones-linkCount": 0,
+    "area_types-select_area": "Ganze Stadt",
+    "area_types-select_group": "Ganze Liegenschaften",
+    "area_types-select_price": "Preis pro m² Grundstücksfläche",
+    "area_types-start_query": 0,
+    "area_zones-mod_types-linkCount": 0,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__page": 1,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__pageSize": 25,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__pages": 1,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__selected": null,
+    "area_zones-mod_zones-Preis_submodul16-results__reactable__sorted": null,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__page": 1,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__pageSize": 25,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__pages": 1,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__selected": null,
+    "area_zones-mod_zones-Preis_submodul99-results__reactable__sorted": null,
+    "area_zones-mod_zones-linkCount": 0,
+    "area_zones-select_area": "Kreis 4",
+    "area_zones-select_group": "Nur Stockwerkeigentum",
+    "area_zones-select_price": "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert",
+    "area_zones-start_query": 1,
+    "choose_app": "Abfrage 1"
+  },
+  "output": {
+    "addresses-show_panel": {
+      "message": "",
+      "call": "NULL",
+      "type": [
+        "shiny.silent.error",
+        "validation"
+      ]
+    },
+    "area_zones-mod_zones-Preis_submodul16-results": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Jahr": [
+                "2025",
+                "2024",
+                "2023",
+                "2022",
+                "2021",
+                "2020",
+                "2019"
+              ],
+              "Total": [
+                34421,
+                30301,
+                20978,
+                33046,
+                20757,
+                27119,
+                15788
+              ],
+              "Z": [
+                179922,
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "K": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "Q": [
+                34421,
+                30641,
+                36356,
+                38549,
+                30200,
+                31691,
+                16319
+              ],
+              "W2": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W3": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W4": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W5": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W6": [
+                22453,
+                28952,
+                20978,
+                23021,
+                14741,
+                8758,
+                14293
+              ]
+            },
+            "columns": [
+              {
+                "id": "Jahr",
+                "name": "Jahr",
+                "type": "character",
+                "cell": [
+                  "2025",
+                  "2024",
+                  "2023",
+                  "2022",
+                  "2021",
+                  "2020",
+                  "2019"
+                ],
+                "minWidth": 100,
+                "align": "left",
+                "sticky": "left"
+              },
+              {
+                "id": "Total",
+                "name": "Total",
+                "type": "numeric",
+                "cell": [
+                  "34 421",
+                  "30 301",
+                  "20 978",
+                  "33 046",
+                  "20 757",
+                  "27 119",
+                  "15 788"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Z",
+                "name": "Z",
+                "type": "numeric",
+                "cell": [
+                  "179 922",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "K",
+                "name": "K",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Q",
+                "name": "Q",
+                "type": "numeric",
+                "cell": [
+                  "34 421",
+                  "30 641",
+                  "36 356",
+                  "38 549",
+                  "30 200",
+                  "31 691",
+                  "16 319"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W2",
+                "name": "W2",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W3",
+                "name": "W3",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W4",
+                "name": "W4",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W5",
+                "name": "W5",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W6",
+                "name": "W6",
+                "type": "numeric",
+                "cell": [
+                  "22 453",
+                  "28 952",
+                  "20 978",
+                  "23 021",
+                  "14 741",
+                  "8 758",
+                  "14 293"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              }
+            ],
+            "defaultPageSize": 25,
+            "className": "table-striped",
+            "dataKey": "5bf345fba43eaaeca1992674792e0ff3",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "area_zones-mod_zones-Preis_submodul16-tableTitle": "Nach Zonenart gemäss BZO 2016",
+    "area_zones-mod_zones-Preis_submodul99-results": {
+      "x": {
+        "tag": {
+          "name": "Reactable",
+          "attribs": {
+            "data": {
+              "Jahr": [
+                "2018",
+                "2017",
+                "2016",
+                "2015",
+                "2014",
+                "2013",
+                "2012",
+                "2011",
+                "2010",
+                "2009",
+                "2008"
+              ],
+              "Total": [
+                9934,
+                11589,
+                8779,
+                59071,
+                18742,
+                8972,
+                10811,
+                6745,
+                12325,
+                4030,
+                1107
+              ],
+              "Z": [
+                "NA",
+                "NA",
+                93937,
+                72293,
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "K": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "Q": [
+                9934,
+                16898,
+                11316,
+                20209,
+                20543,
+                8972,
+                14750,
+                6828,
+                13637,
+                4030,
+                "NA"
+              ],
+              " ": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W2": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W3": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W4": [
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA",
+                "NA"
+              ],
+              "W5": [
+                "NA",
+                10482,
+                8001,
+                10013,
+                7264,
+                6484,
+                9216,
+                6591,
+                9974,
+                4575,
+                1107
+              ]
+            },
+            "columns": [
+              {
+                "id": "Jahr",
+                "name": "Jahr",
+                "type": "character",
+                "cell": [
+                  "2018",
+                  "2017",
+                  "2016",
+                  "2015",
+                  "2014",
+                  "2013",
+                  "2012",
+                  "2011",
+                  "2010",
+                  "2009",
+                  "2008"
+                ],
+                "minWidth": 100,
+                "align": "left",
+                "sticky": "left"
+              },
+              {
+                "id": "Total",
+                "name": "Total",
+                "type": "numeric",
+                "cell": [
+                  "9 934",
+                  "11 589",
+                  "8 779",
+                  "59 071",
+                  "18 742",
+                  "8 972",
+                  "10 811",
+                  "6 745",
+                  "12 325",
+                  "4 030",
+                  "1 107"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Z",
+                "name": "Z",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "93 937",
+                  "72 293",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "K",
+                "name": "K",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "Q",
+                "name": "Q",
+                "type": "numeric",
+                "cell": [
+                  "9 934",
+                  "16 898",
+                  "11 316",
+                  "20 209",
+                  "20 543",
+                  "8 972",
+                  "14 750",
+                  "6 828",
+                  "13 637",
+                  "4 030",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": " ",
+                "name": " ",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W2",
+                "name": "W2",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W3",
+                "name": "W3",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W4",
+                "name": "W4",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–",
+                  "–"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              },
+              {
+                "id": "W5",
+                "name": "W5",
+                "type": "numeric",
+                "cell": [
+                  "–",
+                  "10 482",
+                  "8 001",
+                  "10 013",
+                  "7 264",
+                  "6 484",
+                  "9 216",
+                  "6 591",
+                  "9 974",
+                  "4 575",
+                  "1 107"
+                ],
+                "minWidth": 100,
+                "align": "right"
+              }
+            ],
+            "defaultPageSize": 25,
+            "className": "table-striped",
+            "dataKey": "ce7c7edf99a81a693dcce0b7dfb7b2b5",
+            "static": false
+          },
+          "children": [
+
+          ]
+        },
+        "class": "reactR_markup"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+
+      ]
+    },
+    "area_zones-mod_zones-Preis_submodul99-tableTitle": "Nach Zonenart gemäss BZO 1999",
+    "area_zones-subSubtitle": "Kreis 4, Medianpreise in CHF",
+    "area_zones-subtitle": "Nur Stockwerkeigentum",
+    "area_zones-title": "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert"
+  },
+  "export": {
+
+  }
+}
