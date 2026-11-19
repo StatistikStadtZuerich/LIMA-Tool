@@ -23,7 +23,7 @@ import_data_from_ogd <- function() {
 
       ## Download
       dataDownload <- function(link) {
-        data <- fread(link, encoding = "UTF-8")
+        data <- fread(link, encoding = "UTF-8", showProgress = FALSE)
 
         return(data)
       }
