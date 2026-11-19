@@ -1,5 +1,3 @@
-library(shinytest2)
-
 # Query 1
 test_that("{shinytest2} Query 1: Default filter (Ganze Stadt) shows both BZO tables", {
   skip_on_cran()
@@ -133,11 +131,19 @@ test_that("{shinytest2} Query 3: 'Anzahl Handänderungen einblenden' shows table
   app$expect_values(transform = fix_reactable_key)
 })
 
-test_that("{shinytest2} Query 3: filter_address_download returns prices and counts for one address", {
-  out <- filter_address_download(
-    data_vector[["addresses"]], data_vector[["series"]], "Verenastrasse 16"
-  )
-  expect_gt(nrow(out), 0)
-  expect_setequal(unique(out$Typ), c("Preis", "Zahl"))
-  expect_true(all(out$QuarLang == "Wollishofen"))
+test_that("{shinytest2} Query 3: CSV and XLSX downloads deliver a file", {
+  skip_on_cran()
+  app <- start_lima_app("abfrage3-download")
+  withr::defer(app$stop())
+  
+  query_address(app, "Verenastrasse 16")
+  
+  csv <- app$get_download("addresses-download_3-csvDownload")
+  expect_true(file.exists(csv))
+  expect_gt(file.size(csv), 0)
+  expect_match(basename(csv), "Wollishofen.*\\.csv$")
+  
+  xlsx <- app$get_download("addresses-download_3-excelDownload")
+  expect_true(file.exists(xlsx))
+  expect_gt(file.size(xlsx), 0)
 })
