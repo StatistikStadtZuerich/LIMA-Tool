@@ -1,4 +1,4 @@
 library(testthat)
-library(shinylima)
+library(lima)
 
-test_check("shinylima")
+test_check("lima")

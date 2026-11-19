@@ -1,8 +1,8 @@
 ---
-title: "shinylima"
+title: "lima"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{shinylima}
+  %\VignetteIndexEntry{lima}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,5 +15,5 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(shinylima)
+library(lima)
 ```
