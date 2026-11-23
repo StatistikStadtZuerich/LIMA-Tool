@@ -147,7 +147,7 @@
                   "2020",
                   "2019"
                 ],
-                "minWidth": 100,
+                "minWidth": 65,
                 "align": "left",
                 "sticky": "left"
               },
@@ -317,7 +317,7 @@
 
       ]
     },
-    "area_zones-mod_zones-Preis_submodul16-tableTitle": "Nach Zonenart gemäss BZO 2016",
+    "area_zones-mod_zones-Preis_submodul16-tableTitle": "Nach Zonenart gemäss BZO 2016, Medianpreise in CHF",
     "area_zones-mod_zones-Preis_submodul99-results": {
       "x": {
         "tag": {
@@ -473,7 +473,7 @@
                   "2009",
                   "2008"
                 ],
-                "minWidth": 100,
+                "minWidth": 65,
                 "align": "left",
                 "sticky": "left"
               },
@@ -679,9 +679,8 @@
 
       ]
     },
-    "area_zones-mod_zones-Preis_submodul99-tableTitle": "Nach Zonenart gemäss BZO 1999",
-    "area_zones-subSubtitle": "Ganze Stadt, Medianpreise in CHF",
-    "area_zones-subtitle": "Ganze Liegenschaften",
+    "area_zones-mod_zones-Preis_submodul99-tableTitle": "Nach Zonenart gemäss BZO 1999, Medianpreise in CHF",
+    "area_zones-subtitle": "Ganze Stadt, Ganze Liegenschaften",
     "area_zones-title": "Preis pro m² Grundstücksfläche"
   },
   "export": {

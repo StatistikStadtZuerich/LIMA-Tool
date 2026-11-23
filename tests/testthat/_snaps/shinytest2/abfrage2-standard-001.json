@@ -243,7 +243,7 @@
                   "2009",
                   "2008"
                 ],
-                "minWidth": 100,
+                "minWidth": 65,
                 "align": "left",
                 "sticky": "left"
               },
@@ -519,9 +519,8 @@
 
       ]
     },
-    "area_types-mod_types-Preis_submodul-tableTitle": "Nach Bebauungsart",
-    "area_types-subSubtitle": "Ganze Stadt, Medianpreise in CHF",
-    "area_types-subtitle": "Ganze Liegenschaften",
+    "area_types-mod_types-Preis_submodul-tableTitle": "Nach Bebauungsart, Medianpreise in CHF",
+    "area_types-subtitle": "Ganze Stadt, Ganze Liegenschaften",
     "area_types-title": "Preis pro m² Grundstücksfläche"
   },
   "export": {

@@ -7,8 +7,16 @@ test_that("{shinytest2} Query 1: Default filter (Ganze Stadt) shows both BZO tab
   query_area(app, "Abfrage 1")
   
   expect_equal(
-    app$get_value(output = "area_zones-subSubtitle"),
-    "Ganze Stadt, Medianpreise in CHF"
+    app$get_value(output = "area_zones-subtitle"),
+    "Ganze Stadt, Ganze Liegenschaften"
+  )
+  expect_match(
+    app$get_value(output = "area_zones-mod_zones-Preis_submodul16-tableTitle"),
+    "BZO 2016"
+  )
+  expect_match(
+    app$get_value(output = "area_zones-mod_zones-Preis_submodul99-tableTitle"),
+    "BZO 1999"
   )
   app$expect_values(transform = fix_reactable_key)
 })
@@ -26,8 +34,12 @@ test_that("{shinytest2} Query 1: Kreis 4, Preis abzgl. Versicherungswert, Stockw
   )
   
   expect_equal(
-    app$get_value(output = "area_zones-subSubtitle"),
-    "Kreis 4, Medianpreise in CHF"
+    app$get_value(output = "area_zones-title"),
+    "Preis pro m² Grundstücksfläche, abzgl. Versicherungswert"
+  )
+  expect_equal(
+    app$get_value(output = "area_zones-subtitle"),
+    "Kreis 4, Nur Stockwerkeigentum"
   )
   
   app$expect_values(transform = fix_reactable_key)

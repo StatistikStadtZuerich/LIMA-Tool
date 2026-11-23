@@ -200,7 +200,7 @@
                   "2009",
                   "2008"
                 ],
-                "minWidth": 100,
+                "minWidth": 65,
                 "align": "left",
                 "headerVAlign": "bottom",
                 "sticky": "left"
@@ -590,7 +590,7 @@
                   "2009",
                   "2008"
                 ],
-                "minWidth": 100,
+                "minWidth": 65,
                 "align": "left",
                 "headerVAlign": "bottom",
                 "sticky": "left"
