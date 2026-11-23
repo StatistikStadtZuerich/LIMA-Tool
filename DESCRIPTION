@@ -25,15 +25,11 @@ Imports:
     stringr,
     zuericssstyle
 Suggests:
-    knitr,
-    rmarkdown,
     shinytest2,
-    spelling,
     testthat (>= 3.0.0),
     withr
 Remotes:
     github::StatistikStadtZuerich/zuericssstyle
-VignetteBuilder: knitr
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
