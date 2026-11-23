@@ -49,7 +49,7 @@ mod_address_tables_server <- function(id, selected_address, series, target_value
     output$results <- renderReactable({
       req(nrow(selected_address()) > 0, data_available())
       filtered_data <- filter_address_data(selected_address(), series, target_value)
-
+      
       reactable_address(filtered_data)
     })
   })
