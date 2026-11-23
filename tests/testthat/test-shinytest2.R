@@ -139,11 +139,13 @@ test_that("{shinytest2} Query 3: CSV and XLSX downloads deliver a file", {
   query_address(app, "Verenastrasse 16")
   
   csv <- app$get_download("addresses-download_3-csvDownload")
+  withr::defer(unlink(csv))
   expect_true(file.exists(csv))
   expect_gt(file.size(csv), 0)
   expect_match(basename(csv), "Wollishofen.*\\.csv$")
   
   xlsx <- app$get_download("addresses-download_3-excelDownload")
+  withr::defer(unlink(xlsx))
   expect_true(file.exists(xlsx))
   expect_gt(file.size(xlsx), 0)
 })
