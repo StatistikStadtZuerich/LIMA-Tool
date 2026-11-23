@@ -57,7 +57,7 @@ mod_area_types_server <- function(id, zones, filename_download, filter_area, fil
       filter_area = reactive(filter_area()),
       filter_price = reactive(filter_price()),
       filter_group = reactive(filter_group()),
-      title = paste0("Nach Bebauungsart"),
+      title = paste0("Nach Bebauungsart, Medianpreise in CHF"),
       BZO = "BZO99"
     )
 
@@ -84,7 +84,7 @@ mod_area_types_server <- function(id, zones, filename_download, filter_area, fil
       filter_area = reactive(filter_area()),
       filter_price = reactive(filter_price()),
       filter_group = reactive(filter_group()),
-      title = paste0("Nach Bebauungsart")
+      title = paste0("Nach Bebauungsart, Anzahl Handänderungen")
     )
   })
 }
