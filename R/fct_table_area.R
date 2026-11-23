@@ -12,7 +12,7 @@ reactable_area <- function(target_data, pagesize) {
   reactable(target_data,
     class = "table-striped",
     columns = list(
-      Jahr = colDef(name = "Jahr", align = "left", sticky = "left")
+      Jahr = colDef(name = "Jahr", align = "left", sticky = "left", minWidth = 65)
     ),
     defaultColDef = colDef(
       align = "right",
@@ -48,7 +48,7 @@ reactable_area_types <- function(target_data, pagesize) {
       borderColor = "#DEDEDE"
     ),
     columns = list(
-      Jahr = colDef(name = "Jahr", align = "left", sticky = "left"),
+      Jahr = colDef(name = "Jahr", align = "left", sticky = "left", minWidth = 65),
       EFH = colDef(name = "EFH"),
       MFH = colDef(name = "MFH"),
       WHG = colDef(name = "WGR"),
