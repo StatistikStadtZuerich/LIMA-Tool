@@ -3,30 +3,29 @@
 export(run_app)
 import(bslib)
 import(dplyr)
-import(ggplot2)
-import(icons)
-import(jpeg)
 import(openxlsx)
 import(reactable)
 import(shiny)
 import(zuericssstyle)
 importFrom(data.table,fread)
-importFrom(golem,activate_js)
-importFrom(golem,add_resource_path)
-importFrom(golem,bundle_resources)
-importFrom(golem,favicon)
-importFrom(golem,with_golem_options)
-importFrom(gtools,mixedsort)
-importFrom(kableExtra,kable_styling)
-importFrom(knitr,kable)
+importFrom(golem,
+  activate_js,
+  add_resource_path,
+  bundle_resources,
+  favicon,
+  with_golem_options
+)
 importFrom(purrr,map)
 importFrom(readxl,read_excel)
-importFrom(shiny,NS)
-importFrom(shiny,shinyApp)
-importFrom(shiny,tagList)
+importFrom(shiny,
+  NS,
+  shinyApp,
+  tagList
+)
 importFrom(shinycssloaders,withSpinner)
-importFrom(stringr,str_glue)
-importFrom(stringr,str_remove_all)
-importFrom(stringr,str_replace_all)
-importFrom(tidyr,pivot_longer)
+importFrom(stringr,
+  str_glue,
+  str_remove_all,
+  str_replace_all
+)
 importFrom(utils,write.csv)

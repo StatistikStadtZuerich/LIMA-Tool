@@ -18,7 +18,7 @@ data_load <- function() {
 
   na_vars <- c("FrQmBodenGanzeLieg", "FrQmBodenStwE", "FrQmBodenAlleHA")
   series_list <- prepare_series(data[[2]], data[[5]]) |>
-    map(\(x) mutate_nas(x, na_vars))
+    map(\(x) mutate_nas(x, all_of(na_vars)))
 
   addresses <- prepare_data(data[[3]])
 
@@ -47,5 +47,5 @@ data_load <- function() {
 mutate_nas <- function(dat, mutate_where) {
   dat |>
     mutate(across(everything(), \(x) replace(x, x == ".", "–"))) |>
-    mutate(across(mutate_where, \(x) replace(x, x == "", "–")))
+    mutate(across({{ mutate_where }}, \(x) replace(x, x == "", "–")))
 }

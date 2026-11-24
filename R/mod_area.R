@@ -71,9 +71,6 @@ mod_area_ui <- function(id, choicesapp) {
       # Table Subtitle (prices)
       h3(textOutput(ns("subtitle"))),
 
-      # Table Subsubtitle (prices)
-      h4(textOutput(ns("subSubtitle"))),
-
       # Modules for App1 & App2
       conditionalPanel(
         # This condition is not in a module, therefore there is no need for a Namespace
@@ -112,16 +109,9 @@ mod_area_server <- function(id, zones, choice_app) {
     # Subtitle
     # only updated when button is pressed
     output$subtitle <- renderText({
-      input$select_group
+      paste0(input$select_area, ", ", input$select_group)
     }) |>
-      bindEvent(input$select_group)
-
-    # Sub-Subtitle
-    # only updated when button is pressed
-    output$subSubtitle <- renderText({
-      paste0(input$select_area, ", Medianpreise in CHF")
-    }) |>
-      bindEvent(input$select_area)
+      bindEvent(input$select_area, input$select_group)
 
     # Call Modules for App 1
     if (choice_app == 1) {

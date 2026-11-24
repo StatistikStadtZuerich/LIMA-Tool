@@ -61,7 +61,7 @@ mod_area_zones_server <- function(id, zones, filename_download, filter_area, fil
       filter_area = reactive(filter_area()),
       filter_price = reactive(filter_price()),
       filter_group = reactive(filter_group()),
-      title = paste0("Nach Zonenart gemäss BZO 2016"),
+      title = paste0("Nach Zonenart gemäss BZO 2016, Medianpreise in CHF"),
       BZO = "BZO16"
     )
     mod_area_tables_server(
@@ -73,7 +73,7 @@ mod_area_zones_server <- function(id, zones, filename_download, filter_area, fil
       filter_area = reactive(filter_area()),
       filter_price = reactive(filter_price()),
       filter_group = reactive(filter_group()),
-      title = paste0("Nach Zonenart gemäss BZO 1999"),
+      title = paste0("Nach Zonenart gemäss BZO 1999, Medianpreise in CHF"),
       BZO = "BZO99"
     )
 
@@ -100,7 +100,7 @@ mod_area_zones_server <- function(id, zones, filename_download, filter_area, fil
       filter_area = reactive(filter_area()),
       filter_price = reactive(filter_price()),
       filter_group = reactive(filter_group()),
-      title = paste0("Nach Zonenart gemäss BZO 2016"),
+      title = paste0("Nach Zonenart gemäss BZO 2016, Anzahl Handänderungen"),
       BZO = "BZO16"
     )
     mod_area_tables_server(
@@ -112,7 +112,7 @@ mod_area_zones_server <- function(id, zones, filename_download, filter_area, fil
       filter_area = reactive(filter_area()),
       filter_price = reactive(filter_price()),
       filter_group = reactive(filter_group()),
-      title = paste0("Nach Zonenart gemäss BZO 1999"),
+      title = paste0("Nach Zonenart gemäss BZO 1999, Anzahl Handänderungen"),
       BZO = "BZO99"
     )
   })

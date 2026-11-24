@@ -1,0 +1,32 @@
+{
+  "input": {
+    "addresses-address": "LilaLangstrasse 98",
+    "addresses-linkCount": 0,
+    "addresses-start_query": 1,
+    "area_types-mod_types-linkCount": 0,
+    "area_types-mod_zones-linkCount": 0,
+    "area_types-select_area": "Ganze Stadt",
+    "area_types-select_group": "Ganze Liegenschaften",
+    "area_types-select_price": "Preis pro m² Grundstücksfläche",
+    "area_types-start_query": 0,
+    "area_zones-mod_types-linkCount": 0,
+    "area_zones-mod_zones-linkCount": 0,
+    "area_zones-select_area": "Ganze Stadt",
+    "area_zones-select_group": "Ganze Liegenschaften",
+    "area_zones-select_price": "Preis pro m² Grundstücksfläche",
+    "area_zones-start_query": 0,
+    "choose_app": "Abfrage 3"
+  },
+  "output": {
+    "addresses-more_info": {
+      "html": "<div class=\"info-box-div sszInfoBox\">\n  <div class=\"info-box-content\">\n    <svg fill=\"none\" viewBox=\"0 0 24 24\" style=\"height:1em;display:inline-block;vertical-align:-.1em;\" xmlns=\"http://www.w3.org/2000/svg\">\n      <g clip-path=\"url(#a)\">\n        <path fill=\"currentColor\" d=\"M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10m-1-11v6h2v-6zm0-4v2h2V7z\"><\/path>\n      <\/g>\n      <defs>\n        <clipPath id=\"a\">\n          <path fill=\"currentColor\" d=\"M0 0h24v24H0z\"><\/path>\n        <\/clipPath>\n      <\/defs>\n    <\/svg>\n    <div class=\"info-box-text\">\n      <p>Hinweis<\/p>\n      <p>Die gewünschte Adresse existiert nicht.\nWählen Sie eine andere Adresse und machen Sie eine erneute Abfrage.<\/p>\n    <\/div>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "addresses-show_panel": false
+  },
+  "export": {
+
+  }
+}

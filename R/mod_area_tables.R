@@ -11,7 +11,7 @@ mod_area_tables_ui <- function(id, target_value) {
 
   tagList(
     # Title for results
-    p(textOutput(ns("tableTitle"))),
+    h4(textOutput(ns("tableTitle"))),
 
     # Table for results
     shinycssloaders::withSpinner(

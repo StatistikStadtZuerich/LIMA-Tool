@@ -14,8 +14,8 @@
 #' @noRd
 sszDownloadExcel <- function(filteredData, file, queryinput, input1, input2 = NULL, input3 = NULL) {
   # Data Paths
-  hauptPfad <- "inst/app/www/Titelblatt.xlsx"
-  imagePfad <- "inst/app/www/logo_stzh_stat_sw_pos_1.png"
+  hauptPfad <- app_sys("app/www/Titelblatt.xlsx")
+  imagePfad <- app_sys("app/www/logo_stzh_stat_sw_pos_1.png")
 
 
   # Manipulate Data for the two queries

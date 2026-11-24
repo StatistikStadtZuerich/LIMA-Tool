@@ -1,10 +1,10 @@
 # lima-golem
 
-Shiny app for [LIMA](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bauen-wohnen/liegenschaftenhandel/preise-liegenschaften.html) tool (Abfragetool Liegenschaftenmarkt).
+Shiny app for [LIMA](https://www.stadt-zuerich.ch/de/politik-und-verwaltung/statistik-und-daten/daten/bauen-und-wohnen/liegenschaftenhandel/preise-von-liegenschaften.html) tool (Abfragetool Liegenschaftenmarkt).
 
-The data from the LIMA (LIegenschaftenMArkt) tool on the Website of [Statistik Stadt Zürich](https://www.stadt-zuerich.ch/prd/de/index/statistik.html) are based on notification changes of ownership from the land registry offices. All sales of developed land in the territory of the city of Zurich are taken into account. The data is obtained from the Open Data portal of the city of Zurich and is available [here](https://data.stadt-zuerich.ch/dataset?tags=lima).
+The data from the LIMA (LIegenschaftenMArkt) tool are based on notification changes of ownership from the land registry offices. All sales of developed land in the territory of the city of Zurich are taken into account. The data is obtained from the Open Data portal of the city of Zurich and is available [here](https://data.stadt-zuerich.ch/dataset?tags=lima).
 
-By using the this application you agree to the [disclaimer](https://www.stadt-zuerich.ch/prd/de/index/statistik/themen/bauen-wohnen/liegenschaftenhandel/preise-liegenschaften/disclaimer.html). 
+By using the this application you agree to the [disclaimer](https://www.stadt-zuerich.ch/de/politik-und-verwaltung/statistik-und-daten/daten/bauen-und-wohnen/liegenschaftenhandel/preise-von-liegenschaften/disclaimer-lima-tool.html). 
 
 ## Price series and grouping
 
@@ -52,10 +52,3 @@ For the second app of LIMA, changes in ownership in residential and mixed zones 
 - UWH = Übrige Wohnhäuser
 - NUB = Nutzbauten in Wohn- und Mischzonen
 - UNB = Unbebaut in Wohn- und Mischzonen
-
-
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!

@@ -19,7 +19,7 @@ test_that("utils to load data", {
   purrr::map(data_vector, \(x) expect_equal(sum(is.na(x)), 0))
 
   # snapshot of dfs
-  purrr::map(data_vector, \(x) expect_snapshot_value(x, style = "json2"))
+  purrr::map(data_vector, \(x) expect_snapshot_value(as.data.frame(x), style = "json2"))
 
   # check column names
   expect_named(

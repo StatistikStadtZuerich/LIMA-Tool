@@ -11,7 +11,7 @@ reactable_address <- function(target_data) {
   reactable(target_data,
     class = "table-striped",
     columns = list(
-      Jahr = colDef(name = "Jahr", align = "left", sticky = "left"),
+      Jahr = colDef(name = "Jahr", align = "left", sticky = "left", minWidth = 65),
       FrQmBodenGanzeLieg = colDef(name = "Ganze Liegen-\nschaften"),
       FrQmBodenStwE = colDef(name = "StwE"),
       FrQmBodenAlleHA = colDef(name = "Alle Verkäufe"),
