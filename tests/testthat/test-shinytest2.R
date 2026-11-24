@@ -143,21 +143,28 @@ test_that("{shinytest2} Query 3: 'Anzahl Handänderungen einblenden' shows table
   app$expect_values(transform = fix_reactable_key)
 })
 
-test_that("{shinytest2} Query 3: CSV and XLSX downloads deliver a file", {
+test_that("{shinytest2} Query 3: CSV and XLSX downloads contain the data of the address", {
   skip_on_cran()
   app <- start_lima_app("abfrage3-download")
-  withr::defer(app$stop())
+  withr::defer(app$stop)
   
   query_address(app, "Verenastrasse 16")
   
-  csv <- app$get_download("addresses-download_3-csvDownload")
-  withr::defer(unlink(csv))
-  expect_true(file.exists(csv))
-  expect_gt(file.size(csv), 0)
-  expect_match(basename(csv), "Wollishofen.*\\.csv$")
+  # CSV: snapshot of the file content and of the file name
+  app$expect_download("addresses-download_3-csvDownload")
   
-  xlsx <- app$get_download("addresses-download_3-excelDownload")
-  withr::defer(unlink(xlsx))
-  expect_true(file.exists(xlsx))
-  expect_gt(file.size(xlsx), 0)
+  # XLSX: adjust test for excel as metadata is different every time, 
+  # get file and compare only the content
+  # Not tested this way: the logo and the date on the first sheet
+  xlsx <- withr::local_tempfile(fileext = ".xlsx")
+  app$get_download("addresses-download_3-excelDownload", filename = xlsx)
+  # Sheet 1 "Inhalt": only the first 4 columns, the 5th contains today's date
+  sheet1 <- openxlsx::read.xlsx(xlsx, sheet = 1, colNames = FALSE)
+  expect_snapshot(sheet1[, 1:4])
+  # Sheet 2 "Erläuterungen"
+  sheet2 <- openxlsx::read.xlsx(xlsx, sheet = 2, colNames = FALSE)
+  expect_snapshot(sheet2)
+  # sheet 3 "T_1": title, selection and the data of the address
+  sheet3 <- openxlsx::read.xlsx(xlsx, sheet = 3, colNames = FALSE)
+  expect_snapshot(sheet3)
 })
